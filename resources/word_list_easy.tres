@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WordLists" load_steps=2 format=3 uid="uid://rpkvl2xw3n4d"]
+
+[ext_resource type="Script" path="res://resources/word_lists.gd" id="1_edvia"]
+
+[resource]
+script = ExtResource("1_edvia")
+word_list_easy = Array[String](["ball", "love", "face", "cash", "four", "book", "good", "kite", "bear", "salt", "
+deer", "cube", "bake", "cage", "rain", "hand", "leaf", "salt", "bird", "time
+"])
+word_list_med = null
+word_list_hard = null

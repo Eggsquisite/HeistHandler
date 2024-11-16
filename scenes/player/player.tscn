@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh0ftwhxdjh1l"]
+
+[ext_resource type="Texture2D" uid="uid://cs3w7om7g84v8" path="res://assets/player/player-single.png" id="1_5ysw3"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ki0f4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_guay4"]
+radius = 8.0
+height = 22.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(142, 66)
+script = ExtResource("1_ki0f4")
+
+[node name="PlayerCam" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5ysw3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_guay4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -12.0
+offset_top = -50.0
+offset_right = 107.0
+offset_bottom = 129.0
+scale = Vector2(0.199999, 0.199999)
+theme_override_font_sizes/font_size = 64
+text = "test
+test"
