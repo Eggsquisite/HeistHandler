@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WordLists" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/word_lists.gd" id="1_hvjku"]
+
+[resource]
+script = ExtResource("1_hvjku")
+word_list_easy = Array[String](["ball", "love", "face", "cash", "four", "book", "good", "kite", "bear", "salt", "deer", "cube", "bake", "cage", "rain", "hand", "leaf", "salt", "bird", "time"])
+word_list_med = Array[String](["apple", "heart", "teeth", "black", "block", "light", "water", "green", "cloud", "truck", "honey", "tiger", "shirt", "sleep", "pizza", "happy", "paint", "wrong", "fruit", "fence", "thief"])
+word_list_hard = Array[String](["circle", "cactus", "island", "letter", "potato", "garlic", "mirror", "spring", "turtle", "doctor", "shovel", "street", "carrot", "square", "animal", "violin", "silent", "flower", "parrot", "guitar"])

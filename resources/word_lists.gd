@@ -10,6 +10,7 @@ class_name WordLists
 
 
 func add_words(word: String, difficulty: int) -> void:
+	word = word.replace('\n', '')
 	match difficulty:
 		1:
 			word_list_easy.append(word)
@@ -17,8 +18,8 @@ func add_words(word: String, difficulty: int) -> void:
 			word_list_med.append(word)
 		3:
 			word_list_hard.append(word)
-		
-		
+	
+
 func get_words(difficulty: int) -> Array[String]:
 	match difficulty:
 		1:
@@ -28,3 +29,4 @@ func get_words(difficulty: int) -> Array[String]:
 		3:
 			return word_list_hard
 	return word_list_easy
+	
