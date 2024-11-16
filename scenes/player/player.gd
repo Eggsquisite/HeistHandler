@@ -30,6 +30,16 @@ func _physics_process(delta: float) -> void:
 	get_input()
 	move_and_slide()
 	calculate_states()
+	update_debug_label()
+
+
+func update_debug_label() -> void:
+	debug_label.text = "%s\nsneak:%s\nvel:(%.0f,%.0f)" % [
+		PlayerState.keys()[_state],
+		_sneaking,
+		velocity.x,
+		velocity.y,
+		]
 
 
 func get_input() -> void:
@@ -78,7 +88,7 @@ func set_state(new_state: PlayerState) -> void:
 	if new_state == _state:
 		return
 	
-	new_state = _state
+	_state = new_state
 
 
 func set_sneaking(sneak_flag: bool) -> void:
