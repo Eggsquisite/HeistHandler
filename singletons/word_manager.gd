@@ -18,7 +18,6 @@ func _ready() -> void:
 		_word_list_hard.append(word)
 
 
-
 func get_random_word(difficulty: int) -> String:
 	match difficulty:
 		1:

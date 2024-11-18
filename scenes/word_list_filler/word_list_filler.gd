@@ -7,6 +7,7 @@ const HARD_PATH: String = "res://words/words_hard.txt"
 
 
 func _ready() -> void:
+	# Create new Resource
 	var word_lists: WordLists = WordLists.new()
 	
 	update_easy_list(word_lists)
