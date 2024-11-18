@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://l7ndep23svlc" path="res://assets/Sprite-0001.png" id="1_gunet"]
 [ext_resource type="Script" path="res://scenes/letter/letter.gd" id="1_hrkep"]
 
-[node name="Letter" type="CenterContainer"]
+[node name="LetterContainer" type="CenterContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,6 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_mode = 2
 script = ExtResource("1_hrkep")
 
 [node name="Letter" type="Label" parent="."]
@@ -20,5 +21,19 @@ text = "L"
 [node name="LetterCover" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(5, 11)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("1_gunet")
+
+[node name="Selector" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(5, -16)
+rotation = 0.785398
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("1_gunet")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
