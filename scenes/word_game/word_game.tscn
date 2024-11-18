@@ -19,11 +19,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_next = NodePath("../LineEdit")
+focus_previous = NodePath("../LineEdit")
 theme_override_constants/separation = 10
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+focus_next = NodePath("../Full Word Container")
 alignment = 1
 max_length = 5
 caret_blink = true

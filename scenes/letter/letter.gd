@@ -8,10 +8,6 @@ extends CenterContainer
 
 var is_hidden: bool = false
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("lockpick") and is_hidden and has_focus():
-		begin_lockpick(1)
-
 
 func get_letter() -> Label:
 	return letter
@@ -20,12 +16,14 @@ func get_letter() -> Label:
 func hide_letter() -> void:
 	is_hidden = true
 	letter_cover.show()
+	focus_mode = FOCUS_ALL
 
 
 func show_letter() -> void:
 	is_hidden = false
 	selector.hide()
 	letter_cover.hide()
+	focus_next
 	# Play unlock sound
 
 
@@ -38,11 +36,14 @@ func _on_focus_entered() -> void:
 func _on_focus_exited() -> void:
 	end_lockpick()
 	selector.hide()
+	if !is_hidden:
+		focus_mode = FOCUS_NONE
 
 
 func begin_lockpick(duration: float) -> void:
-	timer.start(duration)
-	# play unlocking sound
+	if is_hidden and has_focus():
+		timer.start(duration)
+		# play unlocking sound
 
 
 func end_lockpick() -> void:

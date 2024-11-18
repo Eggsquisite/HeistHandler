@@ -12,7 +12,12 @@ var letter_containers: Array[Node] = []
 var letter_array: Array[String] = []
 
 var is_game_started: bool = false
-var tries: int = 3
+var control_focus: Control
+
+var tries: int = 0
+@export var tries_remaining: int = 3
+@export var time_to_pick: float = 1
+@export var multiplier_to_pick: float = 1.2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,22 +27,29 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and !is_game_started:
-		start_game(2)
+		start_minigame(2)
 	
-	if Input.is_action_just_pressed("sneak"):
-		end_game()
 	
 	if Input.is_action_just_pressed("switch_focus") and is_game_started:
-		if !line_edit.has_focus():
-			print("line_edit focus:%s" % line_edit.has_focus())
-			line_edit.grab_focus()
-			print("switching focus to line_edit")
-		else:
-			letter_containers[0].grab_focus()
-			print("switching focus to letter")
+		pass
+		#if !line_edit.has_focus():
+		#	print("line_edit focus:%s" % line_edit.has_focus())
+		#	line_edit.grab_focus()
+		#	print("switching focus to line_edit")
+		#elif line_edit.has_focus():
+		#	letter_containers[0].grab_focus()
+		#	print("switching focus to letter")
+	
+	
+	if Input.is_action_just_pressed("lockpick"):
+		control_focus = get_viewport().gui_get_focus_owner()
+		if control_focus != null and control_focus != line_edit:
+			control_focus.begin_lockpick(time_to_pick * (multiplier_to_pick * tries))
+			tries += 1
 
 
-func start_game(difficulty: int) -> void:
+func start_minigame(difficulty: int) -> void:
+	tries = 0
 	is_game_started = true
 	setup_line_edit(difficulty)
 	
@@ -75,7 +87,7 @@ func setup_line_edit(diff: int) -> void:
 	line_edit.max_length = diff + 3
 	
 	
-func end_game() -> void:
+func end_minigame() -> void:
 	is_game_started = false
 	line_edit.hide()
 	line_edit.show()
@@ -87,7 +99,11 @@ func end_game() -> void:
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	if new_text == full_word:
 		print("Hooray! Correct word!")
-		end_game()
+		end_minigame()
 	else:
 		print("Boo! Wrong word!")
+		tries_remaining -= 1
 		line_edit.clear()
+		if tries_remaining <= 0:
+			print("Lock broken!")
+			end_minigame()
