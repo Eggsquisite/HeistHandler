@@ -1,9 +1,9 @@
 extends CenterContainer
 
 
-@onready var letter: Label = $Letter
-@onready var letter_cover: Sprite2D = $LetterCover
-@onready var selector: Sprite2D = $Selector
+@onready var letter: Label = $VBoxContainer/CoverContainer/Letter
+@onready var cover: Sprite2D = $VBoxContainer/CoverContainer/Cover2
+@onready var selector: Sprite2D = $VBoxContainer/SelectorContainer/Selector
 @onready var timer: Timer = $Timer
 
 var is_hidden: bool = false
@@ -15,21 +15,21 @@ func get_letter() -> Label:
 
 func hide_letter() -> void:
 	is_hidden = true
-	letter_cover.show()
+	cover.show()
 	focus_mode = FOCUS_ALL
 
 
 func show_letter() -> void:
 	is_hidden = false
 	selector.hide()
-	letter_cover.hide()
+	cover.hide()
 	focus_next
 	# Play unlock sound
 
 
 func _on_focus_entered() -> void:
 	# If letter is covered, allow to be lockpicked
-	if letter_cover.visible:
+	if cover.visible:
 		selector.show()
 
 
