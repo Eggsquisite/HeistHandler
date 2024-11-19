@@ -23,6 +23,7 @@ var is_lockpick_started: bool = false
 var is_lock_picked: bool = false
 
 @export var max_tries: int = 3
+@export var difficulty: int = 1
 @export var time_to_pick: float = 1
 @export var multiplier_to_pick: float = 1.2
 
@@ -35,7 +36,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and !is_game_started:
-		start_minigame(2)
+		start_minigame()
 	
 	if Input.is_action_just_pressed("lockpick") and !is_lockpick_started:
 		control_focus = get_viewport().gui_get_focus_owner()
@@ -43,11 +44,13 @@ func _process(delta: float) -> void:
 			begin_lockpick()
 
 
-func start_minigame(difficulty: int) -> void:
+func start_minigame() -> void:
+	self.show()
 	is_game_started = true
 	tries_left = max_tries
+	line_edit.grab_focus()
 	update_lock_label()
-	setup_line_edit(difficulty)
+	setup_line_edit()
 	
 	full_word = WordManager.get_random_word(difficulty)
 	print(full_word)
@@ -78,9 +81,9 @@ func randomize_letter(difficulty: int, size: int) -> void:
 	index_array.clear()
 
 
-func setup_line_edit(diff: int) -> void:
+func setup_line_edit() -> void:
 	line_edit.grab_focus()
-	line_edit.max_length = diff + 3
+	line_edit.max_length = difficulty + 3
 
 
 func update_lock_label() -> void:

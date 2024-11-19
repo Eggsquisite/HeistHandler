@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://ctlcuyeb87x46"]
+[gd_scene load_steps=6 format=4 uid="uid://ctlcuyeb87x46"]
 
 [ext_resource type="Texture2D" uid="uid://td5ecgxvb75o" path="res://assets/tiles/Terrain (16x16).png" id="1_hulus"]
 [ext_resource type="PackedScene" uid="uid://bh0ftwhxdjh1l" path="res://scenes/player/player.tscn" id="2_fl8iu"]
+[ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_7sbiq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cqlat"]
 texture = ExtResource("1_hulus")
@@ -162,4 +163,8 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAJAAQAAAABAAAAAAAJAAQAAAACAAAAAAAKAAU
 tile_set = SubResource("TileSet_kk3le")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
+z_index = 5
 position = Vector2(113, -106)
+
+[node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
+position = Vector2(230, -102)

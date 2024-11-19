@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://dn3wn221hgqsy"]
+
+[ext_resource type="Texture2D" uid="uid://g0yfsf77rh0d" path="res://assets/chest/Chest 1.png" id="1_0f47s"]
+[ext_resource type="Script" path="res://scenes/chest/chest.gd" id="1_b1120"]
+[ext_resource type="PackedScene" uid="uid://c6558piuwf6fw" path="res://scenes/interaction_area/interaction_area.tscn" id="2_arlpa"]
+[ext_resource type="PackedScene" uid="uid://bc04p6e3xp50b" path="res://scenes/word_game/word_game.tscn" id="4_oi5mk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_syylu"]
+
+[node name="Chest" type="Node2D"]
+script = ExtResource("1_b1120")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0f47s")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_arlpa")]
+action_name = "lockpick"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_syylu")
+
+[node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]
+visible = false

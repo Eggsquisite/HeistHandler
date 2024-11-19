@@ -11,6 +11,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_nr105")
+time_to_pick = 1.5
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 2
