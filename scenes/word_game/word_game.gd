@@ -50,10 +50,10 @@ func start_minigame() -> void:
 		resume_minigame()
 		return
 	
-	SignalManager.word_game_started.emit()
 	self.show()
 	is_game_started = true
 	tries_left = max_tries
+	SignalManager.word_game_started.emit()
 	
 	update_lock_label()
 	setup_line_edit()
@@ -95,8 +95,8 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 
 func setup_line_edit() -> void:
-	line_edit.clear()
 	line_edit.editable = true
+	line_edit.clear()
 	line_edit.grab_focus()
 	line_edit.max_length = difficulty + 3
 
@@ -116,13 +116,11 @@ func success() -> void:
 	
 	is_lock_picked = true 
 	update_lock_label()
-	for n in full_word_container.get_children():
-		n.show_letter()
 	# reward player
 	# play unlock sound
 	
 	# Will queue_free at end of timer
-	complete_timer.start()
+	start_complete_timer()
 
 
 func failure() -> void:
@@ -133,29 +131,24 @@ func failure() -> void:
 	if tries_left <= 0:
 		# play lock broken sound
 		is_lock_broken = true
-		complete_timer.start()
+		start_complete_timer()
 
 
 func end_minigame() -> void:
-	# Removed some clears to allow for resuming
-	SignalManager.word_game_finished.emit()
-	
+	# Lock picked or broken, delete minigame
 	if check_lock_finished():
+		# To check if chest is unlock/locked
+		if is_lock_picked:
+			SignalManager.word_game_finished.emit(true)
+		elif is_lock_broken:
+			SignalManager.word_game_finished.emit(false)
 		queue_free()
+	
+	# Resume game
+	SignalManager.word_game_finished.emit(false)
 	self.hide()
 	line_edit.clear()
-	
-	# full_word = ''
-	# is_game_started = false
-	# tries_left = max_tries
-	# is_lock_picked = false
-	# is_lockpick_started = false
-	# index_array.clear()
-	# letter_array.clear()
-	# letter_containers.clear()
-	
-	# for n in full_word_container.get_children():
-	# 	full_word_container.remove_child(n)
+	line_edit.editable = false
 
 
 func begin_lockpick() -> void:
@@ -179,6 +172,15 @@ func check_lock_finished() -> bool:
 		return true
 	else:
 		return false
+
+
+func start_complete_timer() -> void:
+	if complete_timer.time_left <= 0:
+		complete_timer.start()
+	
+	line_edit.editable = false
+	for n in full_word_container.get_children():
+		n.show_letter()
 
 
 func _on_lockpick_timer_timeout() -> void:

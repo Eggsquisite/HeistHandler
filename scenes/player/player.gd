@@ -111,7 +111,7 @@ func set_interact_true() -> void:
 	_interacting = true
 
 
-func set_interact_false() -> void:
+func set_interact_false(flag) -> void:
 	if _interacting == false:
 		return
 

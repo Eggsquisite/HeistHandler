@@ -11,15 +11,18 @@ var unlocked: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	interaction_area.interact = Callable(self, "_on_interact")
-	SignalManager.word_game_finished.connect(unlock_chest)
 
 
 func _on_interact() -> void:
 	if word_game != null:
 		word_game.start_minigame()
+		SignalManager.word_game_finished.connect(unlock_chest)
+	
 	await SignalManager.word_game_finished
 
 
-func unlock_chest() -> void:
-	locked_chest.hide()
-	open_chest.show()
+func unlock_chest(unlock_flag: bool) -> void:
+	SignalManager.word_game_finished.disconnect(unlock_chest)
+	if unlock_flag: 
+		locked_chest.hide()
+		open_chest.show()
