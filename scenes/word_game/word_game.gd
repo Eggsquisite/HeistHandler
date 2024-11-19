@@ -3,8 +3,9 @@ extends CenterContainer
 @onready var full_word_container: HBoxContainer = $"Control/ColorRect/VBoxContainer/Full Word Container"
 @onready var line_edit: LineEdit = $Control/ColorRect/VBoxContainer/LineEdit
 @onready var lockpick_timer: Timer = $LockpickTimer
+@onready var success_timer: Timer = $SuccessTimer
 @onready var color_rect: ColorRect = $ColorRect
-@onready var tries_remaining: Label = $Control/ColorRect/VBoxContainer/TriesRemaining
+@onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 
 var letter_node = preload("res://scenes/letter/letter.tscn")
 
@@ -19,6 +20,7 @@ var lockpick_count: int = 0
 var control_focus: Control
 var is_game_started: bool = false
 var is_lockpick_started: bool = false
+var is_lock_picked: bool = false
 
 @export var max_tries: int = 3
 @export var time_to_pick: float = 1
@@ -44,7 +46,7 @@ func _process(delta: float) -> void:
 func start_minigame(difficulty: int) -> void:
 	is_game_started = true
 	tries_left = max_tries
-	update_tries_label()
+	update_lock_label()
 	setup_line_edit(difficulty)
 	
 	full_word = WordManager.get_random_word(difficulty)
@@ -57,7 +59,7 @@ func start_minigame(difficulty: int) -> void:
 		var letter_instance = letter_node.instantiate()
 		full_word_container.add_child(letter_instance)
 		
-		letter_instance.get_letter().text = letter.capitalize()
+		letter_instance.get_letter().text = letter
 		letter_containers.append(letter_instance)
 
 	randomize_letter(difficulty, letter_containers.size() - 1)
@@ -81,17 +83,45 @@ func setup_line_edit(diff: int) -> void:
 	line_edit.max_length = diff + 3
 
 
-func update_tries_label() -> void:
-	if tries_left > 0:
-		tries_remaining.text = "%s tries left!" % tries_left
-	else:
-		tries_remaining.text = "Lock is broken!"
+func update_lock_label() -> void:
+	if is_lock_picked:
+		lock_status.text = "Lock unlocked!"
+	elif tries_left > 0:
+		lock_status.text = "%s tries left!" % tries_left
+	elif tries_left <= 0:
+		lock_status.text = "Lock is broken!"
+
+
+func success() -> void:
+	if is_lock_picked:
+		return
+	
+	# Will queue_free at end of timer
+	success_timer.start()
+	
+	is_lock_picked = true 
+	update_lock_label()
+	for n in full_word_container.get_children():
+		n.show_letter()
+	# reward player
+	# play unlock sound
+
+
+func failure() -> void:
+	tries_left -= 1
+	line_edit.clear()
+	update_lock_label()
+	
+	if tries_left <= 0:
+		# play lock broken sound
+		end_minigame()
 
 
 func end_minigame() -> void:
 	full_word = ''
 	tries_left = max_tries
 	is_game_started = false
+	is_lock_picked = false
 	is_lockpick_started = false
 	index_array.clear()
 	letter_array.clear()
@@ -128,16 +158,11 @@ func _on_lockpick_timer_timeout() -> void:
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	new_text = new_text.to_lower()
 	if new_text == full_word:
-		print("Hooray! Correct word!")
-		# play unlock sound
-		end_minigame()
+		success()
 	else:
-		tries_left -= 1
-		line_edit.clear()
-		update_tries_label()
-		print("Wrong word! %s tries left!" % tries_left)
-		# play wrong word sound
-		if tries_left <= 0:
-			print("Lock broken!")
-			# play lock broken sound
-			end_minigame()
+		failure()
+		
+
+
+func _on_success_timer_timeout() -> void:
+	queue_free()

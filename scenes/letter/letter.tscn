@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 script = ExtResource("1_hrkep")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -26,7 +27,7 @@ size_flags_vertical = 4
 
 [node name="Selector" type="Sprite2D" parent="VBoxContainer/SelectorContainer"]
 visible = false
-position = Vector2(0, -8)
+position = Vector2(-1, -8)
 rotation = 0.785398
 texture = ExtResource("1_gunet")
 
@@ -38,6 +39,9 @@ size_flags_vertical = 4
 [node name="Letter" type="Label" parent="VBoxContainer/CoverContainer"]
 layout_mode = 2
 text = "L"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="Cover" type="TextureRect" parent="VBoxContainer/CoverContainer"]
 visible = false

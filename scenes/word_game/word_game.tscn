@@ -32,17 +32,17 @@ color = Color(0.113725, 0.364706, 0.541176, 0.701961)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.5
-offset_top = -17.5
-offset_right = 33.5
-offset_bottom = 17.5
+anchor_bottom = 1.0
+offset_left = -33.0
+offset_top = -70.0
+offset_right = 34.0
+offset_bottom = -8.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 
 [node name="Full Word Container" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -61,9 +61,8 @@ alignment = 1
 max_length = 5
 caret_blink = true
 
-[node name="TriesRemaining" type="Label" parent="Control/ColorRect/VBoxContainer"]
+[node name="LockStatus" type="Label" parent="Control/ColorRect/VBoxContainer"]
 layout_mode = 2
-text = "3 tries left"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -71,5 +70,10 @@ uppercase = true
 [node name="LockpickTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="SuccessTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="text_submitted" from="Control/ColorRect/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="timeout" from="LockpickTimer" to="." method="_on_lockpick_timer_timeout"]
+[connection signal="timeout" from="SuccessTimer" to="." method="_on_success_timer_timeout"]
