@@ -31,7 +31,6 @@ var is_paused: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# color_rect.set_size(Vector2(100, 100))
 	pass
 
 
@@ -55,15 +54,15 @@ func start_minigame() -> void:
 	self.show()
 	is_game_started = true
 	tries_left = max_tries
-	line_edit.grab_focus()
+	
 	update_lock_label()
 	setup_line_edit()
 	
 	full_word = WordManager.get_random_word(difficulty)
-	print(full_word)
 	for letter in full_word:
 		letter_array.append(letter)
 
+	print(full_word)
 	print(letter_array)
 	for letter in letter_array:
 		var letter_instance = letter_node.instantiate()
@@ -76,10 +75,8 @@ func start_minigame() -> void:
 
 
 func resume_minigame() -> void:
-	self.show()
-	print("resuming")
 	SignalManager.word_game_started.emit()
-	line_edit.grab_focus()
+	self.show()
 	update_lock_label()
 	setup_line_edit()
 
@@ -98,8 +95,9 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 
 func setup_line_edit() -> void:
-	line_edit.grab_focus()
 	line_edit.clear()
+	line_edit.editable = true
+	line_edit.grab_focus()
 	line_edit.max_length = difficulty + 3
 
 

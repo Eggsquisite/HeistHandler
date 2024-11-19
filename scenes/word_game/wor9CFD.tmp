@@ -61,7 +61,6 @@ size_flags_vertical = 4
 focus_next = NodePath("../Full Word Container")
 alignment = 1
 max_length = 5
-editable = false
 caret_blink = true
 
 [node name="LockStatus" type="Label" parent="Control/ColorRect/VBoxContainer"]
