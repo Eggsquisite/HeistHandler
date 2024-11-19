@@ -48,6 +48,7 @@ func _process(delta: float) -> void:
 
 func start_minigame() -> void:
 	if is_game_started:
+		resume_minigame()
 		return
 	
 	SignalManager.word_game_started.emit()
@@ -58,22 +59,29 @@ func start_minigame() -> void:
 	update_lock_label()
 	setup_line_edit()
 	
-	# If the lock has not been picked or broken, do not randomize again
-	if !check_lock_finished():
-		full_word = WordManager.get_random_word(difficulty)
-		print(full_word)
-		for letter in full_word:
-			letter_array.append(letter)
-	
-		print(letter_array)
-		for letter in letter_array:
-			var letter_instance = letter_node.instantiate()
-			full_word_container.add_child(letter_instance)
-			
-			letter_instance.get_letter().text = letter
-			letter_containers.append(letter_instance)
+	full_word = WordManager.get_random_word(difficulty)
+	print(full_word)
+	for letter in full_word:
+		letter_array.append(letter)
 
-		randomize_letter(difficulty, letter_containers.size() - 1)
+	print(letter_array)
+	for letter in letter_array:
+		var letter_instance = letter_node.instantiate()
+		full_word_container.add_child(letter_instance)
+		
+		letter_instance.get_letter().text = letter
+		letter_containers.append(letter_instance)
+
+	randomize_letter(difficulty, letter_containers.size() - 1)
+
+
+func resume_minigame() -> void:
+	self.show()
+	print("resuming")
+	SignalManager.word_game_started.emit()
+	line_edit.grab_focus()
+	update_lock_label()
+	setup_line_edit()
 
 
 func randomize_letter(difficulty: int, size: int) -> void:
@@ -91,6 +99,7 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 func setup_line_edit() -> void:
 	line_edit.grab_focus()
+	line_edit.clear()
 	line_edit.max_length = difficulty + 3
 
 
@@ -135,21 +144,20 @@ func end_minigame() -> void:
 	
 	if check_lock_finished():
 		queue_free()
+	self.hide()
+	line_edit.clear()
 	
 	# full_word = ''
-	is_game_started = false
+	# is_game_started = false
 	# tries_left = max_tries
 	# is_lock_picked = false
 	# is_lockpick_started = false
 	# index_array.clear()
 	# letter_array.clear()
 	# letter_containers.clear()
-	# line_edit.clear()
 	
 	# for n in full_word_container.get_children():
 	# 	full_word_container.remove_child(n)
-	
-	self.hide()
 
 
 func begin_lockpick() -> void:
