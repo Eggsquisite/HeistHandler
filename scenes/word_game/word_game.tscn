@@ -8,6 +8,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.4, 0.398521)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_nr105")
@@ -71,10 +72,10 @@ uppercase = true
 [node name="LockpickTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="SuccessTimer" type="Timer" parent="."]
+[node name="CompleteTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
 
 [connection signal="text_submitted" from="Control/ColorRect/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="timeout" from="LockpickTimer" to="." method="_on_lockpick_timer_timeout"]
-[connection signal="timeout" from="SuccessTimer" to="." method="_on_success_timer_timeout"]
+[connection signal="timeout" from="CompleteTimer" to="." method="_on_complete_timer_timeout"]

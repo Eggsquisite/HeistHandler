@@ -3,7 +3,7 @@ extends CenterContainer
 @onready var full_word_container: HBoxContainer = $"Control/ColorRect/VBoxContainer/Full Word Container"
 @onready var line_edit: LineEdit = $Control/ColorRect/VBoxContainer/LineEdit
 @onready var lockpick_timer: Timer = $LockpickTimer
-@onready var success_timer: Timer = $SuccessTimer
+@onready var complete_timer: Timer = $CompleteTimer
 @onready var color_rect: ColorRect = $ColorRect
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 
@@ -21,6 +21,8 @@ var control_focus: Control
 var is_game_started: bool = false
 var is_lockpick_started: bool = false
 var is_lock_picked: bool = false
+var is_lock_broken: bool = false
+var is_paused: bool = false
 
 @export var max_tries: int = 3
 @export var difficulty: int = 1
@@ -35,16 +37,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("interact") and !is_game_started:
-		start_minigame()
-	
 	if Input.is_action_just_pressed("lockpick") and !is_lockpick_started:
 		control_focus = get_viewport().gui_get_focus_owner()
 		if control_focus != null and control_focus != line_edit:
 			begin_lockpick()
+	
+	if Input.is_action_just_pressed("escape") and is_game_started and !check_lock_finished():
+		end_minigame()
 
 
 func start_minigame() -> void:
+	if is_game_started:
+		return
+	
+	SignalManager.word_game_started.emit()
 	self.show()
 	is_game_started = true
 	tries_left = max_tries
@@ -52,20 +58,22 @@ func start_minigame() -> void:
 	update_lock_label()
 	setup_line_edit()
 	
-	full_word = WordManager.get_random_word(difficulty)
-	print(full_word)
-	for letter in full_word:
-		letter_array.append(letter)
+	# If the lock has not been picked or broken, do not randomize again
+	if !check_lock_finished():
+		full_word = WordManager.get_random_word(difficulty)
+		print(full_word)
+		for letter in full_word:
+			letter_array.append(letter)
 	
-	print(letter_array)
-	for letter in letter_array:
-		var letter_instance = letter_node.instantiate()
-		full_word_container.add_child(letter_instance)
-		
-		letter_instance.get_letter().text = letter
-		letter_containers.append(letter_instance)
+		print(letter_array)
+		for letter in letter_array:
+			var letter_instance = letter_node.instantiate()
+			full_word_container.add_child(letter_instance)
+			
+			letter_instance.get_letter().text = letter
+			letter_containers.append(letter_instance)
 
-	randomize_letter(difficulty, letter_containers.size() - 1)
+		randomize_letter(difficulty, letter_containers.size() - 1)
 
 
 func randomize_letter(difficulty: int, size: int) -> void:
@@ -99,15 +107,15 @@ func success() -> void:
 	if is_lock_picked:
 		return
 	
-	# Will queue_free at end of timer
-	success_timer.start()
-	
 	is_lock_picked = true 
 	update_lock_label()
 	for n in full_word_container.get_children():
 		n.show_letter()
 	# reward player
 	# play unlock sound
+	
+	# Will queue_free at end of timer
+	complete_timer.start()
 
 
 func failure() -> void:
@@ -117,25 +125,31 @@ func failure() -> void:
 	
 	if tries_left <= 0:
 		# play lock broken sound
-		end_minigame()
+		is_lock_broken = true
+		complete_timer.start()
 
 
 func end_minigame() -> void:
-	full_word = ''
-	tries_left = max_tries
-	is_game_started = false
-	is_lock_picked = false
-	is_lockpick_started = false
-	index_array.clear()
-	letter_array.clear()
-	letter_containers.clear()
-	line_edit.hide()
-	line_edit.show()
-	line_edit.clear()
+	# Removed some clears to allow for resuming
+	SignalManager.word_game_finished.emit()
 	
-	for n in full_word_container.get_children():
-		full_word_container.remove_child(n)
-	# queue_free()
+	if check_lock_finished():
+		queue_free()
+	
+	# full_word = ''
+	is_game_started = false
+	# tries_left = max_tries
+	# is_lock_picked = false
+	# is_lockpick_started = false
+	# index_array.clear()
+	# letter_array.clear()
+	# letter_containers.clear()
+	# line_edit.clear()
+	
+	# for n in full_word_container.get_children():
+	# 	full_word_container.remove_child(n)
+	
+	self.hide()
 
 
 func begin_lockpick() -> void:
@@ -154,6 +168,13 @@ func end_lockpick() -> void:
 	# end unlocking sound
 
 
+func check_lock_finished() -> bool:
+	if is_lock_broken or is_lock_picked:
+		return true
+	else:
+		return false
+
+
 func _on_lockpick_timer_timeout() -> void:
 	end_lockpick()
 
@@ -164,8 +185,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		success()
 	else:
 		failure()
-		
 
 
-func _on_success_timer_timeout() -> void:
-	queue_free()
+func _on_complete_timer_timeout() -> void:
+	end_minigame()

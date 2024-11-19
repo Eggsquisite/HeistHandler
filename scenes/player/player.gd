@@ -22,7 +22,8 @@ var _interacting: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	SignalManager.word_game_started.connect(set_interact_true)
+	SignalManager.word_game_finished.connect(set_interact_false)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,6 +46,9 @@ func update_debug_label() -> void:
 func get_input() -> void:
 	velocity.x = 0
 	velocity.y = 0
+	
+	if _interacting:
+		return
 	
 	if _sneaking:
 		calculate_movement(SNEAK_SPEED)
@@ -72,7 +76,9 @@ func calculate_movement(speed: float) -> void:
 
 
 func calculate_states() -> void:
-	if velocity.x == 0 and velocity.y == 0:
+	if _interacting:
+		set_state(PlayerState.LOCKPICK)
+	elif velocity.x == 0 and velocity.y == 0:
 		if _sneaking:
 			set_state(PlayerState.SNEAK_IDLE)
 		else:
@@ -96,3 +102,19 @@ func set_sneaking(sneak_flag: bool) -> void:
 		return
 		
 	_sneaking = sneak_flag
+
+
+func set_interact_true() -> void:
+	if _interacting == true:
+		return
+	
+	_interacting = true
+
+
+func set_interact_false() -> void:
+	if _interacting == false:
+		return
+
+	# Edge case if player is sneaking when lockpicking
+	set_sneaking(false)
+	_interacting = false
