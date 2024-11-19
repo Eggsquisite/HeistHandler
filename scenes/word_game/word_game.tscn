@@ -61,6 +61,13 @@ alignment = 1
 max_length = 5
 caret_blink = true
 
+[node name="TriesRemaining" type="Label" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "3 tries left"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="LockpickTimer" type="Timer" parent="."]
 one_shot = true
 
