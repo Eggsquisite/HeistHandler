@@ -24,6 +24,8 @@ var is_lockpick_started: bool = false
 var is_lock_picked: bool = false
 var is_lock_broken: bool = false
 var is_paused: bool = false
+var no_more_reveals: bool = false
+var letter_covers: int
 
 @export var max_tries: int = 3
 @export var difficulty: int = 1
@@ -32,7 +34,8 @@ var is_paused: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	tries_left = max_tries
+	letter_covers = difficulty + 1
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -59,7 +62,6 @@ func start_minigame() -> void:
 	
 	self.show()
 	is_game_started = true
-	tries_left = max_tries
 	SignalManager.word_game_started.emit()
 	
 	update_lock_label()
@@ -94,7 +96,7 @@ func randomize_letter(difficulty: int, size: int) -> void:
 		index_array.append(n)
 	
 	# Get a random index, then remove that index from index_array to prevent dupes
-	for n in range(0, difficulty + 1, 1):
+	for n in range(0, letter_covers, 1):
 		letter_index = index_array.pick_random()
 		index_array.erase(letter_index)
 		letter_containers[letter_index].hide_letter()
@@ -167,10 +169,6 @@ func begin_lockpick() -> void:
 	is_lockpick_started = true
 	lockpick_count += 1
 	
-	print("lockpick count:%s for %s" % [
-		lockpick_count,
-		get_parent().name
-	])
 	control_focus.grab_focus()
 	line_edit.editable = false
 	lockpick_timer.start(time_to_pick * (multiplier_to_pick * lockpick_count))
@@ -184,6 +182,12 @@ func end_lockpick() -> void:
 	
 	line_edit.editable = true
 	line_edit.grab_focus()
+	
+	if lockpick_count >= letter_covers - 1:
+		no_more_reveals = true
+		for n in letter_containers:
+			n.no_more_reveal()
+	
 	# end unlocking sound
 
 
