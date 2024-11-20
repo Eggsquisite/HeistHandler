@@ -16,6 +16,8 @@ func get_letter() -> Label:
 func hide_letter() -> void:
 	is_hidden = true
 	cover.show()
+	mouse_filter = MOUSE_FILTER_PASS
+	mouse_default_cursor_shape = CURSOR_POINTING_HAND
 	focus_mode = FOCUS_ALL
 
 
@@ -23,6 +25,8 @@ func show_letter() -> void:
 	is_hidden = false
 	selector.hide()
 	cover.hide()
+	mouse_filter = MOUSE_FILTER_IGNORE
+	mouse_default_cursor_shape = CURSOR_ARROW
 	focus_next
 	# Play unlock sound
 
