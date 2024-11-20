@@ -4,6 +4,7 @@ extends CenterContainer
 @onready var line_edit: LineEdit = $Control/ColorRect/VBoxContainer/LineEdit
 @onready var lockpick_timer: Timer = $LockpickTimer
 @onready var complete_timer: Timer = $CompleteTimer
+@onready var start_timer: Timer = $StartTimer
 @onready var color_rect: ColorRect = $ColorRect
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 
@@ -36,7 +37,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("lockpick") and !is_lockpick_started:
+	if Input.is_action_just_pressed("lockpick") and !is_lockpick_started and is_game_started and !is_paused:
 		control_focus = get_viewport().gui_get_focus_owner()
 		if control_focus != null and control_focus != line_edit:
 			begin_lockpick()
@@ -45,8 +46,14 @@ func _process(delta: float) -> void:
 		end_minigame()
 
 
+func start_minigame_timer() -> void:
+	# Just to avoid "e" being in LineEdit on start because line_edit.clear not working?
+	start_timer.start()
+	print(get_parent().name)
+
+
 func start_minigame() -> void:
-	if is_game_started:
+	if is_game_started and is_paused:
 		resume_minigame()
 		return
 	
@@ -77,6 +84,7 @@ func start_minigame() -> void:
 func resume_minigame() -> void:
 	SignalManager.word_game_started.emit()
 	self.show()
+	is_paused = false
 	update_lock_label()
 	setup_line_edit()
 
@@ -144,26 +152,38 @@ func end_minigame() -> void:
 			SignalManager.word_game_finished.emit(false)
 		queue_free()
 	
-	# Resume game
+	# Pause game
 	SignalManager.word_game_finished.emit(false)
 	self.hide()
+	is_paused = true
 	line_edit.clear()
 	line_edit.editable = false
 
 
 func begin_lockpick() -> void:
+	if is_lockpick_started:
+		return
+	
 	is_lockpick_started = true
 	lockpick_count += 1
+	
+	print("lockpick count:%s for %s" % [
+		lockpick_count,
+		get_parent().name
+	])
 	control_focus.grab_focus()
+	line_edit.editable = false
 	lockpick_timer.start(time_to_pick * (multiplier_to_pick * lockpick_count))
 	# play unlocking sound
 
 
 func end_lockpick() -> void:
 	control_focus.show_letter()
-	control_focus.release_focus()
-	line_edit.grab_focus()
+	# control_focus.release_focus()
 	is_lockpick_started = false
+	
+	line_edit.editable = true
+	line_edit.grab_focus()
 	# end unlocking sound
 
 
@@ -197,3 +217,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 
 func _on_complete_timer_timeout() -> void:
 	end_minigame()
+
+
+func _on_start_timer_timeout() -> void:
+	start_minigame()

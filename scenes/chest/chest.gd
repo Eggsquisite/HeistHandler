@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func _on_interact() -> void:
 	if word_game != null:
-		word_game.start_minigame()
+		word_game.start_minigame_timer()
 		SignalManager.word_game_finished.connect(unlock_chest)
 	
 	await SignalManager.word_game_finished
