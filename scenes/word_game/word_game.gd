@@ -21,7 +21,7 @@ var tries_left: int = 0
 var lockpick_count: int = 0
 var control_focus: Control
 var is_game_started: bool = false
-var is_lockpick_started: bool = false
+var is_lockpicking: bool = false
 var is_lock_picked: bool = false
 var is_lock_broken: bool = false
 var is_paused: bool = false
@@ -126,7 +126,7 @@ func setup_line_edit() -> void:
 
 func update_lock_label() -> void:
 	if is_lock_picked:
-		lock_status.text = "Lock unlocked!"
+		lock_status.text = "Unlocked!"
 	elif tries_left > 0:
 		lock_status.text = "%s tries left!" % tries_left
 	elif tries_left <= 0:
@@ -134,10 +134,10 @@ func update_lock_label() -> void:
 
 
 func begin_lockpick() -> void:
-	if is_lockpick_started:
+	if is_lockpicking:
 		return
 	
-	is_lockpick_started = true
+	is_lockpicking = true
 	lockpick_count += 1
 	
 	control_focus.grab_focus()
@@ -148,8 +148,8 @@ func begin_lockpick() -> void:
 
 func end_lockpick() -> void:
 	control_focus.show_letter()
-	# control_focus.release_focus()
-	is_lockpick_started = false
+	control_focus.release_focus()
+	is_lockpicking = false
 	
 	line_edit.editable = true
 	line_edit.grab_focus()
