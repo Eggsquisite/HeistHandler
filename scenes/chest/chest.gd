@@ -1,4 +1,4 @@
-extends Node2D
+extends Interactable
 
 @onready var interaction_area: InteractionArea = $InteractionArea
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func _on_interact() -> void:
 	if word_game != null:
-		word_game.start_minigame_timer()
+		word_game.start_minigame_timer(max_tries, difficulty, time_to_pick, mult_to_pick)
 		SignalManager.word_game_finished.connect(unlock_chest)
 	
 	await SignalManager.word_game_finished

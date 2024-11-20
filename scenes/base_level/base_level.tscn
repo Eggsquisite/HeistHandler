@@ -206,3 +206,4 @@ position = Vector2(230, -102)
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(159, -32)
+difficulty = 2
