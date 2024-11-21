@@ -111,7 +111,7 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 
 func setup_variables(tries: int, diff: int, pick_time: float, pick_mult: float) -> void:
-	_max_tries = tries
+	_max_tries = diff + 1
 	_difficulty = diff
 	_time_to_pick = pick_time
 	_multiplier_to_pick = pick_mult
@@ -143,10 +143,14 @@ func begin_lockpick() -> void:
 	is_lockpicking = true
 	lockpick_count += 1
 	
-	var tmp = _time_to_pick * (_multiplier_to_pick * lockpick_count)
+	var lp_time: float
+	if lockpick_count == 1:
+		lp_time = _time_to_pick
+	else:
+		lp_time = _time_to_pick * (_multiplier_to_pick * lockpick_count)
 	line_edit.editable = false
-	lockpick_timer.start(tmp)
-	control_focus.begin_lockpick(tmp)
+	lockpick_timer.start(lp_time)
+	control_focus.begin_lockpick(lp_time)
 	# play unlocking sound
 
 

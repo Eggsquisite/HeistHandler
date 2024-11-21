@@ -126,7 +126,6 @@ one_shot = true
 
 [connection signal="text_submitted" from="Control/ColorRect/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="timeout" from="LockpickTimer" to="." method="_on_lockpick_timer_timeout"]
-[connection signal="timeout" from="FinishedTimer" to="." method="_on_complete_timer_timeout"]
 [connection signal="timeout" from="FinishedTimer" to="." method="_on_finished_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="LabelTimer" to="." method="_on_label_timer_timeout"]
