@@ -7,3 +7,4 @@ class_name Interactable
 @export var difficulty: int = 1
 @export var time_to_pick: float = 1.5
 @export var mult_to_pick: float = 1.2
+@export var reward: int = 5

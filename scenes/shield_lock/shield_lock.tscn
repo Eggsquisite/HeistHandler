@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://r3j2mfapjudu"]
+
+[ext_resource type="Texture2D" uid="uid://wnqfqd14dhrb" path="res://assets/locks/shield_lock/Shield-like Padlock - GREY - Spritesheet.png" id="1_2pnhh"]
+[ext_resource type="Script" path="res://scenes/shield_lock/shield_lock.gd" id="1_y5am5"]
+
+[sub_resource type="Animation" id="Animation_coiav"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_61xr6"]
+resource_name = "lock"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yn7ae"]
+resource_name = "unlock"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2nva8"]
+_data = {
+"RESET": SubResource("Animation_coiav"),
+"lock": SubResource("Animation_61xr6"),
+"unlock": SubResource("Animation_yn7ae")
+}
+
+[node name="Shield Lock" type="Node2D"]
+script = ExtResource("1_y5am5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.25, 1)
+texture = ExtResource("1_2pnhh")
+hframes = 13
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2nva8")
+}
+autoplay = "lock"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

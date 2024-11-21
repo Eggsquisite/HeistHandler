@@ -1,6 +1,7 @@
 extends CenterContainer
 
 @onready var full_word_container: HBoxContainer = $"Control/ColorRect/VBoxContainer/Full Word Container"
+@onready var lockpick_tries_container: HBoxContainer = $Control/ColorRect/LockpickTriesContainer
 @onready var line_edit: LineEdit = $Control/ColorRect/VBoxContainer/LineEdit
 @onready var lockpick_timer: Timer = $LockpickTimer
 @onready var finished_timer: Timer = $FinishedTimer
@@ -10,6 +11,7 @@ extends CenterContainer
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 
 var letter_node = preload("res://scenes/letter/letter.tscn")
+var lockpick_tries = preload("res://scenes/lockpick_tries/lockpick_tries.tscn")
 
 var full_word: String = ''
 var letter_index: int
@@ -56,6 +58,7 @@ func start_minigame_timer(tries: int, diff: int, pick_time: float, pick_mult: fl
 	# If starting game for the first time, init interactable variables
 	if !is_game_started:
 		setup_variables(tries, diff, pick_time, pick_mult)
+		lockpick_tries_container.setup_lockpick_amt(_difficulty)
 
 
 func start_minigame() -> void:
@@ -128,9 +131,9 @@ func update_lock_label() -> void:
 	if is_lock_picked:
 		lock_status.text = "Unlocked!"
 	elif tries_left > 0:
-		lock_status.text = "%s tries left!" % tries_left
+		lock_status.text = "%s Guesses" % tries_left
 	elif tries_left <= 0:
-		lock_status.text = "Lock is broken!"
+		lock_status.text = "Lock broken!"
 
 
 func begin_lockpick() -> void:
@@ -140,9 +143,10 @@ func begin_lockpick() -> void:
 	is_lockpicking = true
 	lockpick_count += 1
 	
-	control_focus.grab_focus()
+	var tmp = _time_to_pick * (_multiplier_to_pick * lockpick_count)
 	line_edit.editable = false
-	lockpick_timer.start(_time_to_pick * (_multiplier_to_pick * lockpick_count))
+	lockpick_timer.start(tmp)
+	control_focus.begin_lockpick(tmp)
 	# play unlocking sound
 
 
@@ -151,8 +155,9 @@ func end_lockpick() -> void:
 	control_focus.release_focus()
 	is_lockpicking = false
 	
-	line_edit.editable = true
 	line_edit.grab_focus()
+	line_edit.editable = true
+	lockpick_tries_container.remove_lockpick()
 	
 	if lockpick_count >= letter_covers - 1:
 		for n in letter_containers:
@@ -174,7 +179,7 @@ func success() -> void:
 func failure() -> void:
 	tries_left -= 1
 	line_edit.clear()
-	lock_status.text = "Wrong Word!"
+	lock_status.text = "Wrong Guess!"
 	label_timer.start()
 	
 	if tries_left <= 0:
@@ -212,6 +217,11 @@ func end_minigame() -> void:
 	is_paused = true
 	is_interacting = false
 	line_edit.editable = false
+	
+	if is_lockpicking:
+		lockpick_count -= 1
+		is_lockpicking = false
+		lockpick_timer.stop()
 
 
 func check_lock_finished() -> bool:
@@ -233,7 +243,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		failure()
 
 
-func _on_complete_timer_timeout() -> void:
+func _on_finished_timer_timeout() -> void:
 	end_minigame()
 
 

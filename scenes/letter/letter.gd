@@ -2,9 +2,9 @@ extends CenterContainer
 
 
 @onready var letter: Label = $VBoxContainer/CoverContainer/Letter
-@onready var cover: Sprite2D = $VBoxContainer/CoverContainer/Cover2
-@onready var red_cover: Sprite2D = $VBoxContainer/CoverContainer/RedCover
-@onready var selector: Sprite2D = $VBoxContainer/SelectorContainer/Selector
+# @onready var cover: Sprite2D = $VBoxContainer/CoverContainer/Cover2
+@onready var shield_lock: Node2D = $"VBoxContainer/CoverContainer/Shield Lock"
+@onready var selector: Node2D = $VBoxContainer/SelectorContainer/Selector
 @onready var timer: Timer = $Timer
 
 var is_hidden: bool = false
@@ -17,7 +17,7 @@ func get_letter() -> Label:
 
 func hide_letter() -> void:
 	is_hidden = true
-	cover.show()
+	shield_lock.show()
 	focus_mode = FOCUS_ALL
 	mouse_filter = MOUSE_FILTER_PASS
 	mouse_default_cursor_shape = CURSOR_POINTING_HAND
@@ -27,7 +27,8 @@ func show_letter() -> void:
 	if no_more_reveals:
 		return
 	
-	cover.hide()
+	# shield_lock.hide()
+	shield_lock.play_unlock()
 	selector.hide()
 	is_hidden = false
 	disable_focus()
@@ -36,9 +37,8 @@ func show_letter() -> void:
 
 
 func word_finished() -> void:
-	cover.hide()
+	shield_lock.play_unlock()
 	selector.hide()
-	red_cover.hide()
 	disable_focus()
 
 
@@ -46,8 +46,6 @@ func no_more_reveal() -> void:
 	if !is_hidden: # if letter is shown, no need change anything
 		return
 	
-	cover.hide()
-	red_cover.show()
 	no_more_reveals = true
 	disable_focus()
 
@@ -60,7 +58,7 @@ func disable_focus() -> void:
 
 func _on_focus_entered() -> void:
 	# If letter is covered, allow to be lockpicked
-	if cover.visible:
+	if shield_lock.visible:
 		selector.show()
 
 
@@ -72,13 +70,16 @@ func _on_focus_exited() -> void:
 
 
 func begin_lockpick(duration: float) -> void:
-	if is_hidden and has_focus():
+	if is_hidden:
+		self.grab_focus()
+		selector.start_unlock()
 		timer.start(duration)
 		# play unlocking sound
 
 
 func end_lockpick() -> void:
 	timer.stop()
+	selector.stop_unlock()
 
 
 func _on_timer_timeout() -> void:
