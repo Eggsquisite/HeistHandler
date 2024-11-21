@@ -8,8 +8,6 @@ extends CenterContainer
 
 var is_hidden: bool = false
 var no_more_reveals: bool = false
-var is_being_lockpicked: bool = false
-
 
 func get_letter() -> Label:
 	return letter
@@ -67,9 +65,6 @@ func _on_focus_entered() -> void:
 	# If letter is covered, allow to be lockpicked
 	if shield_lock.visible:
 		selector.show()
-	
-	if is_being_lockpicked:
-		selector.start_unlock()
 
 
 func _on_focus_exited() -> void:
@@ -84,14 +79,12 @@ func begin_lockpick(duration: float) -> void:
 		self.grab_focus()
 		selector.start_unlock()
 		timer.start(duration)
-		is_being_lockpicked = true
 		# play unlocking sound
 
 
 func end_lockpick() -> void:
 	timer.stop()
 	selector.stop_unlock()
-	is_being_lockpicked = false
 
 
 func _on_timer_timeout() -> void:

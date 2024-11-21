@@ -21,7 +21,7 @@ var letter_array: Array[String] = []
 
 var tries_left: int = 0
 var lockpick_count: int = 0
-var control_focus: Control
+var letter_focus: Control
 var is_game_started: bool = false
 var is_lockpicking: bool = false
 var is_lock_picked: bool = false
@@ -43,8 +43,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("lockpick") and is_interacting:
-		control_focus = get_viewport().gui_get_focus_owner()
-		if control_focus != null and control_focus != line_edit:
+		letter_focus = get_viewport().gui_get_focus_owner()
+		if letter_focus != null and letter_focus != line_edit:
 			begin_lockpick()
 	
 	if Input.is_action_just_pressed("escape") and is_interacting and !check_lock_finished():
@@ -161,26 +161,26 @@ func begin_lockpick() -> void:
 	
 	setup_line_edit(false)
 	lockpick_timer.start(lp_time)
-	control_focus.begin_lockpick(lp_time)
+	letter_focus.begin_lockpick(lp_time)
 	
 	# Prevent surrounding nodes from being lockpicked/selected
 	for n in letter_containers:
-		if n != control_focus:
+		if n != letter_focus:
 			n.disable_focus()
 	# play unlocking sound
 
 
 func end_lockpick() -> void:
 	is_lockpicking = false
-	control_focus.show_letter()
-	control_focus.release_focus()
+	letter_focus.show_letter()
+	letter_focus.release_focus()
 	
 	setup_line_edit(true)
 	lockpick_tries_container.remove_lockpick()
 	SignalManager.letter_lockpicked.emit()
 	
 	for n in letter_containers:
-		if n != control_focus:
+		if n != letter_focus:
 			n.reenable_focus()
 	
 	if lockpick_count >= letter_covers - 1:
