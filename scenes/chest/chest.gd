@@ -3,8 +3,8 @@ extends Interactable
 @onready var interaction_area: InteractionArea = $InteractionArea
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var word_game: CenterContainer = $WordGame
-@onready var open_chest: Sprite2D = $OpenChest
-@onready var locked_chest: Sprite2D = $LockedChest
+@onready var chest_sprite: Sprite2D = $ChestSprite
+@onready var chest_anim: AnimationPlayer = $ChestAnimationPlayer
 
 var unlocked: bool = false
 
@@ -17,12 +17,18 @@ func _on_interact() -> void:
 	if word_game != null:
 		word_game.start_minigame_timer(max_tries, difficulty, time_to_pick, mult_to_pick)
 		SignalManager.word_game_finished.connect(unlock_chest)
+		SignalManager.letter_lockpicked.connect(letter_lockpicked)
 	
 	await SignalManager.word_game_finished
 
 
+func letter_lockpicked() -> void:
+	chest_anim.play("lockpicked")
+
+
 func unlock_chest(unlock_flag: bool) -> void:
 	SignalManager.word_game_finished.disconnect(unlock_chest)
+	SignalManager.letter_lockpicked.disconnect(letter_lockpicked)
 	if unlock_flag: 
-		locked_chest.hide()
-		open_chest.show()
+		chest_anim.stop()
+		chest_anim.play("unlocked")

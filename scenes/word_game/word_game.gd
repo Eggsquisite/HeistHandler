@@ -83,7 +83,7 @@ func start_minigame() -> void:
 		letter_instance.get_letter().text = letter
 		letter_containers.append(letter_instance)
 
-	setup_line_edit()
+	setup_line_edit(true)
 	update_lock_label()
 	randomize_letter(_difficulty, letter_containers.size() - 1)
 
@@ -93,8 +93,12 @@ func resume_minigame() -> void:
 	self.show()
 	is_paused = false
 	is_interacting = true
+	
+	for n in letter_containers:
+		n.reenable_focus()
+	
 	update_lock_label()
-	setup_line_edit()
+	setup_line_edit(true)
 
 
 func randomize_letter(difficulty: int, size: int) -> void:
@@ -120,11 +124,17 @@ func setup_variables(tries: int, diff: int, pick_time: float, pick_mult: float) 
 	letter_covers = _difficulty + 1
 
 
-func setup_line_edit() -> void:
-	line_edit.editable = true
-	line_edit.clear()
-	line_edit.grab_focus()
-	line_edit.max_length = letter_array.size()
+func setup_line_edit(flag: bool) -> void:
+	if flag:
+		line_edit.focus_mode = Control.FOCUS_ALL
+		line_edit.mouse_filter = Control.MOUSE_FILTER_STOP
+		line_edit.clear()
+		line_edit.grab_focus()
+		line_edit.editable = true
+		line_edit.max_length = letter_array.size()
+	else:
+		line_edit.focus_mode = Control.FOCUS_NONE
+		line_edit.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func update_lock_label() -> void:
@@ -148,20 +158,30 @@ func begin_lockpick() -> void:
 		lp_time = _time_to_pick
 	else:
 		lp_time = _time_to_pick * (_multiplier_to_pick * lockpick_count)
-	line_edit.editable = false
+	
+	setup_line_edit(false)
 	lockpick_timer.start(lp_time)
 	control_focus.begin_lockpick(lp_time)
+	
+	# Prevent surrounding nodes from being lockpicked/selected
+	for n in letter_containers:
+		if n != control_focus:
+			n.disable_focus()
 	# play unlocking sound
 
 
 func end_lockpick() -> void:
+	is_lockpicking = false
 	control_focus.show_letter()
 	control_focus.release_focus()
-	is_lockpicking = false
 	
-	line_edit.grab_focus()
-	line_edit.editable = true
+	setup_line_edit(true)
 	lockpick_tries_container.remove_lockpick()
+	SignalManager.letter_lockpicked.emit()
+	
+	for n in letter_containers:
+		if n != control_focus:
+			n.reenable_focus()
 	
 	if lockpick_count >= letter_covers - 1:
 		for n in letter_containers:
@@ -176,6 +196,7 @@ func success() -> void:
 	is_lock_picked = true 
 	update_lock_label()
 	start_finished_timer()
+	SignalManager.letter_lockpicked.emit()
 	# reward player
 	# play unlock sound
 
@@ -185,6 +206,7 @@ func failure() -> void:
 	line_edit.clear()
 	lock_status.text = "Wrong Guess!"
 	label_timer.start()
+	SignalManager.letter_lockpicked.emit()
 	
 	if tries_left <= 0:
 		# play lock broken sound
