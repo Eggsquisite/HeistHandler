@@ -216,6 +216,14 @@ collision_mask = 16
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_tvjkt")
 
+[node name="NavPoints" type="Node2D" parent="."]
+
+[node name="LeftPoint" type="Node2D" parent="NavPoints"]
+position = Vector2(-14, 7)
+
+[node name="RightPoint" type="Node2D" parent="NavPoints"]
+position = Vector2(14, 7)
+
 [node name="PlayerCam" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 
@@ -240,14 +248,6 @@ label_settings = SubResource("LabelSettings_dgkft")
 position = Vector2(0, 7)
 radius = 5.0
 affect_navigation_mesh = true
-
-[node name="NavPoints" type="Node2D" parent="."]
-
-[node name="LeftPoint" type="Node2D" parent="NavPoints"]
-position = Vector2(-14, 7)
-
-[node name="RightPoint" type="Node2D" parent="NavPoints"]
-position = Vector2(14, 7)
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 3.0

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuaxdonn0ncvs"]
+
+[ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="1_rgjyn"]
+
+[node name="UsedWord" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+size_flags_horizontal = 0
+text = "Test"
+label_settings = ExtResource("1_rgjyn")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

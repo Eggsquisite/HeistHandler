@@ -15,6 +15,7 @@ func _ready() -> void:
 
 func _on_interact() -> void:
 	if word_game != null:
+		print("starting interact")
 		word_game.start_minigame_timer(max_tries, difficulty, time_to_pick, mult_to_pick)
 		SignalManager.word_game_finished.connect(unlock_chest)
 		SignalManager.letter_lockpicked.connect(letter_lockpicked)
@@ -26,9 +27,13 @@ func letter_lockpicked() -> void:
 	chest_anim.play("lockpicked")
 
 
-func unlock_chest(unlock_flag: bool) -> void:
+func unlock_chest(flag: int) -> void:
 	SignalManager.word_game_finished.disconnect(unlock_chest)
 	SignalManager.letter_lockpicked.disconnect(letter_lockpicked)
-	if unlock_flag: 
+	if flag == 2: # Paused game
+		return
+	elif flag == 1: # Lock unlocked
 		chest_anim.stop()
 		chest_anim.play("unlocked")
+	
+	interaction_area.queue_free()

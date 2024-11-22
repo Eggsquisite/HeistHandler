@@ -9,9 +9,11 @@ extends CenterContainer
 @onready var label_timer: Timer = $LabelTimer
 @onready var color_rect: ColorRect = $ColorRect
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
+@onready var used_words: VBoxContainer = $Control/ColorRect2/MarginContainer/UsedWordsContainer
 
 var letter_node = preload("res://scenes/letter/letter.tscn")
 var lockpick_tries = preload("res://scenes/lockpick_tries/lockpick_tries.tscn")
+var used_word_label = preload("res://scenes/used_word/used_word.tscn")
 
 var full_word: String = ''
 var letter_index: int
@@ -37,7 +39,7 @@ var _multiplier_to_pick: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	SignalManager.on_player_hit.connect(end_minigame)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,7 +49,7 @@ func _process(delta: float) -> void:
 		if letter_focus != null and letter_focus != line_edit:
 			begin_lockpick()
 	
-	if Input.is_action_just_pressed("escape") and is_interacting and !check_lock_finished():
+	if Input.is_action_just_pressed("escape") and !check_lock_finished():
 		end_minigame()
 
 
@@ -115,7 +117,7 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 
 func setup_variables(tries: int, diff: int, pick_time: float, pick_mult: float) -> void:
-	_max_tries = diff * 2
+	_max_tries = diff + 2
 	_difficulty = diff
 	_time_to_pick = pick_time
 	_multiplier_to_pick = pick_mult
@@ -226,17 +228,20 @@ func start_finished_timer() -> void:
 
 
 func end_minigame() -> void:
+	if !is_interacting: # since now connected to on_player_hit signal, need check
+		return
+	
 	# Lock picked or broken, delete minigame
 	if check_lock_finished():
 		# To check if chest is unlock/locked
 		if is_lock_picked:
-			SignalManager.word_game_finished.emit(true)
+			SignalManager.word_game_finished.emit(1)
 		elif is_lock_broken:
-			SignalManager.word_game_finished.emit(false)
+			SignalManager.word_game_finished.emit(0)
 		queue_free()
 	
 	# Pause game
-	SignalManager.word_game_finished.emit(false)
+	SignalManager.word_game_finished.emit(2)
 	self.hide()
 	line_edit.clear()
 
@@ -267,6 +272,9 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		success()
 	else:
 		failure()
+		var instance = used_word_label.instantiate()
+		instance.text = new_text
+		used_words.add_child(instance)
 
 
 func _on_finished_timer_timeout() -> void:

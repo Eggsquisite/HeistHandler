@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bc04p6e3xp50b"]
+[gd_scene load_steps=7 format=3 uid="uid://bc04p6e3xp50b"]
 
 [ext_resource type="Script" path="res://scenes/word_game/word_game.gd" id="1_nr105"]
 [ext_resource type="Script" path="res://scenes/word_game/lockpick_tries_container.gd" id="2_d0nwn"]
 [ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="3_bsct3"]
 [ext_resource type="PackedScene" uid="uid://do4egjvbe7aut" path="res://scenes/lockpick_tries/lockpick_tries.tscn" id="3_lrdoi"]
+[ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="5_dlkik"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kjemf"]
 font = ExtResource("3_bsct3")
@@ -34,13 +35,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -74.3333
-offset_top = -69.0
-offset_right = 75.6667
-offset_bottom = 71.0
+offset_left = -75.0
+offset_top = -70.0
+offset_right = 75.0
+offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.176236, 0.0923368, 0.0133091, 0.862745)
+color = Color(0.176471, 0.0941176, 0.0117647, 0.784314)
 
 [node name="LockpickTriesContainer" type="HBoxContainer" parent="Control/ColorRect"]
 z_index = 5
@@ -110,6 +111,37 @@ label_settings = SubResource("LabelSettings_kjemf")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = -135.0
+offset_top = -70.0
+offset_right = -75.0
+offset_bottom = 30.0
+color = Color(0.298039, 0.2, 0.0980392, 0.686275)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect2"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 32.0
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="UsedWordsContainer" type="VBoxContainer" parent="Control/ColorRect2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Control/ColorRect2/MarginContainer/UsedWordsContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Used:"
+label_settings = ExtResource("5_dlkik")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LockpickTimer" type="Timer" parent="."]
 one_shot = true

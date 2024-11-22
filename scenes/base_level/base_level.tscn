@@ -414,5 +414,6 @@ position = Vector2(159, -32)
 difficulty = 2
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
+visible = false
 position = Vector2(-28, 34)
 speed = 10.0
