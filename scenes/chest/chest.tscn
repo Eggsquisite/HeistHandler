@@ -80,8 +80,9 @@ _data = {
 [node name="Chest" type="Node2D"]
 script = ExtResource("1_b1120")
 max_tries = 2
-time_to_pick = 3.0
+time_to_pick = 1.0
 mult_to_pick = 1.5
+reward = 15
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_23erl")

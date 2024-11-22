@@ -2,7 +2,7 @@ extends Interactable
 
 @onready var interaction_area: InteractionArea = $InteractionArea
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var word_game: CenterContainer = $WordGame
+@onready var word_game: Control = $WordGame
 @onready var chest_sprite: Sprite2D = $ChestSprite
 @onready var chest_anim: AnimationPlayer = $ChestAnimationPlayer
 

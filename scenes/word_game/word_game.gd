@@ -115,7 +115,7 @@ func randomize_letter(difficulty: int, size: int) -> void:
 
 
 func setup_variables(tries: int, diff: int, pick_time: float, pick_mult: float) -> void:
-	_max_tries = diff + 1
+	_max_tries = diff * 2
 	_difficulty = diff
 	_time_to_pick = pick_time
 	_multiplier_to_pick = pick_mult

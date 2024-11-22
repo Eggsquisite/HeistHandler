@@ -14,11 +14,16 @@ const LOCKPICK_MULTIPLIER: float = 2.0
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var debug_label: Label = $DebugLabel
+@onready var invincible_timer: Timer = $InvincibleTimer
+@onready var invincible_player: AnimationPlayer = $InvinciblePlayer
+@onready var nav_points: Node2D = $NavPoints
+
 
 
 var _state: PlayerState = PlayerState.IDLE
 var _sneaking: bool = false
 var _interacting: bool = false
+var _invincible: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,11 +40,10 @@ func _physics_process(delta: float) -> void:
 
 
 func update_debug_label() -> void:
-	debug_label.text = "%s\nsneak:%s\nvel:(%.0f,%.0f)" % [
+	debug_label.text = "%s\nsneak:%s\ninv:%s)" % [
 		PlayerState.keys()[_state],
 		_sneaking,
-		velocity.x,
-		velocity.y,
+		_invincible
 		]
 
 
@@ -130,3 +134,32 @@ func set_interact_false(flag) -> void:
 	# Edge case if player is sneaking when lockpicking
 	set_sneaking(false)
 	_interacting = false
+
+
+func get_nav_points() -> Array[Node2D]:
+	var nodes: Array[Node2D]
+	for n in nav_points.get_children():
+		nodes.append(n)
+	return nodes
+
+
+func go_invincible() -> void:
+	_invincible = true
+	invincible_timer.start()
+	invincible_player.play("invincible")
+
+
+func apply_hit() -> void:
+	if _invincible:
+		return
+	
+	go_invincible()
+
+
+func _on_invincible_timer_timeout() -> void:
+	_invincible = false
+	invincible_player.stop()
+
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	apply_hit()

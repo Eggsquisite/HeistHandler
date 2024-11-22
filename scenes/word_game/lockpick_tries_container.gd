@@ -11,12 +11,10 @@ func setup_lockpick_amt(diff: int) -> void:
 		var instance = lockpick_tries.instantiate()
 		lockpicks.append(instance)
 		add_child(instance)
-	
-	print(lockpicks.size())
+
 	lockpick_amt = lockpicks.size() - 1
 
 
 func remove_lockpick() -> void:
-	print("reducing lockpick UI")
 	lockpicks[lockpick_amt].hide()
 	lockpick_amt -= 1
