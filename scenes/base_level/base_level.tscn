@@ -411,7 +411,7 @@ position = Vector2(230, -102)
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(159, -32)
-difficulty = 2
+difficulty = 3
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 visible = false
