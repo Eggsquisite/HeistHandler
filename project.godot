@@ -82,7 +82,9 @@ escape={
 [layer_names]
 
 2d_physics/layer_1="world"
+2d_navigation/layer_1="walkable"
 2d_physics/layer_2="player"
+2d_navigation/layer_2="nonwalkable"
 2d_physics/layer_3="interactable"
 2d_physics/layer_4="player_hurtbox"
 2d_physics/layer_5="enemy_hitbox"
