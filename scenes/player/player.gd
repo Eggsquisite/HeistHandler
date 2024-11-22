@@ -12,7 +12,7 @@ const LOCKPICK_MULTIPLIER: float = 2.0
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var debug_label: Label = $DebugLabel
 
 
@@ -95,6 +95,18 @@ func set_state(new_state: PlayerState) -> void:
 		return
 	
 	_state = new_state
+	
+	match _state:
+		PlayerState.IDLE:
+			anim_player.play("idle")
+		PlayerState.RUN:
+			anim_player.play("walk")
+		PlayerState.SNEAK_IDLE:
+			anim_player.play("sneak_idle")
+		PlayerState.SNEAK_WALK:
+			anim_player.play("sneak_walk")
+		PlayerState.LOCKPICK:
+			anim_player.play("sneak_idle")
 
 
 func set_sneaking(sneak_flag: bool) -> void:
