@@ -143,6 +143,10 @@ func get_nav_points() -> Array[Node2D]:
 	return nodes
 
 
+func get_sneak_status() -> bool:
+	return _sneaking
+
+
 func go_invincible() -> void:
 	_invincible = true
 	invincible_timer.start()

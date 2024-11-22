@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cf6hjuffh04dw" path="res://assets/player/Medieval Thief Sprite Sheet.png" id="2_myxj4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4u78"]
-size = Vector2(11, 20)
+size = Vector2(11, 17)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjkt"]
 radius = 7.0
@@ -205,7 +205,7 @@ vframes = 8
 frame = 21
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 6)
+position = Vector2(0.5, 7.5)
 shape = SubResource("RectangleShape2D_c4u78")
 
 [node name="HitBox" type="Area2D" parent="."]
@@ -246,8 +246,6 @@ label_settings = SubResource("LabelSettings_dgkft")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 position = Vector2(0, 7)
-radius = 5.0
-affect_navigation_mesh = true
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 3.0
