@@ -81,6 +81,7 @@ func calculate_movement(speed: float) -> void:
 
 func calculate_states() -> void:
 	if _interacting:
+		set_sneaking(true)
 		set_state(PlayerState.LOCKPICK)
 	elif velocity.x == 0 and velocity.y == 0:
 		if _sneaking:

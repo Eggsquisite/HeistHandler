@@ -15,7 +15,6 @@ func _ready() -> void:
 
 func _on_interact() -> void:
 	if word_game != null:
-		print("starting interact")
 		word_game.start_minigame_timer(max_tries, difficulty, time_to_pick, mult_to_pick)
 		SignalManager.word_game_finished.connect(unlock_chest)
 		SignalManager.letter_lockpicked.connect(letter_lockpicked)

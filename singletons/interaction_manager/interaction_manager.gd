@@ -43,7 +43,6 @@ func _input(event):
 			label.hide()
 			
 			# call the interact function of the interaction_Area
-			print("starting interact 2")
 			await active_areas[0].interact.call()
 			
 			can_interact = true

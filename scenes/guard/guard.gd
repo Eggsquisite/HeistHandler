@@ -5,18 +5,19 @@ enum GuardState { IDLE, RUN, ATTACK }
 
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var detection_bar: ProgressBar = $DetectionBar
+@onready var detection_delay: Timer = $DetectionDelay
 
 const SPEED_MULT: float = 100
-const MAX_DETECTION: float = 100
 
 var _state: GuardState = GuardState.IDLE
 var _target_pos: Array[Node2D]
 var _player_sighted: bool = false
+var _dec_detection: bool = false
 var _alerted: bool = false
 var _player_is_sneaking: bool = false
 var _player: Node2D
 
-var _detection_level: float = 0
 var _sneak_detection_value: float
 
 @export var speed: float = 12
@@ -48,6 +49,9 @@ func _physics_process(delta: float) -> void:
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
 	
 	move_and_slide()
+
+
+func _process(delta: float) -> void:
 	_detect_player(delta)
 
 
@@ -81,16 +85,17 @@ func set_states(new_state: GuardState) -> void:
 
 
 func _on_vision_cone_body_entered(body: Node2D) -> void:
-	if body == get_tree().get_first_node_in_group("player"):
-		_player_in_sight(true)
-		if _player == null:
-			_player = body
+	_player_in_sight(true)
+	_dec_detection = false
+	if _player == null:
+		_player = body
 
 
 func _on_vision_cone_body_exited(body: Node2D) -> void:
-	if body == get_tree().get_first_node_in_group("player"):
+	if _player != null:
 		_player = null
-		_player_in_sight(false)
+	_player_in_sight(false)
+	detection_delay.start()
 
 
 func _player_in_sight(flag: bool) -> void:
@@ -114,32 +119,44 @@ func _detect_player(delta) -> void:
 			_player_is_sneaking = false
 			_sneak_detection_value = detection_inc
 	
-	
 	if _player_sighted:
-		if _detection_level < MAX_DETECTION:
-			_detection_level += _sneak_detection_value * delta
-		elif _detection_level >= MAX_DETECTION:
+		detection_bar.detection += _sneak_detection_value * delta * 10
+		if detection_bar._get_is_alert():
 			_set_alerted(true)
-			_detection_level = MAX_DETECTION
-	else:
-		if _detection_level > 0:
-			_detection_level -= detection_dec * delta
-			# print(_detection_level)
-		elif _detection_level < 0:
+	elif !_player_sighted and _dec_detection:
+		detection_bar.detection -= detection_dec * delta * 10
+		if !detection_bar._get_is_alert():
 			_set_alerted(false)
-			_detection_level = 0
+	
+	#if _player_sighted:
+		#if _detection_level < MAX_DETECTION:
+			#_detection_level += _sneak_detection_value * delta
+		#elif _detection_level >= MAX_DETECTION:
+			#_set_alerted(true)
+			#_detection_level = MAX_DETECTION
+	#else:
+		#if _detection_level > 0:
+			#_detection_level -= detection_dec * delta
+			## print(_detection_level)
+		#elif _detection_level < 0:
+			#_set_alerted(false)
+			#_detection_level = 0
 
 
 func _set_alerted(flag: bool) -> void:
-	print("_alerted")
 	if _alerted == flag:
 		return
 	
 	_alerted = flag
-	print(_alerted)
 	if _alerted and _player != null:
 		_target_pos = _player.get_nav_points()
+	if !_alerted:
+		_target_pos = []
 	
-	# if player leaves vision cone, go to last known position
+	# if player leaves vision cone, keep following until a set time passes
 	# if player not found after set time, reset to patrol path
-	# if player is found, keep following player
+	# if player is found, keep following player and reset time
+
+
+func _on_detection_delay_timeout() -> void:
+	_dec_detection = true
