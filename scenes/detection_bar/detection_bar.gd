@@ -14,6 +14,7 @@ func _ready() -> void:
 func _set_detection(new_value):
 	if new_value < 0:
 		new_value = 0
+	
 	new_value = min(max_value, new_value)
 	detection = new_value
 	value = detection

@@ -415,5 +415,3 @@ difficulty = 3
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(-28, 34)
-speed = 25.0
-detection_inc = 5.0

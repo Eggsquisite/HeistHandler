@@ -17,9 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SignalManager="*res://singletons/signal_manager.gd"
 WordManager="*res://singletons/word_manager.gd"
 InteractionManager="*res://singletons/interaction_manager/interaction_manager.tscn"
-SignalManager="*res://singletons/signal_manager.gd"
+GameManager="*res://singletons/game_manager.gd"
 
 [display]
 

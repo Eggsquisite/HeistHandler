@@ -1,16 +1,22 @@
 extends CharacterBody2D
 
 
-enum GuardState { IDLE, RUN, ATTACK }
+enum EnemyState { IDLE, RUN, ATTACK }
+enum PatrolState { PATROL, ALERT }
 
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var detection_bar: ProgressBar = $DetectionBar
 @onready var detection_delay: Timer = $DetectionDelay
+@onready var follow_delay: Timer = $FollowDelay
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var vision_cone: Area2D = $VisionCone
 
 const SPEED_MULT: float = 100
+const DETECT_MULT: float = 10
 
-var _state: GuardState = GuardState.IDLE
+var _state: EnemyState = EnemyState.IDLE
+var _patrol: PatrolState = PatrolState.PATROL
 var _target_pos: Array[Node2D]
 var _player_sighted: bool = false
 var _dec_detection: bool = false
@@ -20,9 +26,10 @@ var _player: Node2D
 
 var _sneak_detection_value: float
 
-@export var speed: float = 12
-@export var detection_inc: float = 1
-@export var detection_dec: float = 1
+@export var patrol_speed: float = 25
+@export var alert_speed: float = 40
+@export var detection_inc: float = 8
+@export var detection_dec: float = 4
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,13 +42,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if _target_pos != []:
-		_target_pos.sort_custom(_sort_by_distance_to_guard)
-		nav_agent.target_position = _target_pos[0].global_position
-	
 	var next_path_pos = nav_agent.get_next_path_position()
 	var direction = global_position.direction_to(next_path_pos)
-	var new_velocity = direction * speed * SPEED_MULT * delta
+	var new_velocity = direction * alert_speed * SPEED_MULT * delta
 	
 	if nav_agent.avoidance_enabled:
 		nav_agent.velocity = new_velocity
@@ -49,9 +52,7 @@ func _physics_process(delta: float) -> void:
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
 	
 	move_and_slide()
-
-
-func _process(delta: float) -> void:
+	calculate_states()
 	_detect_player(delta)
 
 
@@ -67,6 +68,12 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
 
 
+func set_target() -> void: 
+	if _target_pos != []:
+		_target_pos.sort_custom(_sort_by_distance_to_guard)
+		nav_agent.target_position = _target_pos[0].global_position
+
+
 func _sort_by_distance_to_guard(pos1 : Node2D, pos2: Node2D):
 	var pos1_to_guard = global_position.distance_to(pos1.global_position)
 	var pos2_to_guard = global_position.distance_to(pos2.global_position)
@@ -74,14 +81,30 @@ func _sort_by_distance_to_guard(pos1 : Node2D, pos2: Node2D):
 
 
 func calculate_states() -> void:
-	pass
+	if velocity.x == 0 and velocity.y == 0:
+		set_enemy_states(EnemyState.IDLE)
+	elif velocity.x != 0 or velocity.y != 0:
+		set_enemy_states(EnemyState.RUN)
+		if velocity.x < 0:
+			sprite.flip_h = true
+			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 0.4)
+		elif velocity.x > 0:
+			sprite.flip_h = false
+			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 0.4)
 
 
-func set_states(new_state: GuardState) -> void:
+func set_enemy_states(new_state: EnemyState) -> void:
 	if _state == new_state:
 		return
 	
 	_state = new_state
+
+
+func set_patrol_states(new_state: PatrolState) -> void:
+	if _patrol == new_state:
+		return
+	
+	_patrol = new_state
 
 
 func _on_vision_cone_body_entered(body: Node2D) -> void:
@@ -107,24 +130,19 @@ func _player_in_sight(flag: bool) -> void:
 
 func _detect_player(delta) -> void:
 	if _player != null:
-		var sneak = _player.get_sneak_status()
-		if sneak and !_player_is_sneaking:
-			_player_is_sneaking = true
+		if _player.get_sneak_status():
 			_sneak_detection_value = detection_inc / 2
-		elif !sneak and _player_is_sneaking:
-			_player_is_sneaking = false
-			_sneak_detection_value = detection_inc
-	else:
-		if _player_is_sneaking:
-			_player_is_sneaking = false
+		else:
 			_sneak_detection_value = detection_inc
 	
 	if _player_sighted:
-		detection_bar.detection += _sneak_detection_value * delta * 10
+		if !detection_bar._get_is_alert():
+			detection_bar.detection += _sneak_detection_value * delta * DETECT_MULT
 		if detection_bar._get_is_alert():
+			detection_bar.detection += 100 # Fill detection to max if already alerted
 			_set_alerted(true)
 	elif !_player_sighted and _dec_detection:
-		detection_bar.detection -= detection_dec * delta * 10
+		detection_bar.detection -= detection_dec * delta * DETECT_MULT
 		if !detection_bar._get_is_alert():
 			_set_alerted(false)
 	
@@ -150,8 +168,12 @@ func _set_alerted(flag: bool) -> void:
 	_alerted = flag
 	if _alerted and _player != null:
 		_target_pos = _player.get_nav_points()
+		follow_delay.start()
+		set_target()
 	if !_alerted:
 		_target_pos = []
+		follow_delay.stop()
+		set_target()
 	
 	# if player leaves vision cone, keep following until a set time passes
 	# if player not found after set time, reset to patrol path
@@ -160,3 +182,7 @@ func _set_alerted(flag: bool) -> void:
 
 func _on_detection_delay_timeout() -> void:
 	_dec_detection = true
+
+
+func _on_follow_delay_timeout() -> void:
+	set_target()
