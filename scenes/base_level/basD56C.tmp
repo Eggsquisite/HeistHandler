@@ -417,13 +417,11 @@ difficulty = 3
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(40, -109)
 rotation = -0.00714274
-patrol_speed = 10.0
-alert_speed = 25.0
+patrol_speed = 1.0
 
 [node name="PatrolWaypoints" parent="Guard" instance=ExtResource("6_bjxsp")]
 
 [node name="wp1" type="Marker2D" parent="Guard/PatrolWaypoints"]
-position = Vector2(0.349991, -48.9987)
 
 [node name="wp2" type="Marker2D" parent="Guard/PatrolWaypoints"]
 position = Vector2(134.004, -0.042856)

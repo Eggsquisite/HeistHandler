@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpby7u2fduhbo"]
+
+[ext_resource type="Script" path="res://scenes/patrol_waypoints/patrol_waypoints.gd" id="1_htk36"]
+
+[node name="PatrolWaypoints" type="Node2D"]
+script = ExtResource("1_htk36")

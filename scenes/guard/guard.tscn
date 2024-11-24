@@ -24,6 +24,7 @@ path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_postprocessing = 1
 avoidance_enabled = true
+debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.731612, 0, 0.0691198, 1)
 
@@ -42,8 +43,8 @@ offset_bottom = -15.0
 one_shot = true
 
 [node name="FollowDelay" type="Timer" parent="."]
-wait_time = 1.5
 
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="body_entered" from="VisionCone" to="." method="_on_vision_cone_body_entered"]
 [connection signal="body_exited" from="VisionCone" to="." method="_on_vision_cone_body_exited"]
 [connection signal="timeout" from="DetectionDelay" to="." method="_on_detection_delay_timeout"]

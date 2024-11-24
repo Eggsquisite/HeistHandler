@@ -10,6 +10,7 @@ extends CenterContainer
 @onready var color_rect: ColorRect = $ColorRect
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 @onready var used_words: VBoxContainer = $Control/ColorRect2/MarginContainer/UsedWordsContainer
+@onready var instructions: Label = $Control/ColorRect/VBoxContainer/Instructions
 
 var letter_node = preload("res://scenes/letter/letter.tscn")
 var lockpick_tries = preload("res://scenes/lockpick_tries/lockpick_tries.tscn")
@@ -287,3 +288,11 @@ func _on_start_timer_timeout() -> void:
 
 func _on_label_timer_timeout() -> void:
 	update_lock_label()
+
+
+func _on_line_edit_focus_exited() -> void:
+	instructions.visible = true
+
+
+func _on_line_edit_focus_entered() -> void:
+	instructions.visible = false

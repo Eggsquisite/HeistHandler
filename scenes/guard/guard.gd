@@ -11,18 +11,21 @@ enum PatrolState { PATROL, ALERT }
 @onready var follow_delay: Timer = $FollowDelay
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
+@onready var patrol_waypoints: Node2D = $PatrolWaypoints
 
 const SPEED_MULT: float = 100
 const DETECT_MULT: float = 10
 
+var _player: Node2D
 var _state: EnemyState = EnemyState.IDLE
 var _patrol: PatrolState = PatrolState.PATROL
-var _target_pos: Array[Node2D]
-var _player_sighted: bool = false
-var _dec_detection: bool = false
 var _alerted: bool = false
+var _dec_detection: bool = false
+var _player_sighted: bool = false
 var _player_is_sneaking: bool = false
-var _player: Node2D
+var _player_pos: Array[Node2D]
+var _waypoints: Array[Vector2]
+var _wp_index: int = 0
 
 var _sneak_detection_value: float
 
@@ -38,22 +41,18 @@ func _ready() -> void:
 	# make_path()
 	# _target_pos = get_tree().get_first_node_in_group("player").get_nav_points()
 	_sneak_detection_value = detection_inc
+	_waypoints = patrol_waypoints.get_waypoints()
+	print("waypoints:")
+	print(_waypoints)
+	update_target()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	var next_path_pos = nav_agent.get_next_path_position()
-	var direction = global_position.direction_to(next_path_pos)
-	var new_velocity = direction * alert_speed * SPEED_MULT * delta
-	
-	if nav_agent.avoidance_enabled:
-		nav_agent.velocity = new_velocity
-	else:
-		_on_navigation_agent_2d_velocity_computed(new_velocity)
-	
+	move_to_target(delta)
+	_detect_player(delta)
 	move_and_slide()
 	calculate_states()
-	_detect_player(delta)
 
 
 func _on_nav_finished():
@@ -68,10 +67,34 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
 
 
-func set_target() -> void: 
-	if _target_pos != []:
-		_target_pos.sort_custom(_sort_by_distance_to_guard)
-		nav_agent.target_position = _target_pos[0].global_position
+func patrol(delta) -> void:
+	pass
+
+
+func update_target() -> void: 
+	if _alerted:
+		if _player_pos != []:
+			_player_pos.sort_custom(_sort_by_distance_to_guard)
+			nav_agent.target_position = _player_pos[0].global_position
+	else:
+		print("here at index %s" % _wp_index)
+		print(_waypoints[_wp_index])
+		nav_agent.target_position = _waypoints[_wp_index]
+
+
+func move_to_target(delta) -> void:
+	var next_path_pos = nav_agent.get_next_path_position()
+	var direction = global_position.direction_to(next_path_pos)
+	var new_velocity
+	if _alerted:
+		new_velocity = direction * alert_speed * SPEED_MULT * delta
+	else:
+		new_velocity = direction * patrol_speed * SPEED_MULT * delta
+
+	if nav_agent.avoidance_enabled:
+		nav_agent.velocity = new_velocity
+	else:
+		_on_navigation_agent_2d_velocity_computed(new_velocity)
 
 
 func _sort_by_distance_to_guard(pos1 : Node2D, pos2: Node2D):
@@ -167,22 +190,31 @@ func _set_alerted(flag: bool) -> void:
 	
 	_alerted = flag
 	if _alerted and _player != null:
-		_target_pos = _player.get_nav_points()
+		_player_pos = _player.get_nav_points()
 		follow_delay.start()
-		set_target()
+		update_target()
 	if !_alerted:
-		_target_pos = []
+		_player_pos = []
 		follow_delay.stop()
-		set_target()
+		update_target()
 	
 	# if player leaves vision cone, keep following until a set time passes
 	# if player not found after set time, reset to patrol path
 	# if player is found, keep following player and reset time
 
 
+func _on_follow_delay_timeout() -> void:
+	update_target()
+
+
 func _on_detection_delay_timeout() -> void:
 	_dec_detection = true
 
 
-func _on_follow_delay_timeout() -> void:
-	set_target()
+func _on_navigation_agent_2d_target_reached() -> void:
+	if !_alerted:
+		if _wp_index < _waypoints.size():
+			_wp_index += 1
+		else:
+			_wp_index = 0
+	update_target()
