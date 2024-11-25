@@ -12,6 +12,8 @@ height = 18.0
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("1_8kgwj")
+search_dur = 5.0
+search_delay = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_w8e7d")
@@ -44,8 +46,21 @@ one_shot = true
 
 [node name="FollowDelay" type="Timer" parent="."]
 
+[node name="PatrolTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="SearchDuration" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="SearchFlipTimer" type="Timer" parent="."]
+
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="body_entered" from="VisionCone" to="." method="_on_vision_cone_body_entered"]
 [connection signal="body_exited" from="VisionCone" to="." method="_on_vision_cone_body_exited"]
 [connection signal="timeout" from="DetectionDelay" to="." method="_on_detection_delay_timeout"]
 [connection signal="timeout" from="FollowDelay" to="." method="_on_follow_delay_timeout"]
+[connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_delay_timeout"]
+[connection signal="timeout" from="SearchDuration" to="." method="_on_search_duration_timeout"]
+[connection signal="timeout" from="SearchFlipTimer" to="." method="_on_search_flip_timer_timeout"]
