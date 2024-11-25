@@ -10,7 +10,6 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var detection_delay: Timer = $DetectionDelay
 @onready var follow_delay: Timer = $FollowDelay
 @onready var patrol_timer: Timer = $PatrolTimer
-@onready var search_duration: Timer = $SearchDuration
 @onready var search_flip_timer: Timer = $SearchFlipTimer
 
 
@@ -84,23 +83,22 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 func update_target() -> void: 
 	# print("updating...")
 	if _mode == GuardMode.ALERT:
-		_player_pos.sort_custom(_sort_by_distance_to_guard)
-		nav_agent.target_position = _player_pos[0].global_position
+		nav_agent.target_position = _last_player_pos
 	elif _mode == GuardMode.PATROL:
-		print("move to wp %s" % _waypoints[_wp_index])
+		# print("move to wp %s" % _waypoints[_wp_index])
 		nav_agent.target_position = _waypoints[_wp_index]
 	elif _mode == GuardMode.SEARCH:
-		nav_agent.target_position = _last_player_pos
+		nav_agent.target_position = self.global_position
 
 
 func move_to_target(delta) -> void:
 	var next_path_pos = nav_agent.get_next_path_position()
 	var direction = global_position.direction_to(next_path_pos)
-	var new_velocity = direction * alert_speed * SPEED_MULT * delta
-	#if _mode == GuardMode.ALERT:
-		#new_velocity = direction * alert_speed * SPEED_MULT * delta
-	#elif _mode == GuardMode.PATROL:
-		#new_velocity = direction * patrol_speed * SPEED_MULT * delta
+	var new_velocity: Vector2
+	if _mode == GuardMode.ALERT:
+		new_velocity = direction * alert_speed * SPEED_MULT * delta
+	elif _mode == GuardMode.PATROL:
+		new_velocity = direction * patrol_speed * SPEED_MULT * delta
 
 	if nav_agent.avoidance_enabled:
 		nav_agent.velocity = new_velocity
@@ -151,36 +149,18 @@ func set_guard_mode(new_mode: GuardMode) -> void:
 			stop_search()
 			update_target()
 		GuardMode.SEARCH:
-			_player_pos.sort_custom(_sort_by_distance_to_guard)
-			_last_player_pos = _player_pos[0].global_position
+			update_target()
 
 
 func stop_search() -> void:
 	_searching = false
-	search_duration.stop()
 	search_flip_timer.stop()
 
 
-func _on_vision_cone_body_entered(body: Node2D) -> void:
-	_player_in_sight(true)
-	_dec_detection = false
-	if _player == null:
-		_player = body
-		_player_pos = _player.get_nav_points()
-		update_target()
-
-
-func _on_vision_cone_body_exited(body: Node2D) -> void:
-	if _player != null:
-		_player = null
-	
-	#if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
-		#_player_pos.sort_custom(_sort_by_distance_to_guard)
-		#_last_player_pos = _player_pos[0].global_position
-		#update_target()
-	
-	_player_in_sight(false)
-	detection_delay.start()
+func update_last_player_pos() -> void:
+	if _player_pos != []:
+		_player_pos.sort_custom(_sort_by_distance_to_guard)
+		_last_player_pos = _player_pos[0].global_position
 
 
 func _player_in_sight(flag: bool) -> void:
@@ -200,34 +180,64 @@ func detect_player(delta) -> void:
 	if _player_sighted:
 		if !detection_bar._get_is_alert():
 			detection_bar.detection += _sneak_detection_value * delta * DETECT_MULT
-		if detection_bar._get_is_alert():
+		else:
 			detection_bar.detection += 100 # Fill detection to max if already alerted
 			set_guard_mode(GuardMode.ALERT)
 	elif !_player_sighted and _dec_detection:
-		detection_bar.detection -= detection_dec * delta * DETECT_MULT
-		if !detection_bar._get_is_alert():
-			if _mode == GuardMode.ALERT:
+		if _mode == GuardMode.PATROL || _mode == GuardMode.SEARCH:
+			detection_bar.detection -= detection_dec * delta * DETECT_MULT
+			if !detection_bar._get_is_alert():
+				set_guard_mode(GuardMode.PATROL)
+		elif _mode == GuardMode.ALERT:
+			if detection_bar._get_is_alert():
 				set_guard_mode(GuardMode.SEARCH)
+				detection_bar.detection -= detection_dec * delta * DETECT_MULT
 	
 	# if player leaves vision cone, keep following until a set time passes
 	# if player not found after set time, reset to patrol path
 	# if player is found, keep following player and reset time
 
+func flip_sprite() -> void:
+	if sprite.flip_h:
+		sprite.flip_h = false
+		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 1)
+	else:
+		sprite.flip_h = true
+		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
 
-func _on_follow_delay_timeout() -> void:
+
+func _on_vision_cone_body_entered(body: Node2D) -> void:
+	if _player == null:
+		_player = body
+		_player_pos = _player.get_nav_points()
+	
+	_player_in_sight(true)
+	_dec_detection = false
+	detection_delay.stop()
+	
+	update_last_player_pos()
 	update_target()
 
 
-func _on_detection_delay_timeout() -> void:
-	_dec_detection = true
+func _on_vision_cone_body_exited(body: Node2D) -> void:
+	_player_in_sight(false)
+	
+	if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
+		update_last_player_pos()
+		update_target()
+	elif _mode == GuardMode.PATROL || _mode == GuardMode.SEARCH:
+		detection_delay.start()
 
 
 func _on_navigation_agent_2d_target_reached() -> void:
 	# If patrolling and reached waypoint, update nav_target to next waypoint
 	if _mode == GuardMode.SEARCH and !_searching:
 		_searching = true
-		search_duration.start(search_dur)
 		search_flip_timer.start(search_delay)
+	elif _mode == GuardMode.ALERT:
+		if !_player_sighted:
+			follow_delay.stop()
+			detection_delay.start()
 	elif _mode == GuardMode.PATROL:
 		if _wp_index < _waypoints.size() - 1:
 			_wp_index += 1
@@ -236,23 +246,20 @@ func _on_navigation_agent_2d_target_reached() -> void:
 		patrol_timer.start(patrol_delay)
 
 
-func _on_patrol_delay_timeout() -> void:
-	# call_deferred("update_target")
-	#if _mode == GuardMode.SEARCH:
-		#search_duration.stop()
-		#set_guard_mode(GuardMode.PATROL)
+func _on_detection_delay_timeout() -> void:
+	_dec_detection = true
+
+
+func _on_follow_delay_timeout() -> void:
+	if _player_sighted:
+		update_last_player_pos()
 	update_target()
 
 
-func _on_search_duration_timeout() -> void:
-	print("patrol")
-	# set_guard_mode(GuardMode.PATROL)
+func _on_patrol_delay_timeout() -> void:
+	# call_deferred("update_target")
+	update_target()
 
 
 func _on_search_flip_timer_timeout() -> void:
-	if sprite.flip_h:
-		sprite.flip_h = false
-		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 1)
-	else:
-		sprite.flip_h = true
-		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
+	flip_sprite()

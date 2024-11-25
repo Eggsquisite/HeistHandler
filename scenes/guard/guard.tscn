@@ -50,10 +50,6 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[node name="SearchDuration" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
 [node name="SearchFlipTimer" type="Timer" parent="."]
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
@@ -62,5 +58,4 @@ one_shot = true
 [connection signal="timeout" from="DetectionDelay" to="." method="_on_detection_delay_timeout"]
 [connection signal="timeout" from="FollowDelay" to="." method="_on_follow_delay_timeout"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_delay_timeout"]
-[connection signal="timeout" from="SearchDuration" to="." method="_on_search_duration_timeout"]
 [connection signal="timeout" from="SearchFlipTimer" to="." method="_on_search_flip_timer_timeout"]
