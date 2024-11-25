@@ -54,6 +54,9 @@ one_shot = true
 
 [node name="SearchFlipTimer" type="Timer" parent="Timers"]
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 3
+
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="body_entered" from="VisionCone" to="." method="_on_vision_cone_body_entered"]
 [connection signal="body_exited" from="VisionCone" to="." method="_on_vision_cone_body_exited"]

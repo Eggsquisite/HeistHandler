@@ -32,6 +32,8 @@ var _waypoints: Array[Vector2]
 var _wp_index: int = 0
 
 var _sneak_detection_value: float
+var raycast: RayCast2D
+@onready var ray_cast_2d: RayCast2D = $RayCast2D
 
 @export_group("Patrol Variables")
 @export var patrol_speed: float = 15
@@ -65,6 +67,15 @@ func _physics_process(delta: float) -> void:
 	detect_player(delta)
 	move_and_slide()
 	calculate_states()
+	
+	if _player != null:
+		# ray_cast_2d.target_position = to_local(_player.global_position)
+		ray_cast_2d.target_position = global_position.direction_to(_player.global_position) * 150
+	if ray_cast_2d.is_colliding():
+		if ray_cast_2d.get_collider() is Player:
+			print("Hitting Player")
+		else:
+			print("hitting world")
 
 
 func _on_nav_finished():
