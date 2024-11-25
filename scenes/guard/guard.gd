@@ -7,11 +7,10 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var detection_bar: ProgressBar = $DetectionBar
-@onready var detection_delay: Timer = $DetectionDelay
-@onready var follow_delay: Timer = $FollowDelay
-@onready var patrol_timer: Timer = $PatrolTimer
-@onready var search_flip_timer: Timer = $SearchFlipTimer
-
+@onready var detection_delay: Timer = $Timers/DetectionDelay
+@onready var follow_delay: Timer = $Timers/FollowDelay
+@onready var patrol_timer: Timer = $Timers/PatrolTimer
+@onready var search_flip_timer: Timer = $Timers/SearchFlipTimer
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
@@ -35,7 +34,7 @@ var _wp_index: int = 0
 var _sneak_detection_value: float
 
 @export_group("Patrol Variables")
-@export var patrol_speed: float = 25
+@export var patrol_speed: float = 15
 @export var patrol_delay: float = 2
 
 @export_group("Alert Variables")
@@ -145,6 +144,7 @@ func set_guard_mode(new_mode: GuardMode) -> void:
 			update_target()
 		GuardMode.ALERT:
 			_player_pos = _player.get_nav_points()
+			patrol_timer.stop()
 			follow_delay.start()
 			stop_search()
 			update_target()
@@ -197,6 +197,7 @@ func detect_player(delta) -> void:
 	# if player not found after set time, reset to patrol path
 	# if player is found, keep following player and reset time
 
+
 func flip_sprite() -> void:
 	if sprite.flip_h:
 		sprite.flip_h = false
@@ -233,6 +234,7 @@ func _on_navigation_agent_2d_target_reached() -> void:
 	# If patrolling and reached waypoint, update nav_target to next waypoint
 	if _mode == GuardMode.SEARCH and !_searching:
 		_searching = true
+		call_deferred("flip_sprite")
 		search_flip_timer.start(search_delay)
 	elif _mode == GuardMode.ALERT:
 		if !_player_sighted:

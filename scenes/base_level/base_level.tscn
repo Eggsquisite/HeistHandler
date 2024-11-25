@@ -417,8 +417,7 @@ difficulty = 3
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(40, -109)
 rotation = -0.00714274
-patrol_speed = 15.0
-alert_speed = 25.0
+alert_speed = 35.0
 detection_dec = 2.0
 
 [node name="PatrolWaypoints" parent="Guard" instance=ExtResource("6_bjxsp")]

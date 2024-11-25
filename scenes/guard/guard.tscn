@@ -41,21 +41,23 @@ polygon = PackedVector2Array(-1, 0, 116, -103, 116, 103)
 offset_top = -30.0
 offset_bottom = -15.0
 
-[node name="DetectionDelay" type="Timer" parent="."]
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="DetectionDelay" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="FollowDelay" type="Timer" parent="."]
+[node name="FollowDelay" type="Timer" parent="Timers"]
 
-[node name="PatrolTimer" type="Timer" parent="."]
+[node name="PatrolTimer" type="Timer" parent="Timers"]
 wait_time = 2.0
 one_shot = true
 
-[node name="SearchFlipTimer" type="Timer" parent="."]
+[node name="SearchFlipTimer" type="Timer" parent="Timers"]
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="body_entered" from="VisionCone" to="." method="_on_vision_cone_body_entered"]
 [connection signal="body_exited" from="VisionCone" to="." method="_on_vision_cone_body_exited"]
-[connection signal="timeout" from="DetectionDelay" to="." method="_on_detection_delay_timeout"]
-[connection signal="timeout" from="FollowDelay" to="." method="_on_follow_delay_timeout"]
-[connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_delay_timeout"]
-[connection signal="timeout" from="SearchFlipTimer" to="." method="_on_search_flip_timer_timeout"]
+[connection signal="timeout" from="Timers/DetectionDelay" to="." method="_on_detection_delay_timeout"]
+[connection signal="timeout" from="Timers/FollowDelay" to="." method="_on_follow_delay_timeout"]
+[connection signal="timeout" from="Timers/PatrolTimer" to="." method="_on_patrol_delay_timeout"]
+[connection signal="timeout" from="Timers/SearchFlipTimer" to="." method="_on_search_flip_timer_timeout"]
