@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccyeuil1q7hiq"
-path="res://.godot/imported/letter_cover.png-248c005b3b5344155fa4d748ae054356.ctex"
+uid="uid://txafn7c8smp7"
+path="res://.godot/imported/question_mark_fill.png-42a238aeef3f33b261a42e80b15eb0c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/letter_cover.png"
-dest_files=["res://.godot/imported/letter_cover.png-248c005b3b5344155fa4d748ae054356.ctex"]
+source_file="res://assets/ui/question_mark_fill.png"
+dest_files=["res://.godot/imported/question_mark_fill.png-42a238aeef3f33b261a42e80b15eb0c1.ctex"]
 
 [params]
 

@@ -6,7 +6,7 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
-@onready var detection_bar: ProgressBar = $DetectionBar
+@onready var detection_bar: TextureProgressBar = $DetectionBar
 @onready var detection_delay: Timer = $Timers/DetectionDelay
 @onready var follow_delay: Timer = $Timers/FollowDelay
 @onready var patrol_timer: Timer = $Timers/PatrolTimer

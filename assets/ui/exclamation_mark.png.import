@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de78wo3c48f8n"
-path="res://.godot/imported/select_arrow.png-05a452d6ef184791c71f20aa5809d7b4.ctex"
+uid="uid://ck7q5170xpkpn"
+path="res://.godot/imported/exclamation_mark.png-b72d9f60dd342058b8d30663cbbee0e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/select_arrow.png"
-dest_files=["res://.godot/imported/select_arrow.png-05a452d6ef184791c71f20aa5809d7b4.ctex"]
+source_file="res://assets/ui/exclamation_mark.png"
+dest_files=["res://.godot/imported/exclamation_mark.png-b72d9f60dd342058b8d30663cbbee0e7.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

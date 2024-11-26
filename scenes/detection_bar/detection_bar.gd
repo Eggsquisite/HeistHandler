@@ -1,4 +1,4 @@
-extends ProgressBar
+extends TextureProgressBar
 
 
 const MAX_VALUE = 100

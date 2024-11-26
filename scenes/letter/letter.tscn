@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs8lkrqt7dht5"]
+[gd_scene load_steps=5 format=3 uid="uid://cs8lkrqt7dht5"]
 
-[ext_resource type="Texture2D" uid="uid://l7ndep23svlc" path="res://assets/ui/Sprite-0001.png" id="1_gunet"]
 [ext_resource type="Script" path="res://scenes/letter/letter.gd" id="1_hrkep"]
 [ext_resource type="PackedScene" uid="uid://cm71mchwpj6e1" path="res://scenes/selector/selector.tscn" id="3_6le0h"]
 [ext_resource type="LabelSettings" uid="uid://brelg5q6shlgn" path="res://resources/fonts/16_wh.tres" id="3_72prw"]
@@ -46,11 +45,6 @@ label_settings = ExtResource("3_72prw")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-
-[node name="Cover" type="TextureRect" parent="VBoxContainer/CoverContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("1_gunet")
 
 [node name="Shield Lock" parent="VBoxContainer/CoverContainer" instance=ExtResource("4_xf4qc")]
 visible = false

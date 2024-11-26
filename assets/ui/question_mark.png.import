@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l7ndep23svlc"
-path="res://.godot/imported/Sprite-0001.png-b9e5ffb0cadf229acc59c255ea72bd69.ctex"
+uid="uid://6csvm7xlqxif"
+path="res://.godot/imported/question_mark.png-659a089003dad3a392170e68d1673697.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/Sprite-0001.png"
-dest_files=["res://.godot/imported/Sprite-0001.png-b9e5ffb0cadf229acc59c255ea72bd69.ctex"]
+source_file="res://assets/ui/question_mark.png"
+dest_files=["res://.godot/imported/question_mark.png-659a089003dad3a392170e68d1673697.ctex"]
 
 [params]
 
