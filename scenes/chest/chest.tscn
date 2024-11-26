@@ -82,9 +82,6 @@ _data = {
 z_index = 5
 texture_filter = 1
 script = ExtResource("1_b1120")
-max_tries = 2
-time_to_pick = 1.0
-mult_to_pick = 1.5
 reward = 15
 
 [node name="ChestSprite" type="Sprite2D" parent="."]

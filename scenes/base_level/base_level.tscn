@@ -430,10 +430,10 @@ position = Vector2(114, -40)
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(230, -118)
+difficulty = "medium"
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
-position = Vector2(8, -36)
-difficulty = 3
+position = Vector2(8, -46)
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(40, -109)

@@ -24,6 +24,7 @@ var letter_array: Array[String] = []
 
 var tries_left: int = 0
 var lockpick_count: int = 0
+var lockpick_max: int = 0
 var letter_focus: Control
 var is_game_started: bool = false
 var is_lockpicking: bool = false
@@ -34,7 +35,7 @@ var is_interacting: bool = false
 var letter_covers: int
 
 var _max_tries: int
-var _difficulty: int
+var _difficulty: String
 var _time_to_pick: float
 var _multiplier_to_pick: float
 
@@ -54,14 +55,14 @@ func _process(delta: float) -> void:
 		end_minigame()
 
 
-func start_minigame_timer(tries: int, diff: int, pick_time: float, pick_mult: float) -> void:
+func start_minigame_timer(diff: String, pick_time: float, pick_mult: float) -> void:
 	# Just to avoid "e" being in LineEdit on start because line_edit.clear not working?
 	start_timer.start()
 	
 	# If starting game for the first time, init interactable variables
 	if !is_game_started:
-		setup_variables(tries, diff, pick_time, pick_mult)
-		lockpick_tries_container.setup_lockpick_amt(_difficulty)
+		setup_variables(diff, pick_time, pick_mult)
+		lockpick_tries_container.setup_lockpick_amt(lockpick_max)
 
 
 func start_minigame() -> void:
@@ -88,7 +89,7 @@ func start_minigame() -> void:
 
 	setup_line_edit(true)
 	update_lock_label()
-	randomize_letter(_difficulty, letter_containers.size() - 1)
+	randomize_letter(letter_containers.size() - 1)
 
 
 func resume_minigame() -> void:
@@ -104,7 +105,7 @@ func resume_minigame() -> void:
 	setup_line_edit(true)
 
 
-func randomize_letter(difficulty: int, size: int) -> void:
+func randomize_letter(size: int) -> void:
 	for n in range(0, size + 1, 1):
 		index_array.append(n)
 	
@@ -117,14 +118,27 @@ func randomize_letter(difficulty: int, size: int) -> void:
 	index_array.clear()
 
 
-func setup_variables(tries: int, diff: int, pick_time: float, pick_mult: float) -> void:
-	_max_tries = diff + 2
+func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 	_difficulty = diff
 	_time_to_pick = pick_time
 	_multiplier_to_pick = pick_mult
 	
-	tries_left = _max_tries
-	letter_covers = _difficulty + 1
+	match _difficulty:
+		"easy":
+			letter_covers = 2
+			lockpick_max = 1
+			_max_tries = 3
+			tries_left = _max_tries
+		"medium":
+			letter_covers = 4
+			lockpick_max = 2
+			_max_tries = 5
+			tries_left = _max_tries
+		"hard":
+			letter_covers = 5
+			lockpick_max = 3
+			_max_tries = 6
+			tries_left = _max_tries
 
 
 func setup_line_edit(flag: bool) -> void:
@@ -186,7 +200,7 @@ func end_lockpick() -> void:
 		if n != letter_focus:
 			n.reenable_focus()
 	
-	if lockpick_count >= letter_covers - 1:
+	if lockpick_count >= lockpick_max:
 		for n in letter_containers:
 			n.no_more_reveal()
 	# end unlocking sound

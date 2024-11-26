@@ -62,7 +62,7 @@ func _ready() -> void:
 	_sneak_detection_value = detection_inc
 	_waypoints = patrol_waypoints.get_waypoints()
 	detect_ray.enabled = false
-	hitbox_shape.disabled = true
+	# hitbox_shape.disabled = true
 	update_target()
 
 

@@ -18,15 +18,15 @@ func _ready() -> void:
 		_word_list_hard.append(word)
 
 
-func get_random_word(difficulty: int) -> String:
+func get_random_word(difficulty: String) -> String:
 	match difficulty:
-		1:
+		"easy":
 			if _word_list_easy != []:
 				return _word_list_easy.pick_random()
-		2:
+		"medium":
 			if _word_list_med != []:
 				return _word_list_med.pick_random()
-		3:
+		"hard":
 			if _word_list_hard != []:
 				return _word_list_hard.pick_random()
 	return 'debug'
