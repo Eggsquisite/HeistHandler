@@ -291,8 +291,10 @@ func _on_label_timer_timeout() -> void:
 
 
 func _on_line_edit_focus_exited() -> void:
-	instructions.visible = true
+	pass
+	# instructions.visible = true
 
 
 func _on_line_edit_focus_entered() -> void:
-	instructions.visible = false
+	pass
+	# instructions.visible = false

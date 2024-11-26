@@ -47,9 +47,9 @@ var _sneak_detection_value: float
 
 @export_group("Alert Variables")
 @export var alert_speed: float = 45
-@export var detection_inc: float = 8
+@export var detection_inc: float = 6
 @export var detection_dec: float = 2
-@export var _extra_search_max: int = 2
+@export var _extra_search_max: int = 1
 
 @export_group("Search Variables")
 @export var search_dur: float = 3

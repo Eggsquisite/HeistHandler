@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bc04p6e3xp50b" path="res://scenes/word_game/word_game.tscn" id="4_oi5mk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syylu"]
+size = Vector2(21, 20)
 
 [sub_resource type="Animation" id="Animation_2tr66"]
 length = 0.001
@@ -78,6 +79,8 @@ _data = {
 }
 
 [node name="Chest" type="Node2D"]
+z_index = 5
+texture_filter = 1
 script = ExtResource("1_b1120")
 max_tries = 2
 time_to_pick = 1.0
@@ -85,15 +88,18 @@ mult_to_pick = 1.5
 reward = 15
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
 texture = ExtResource("2_23erl")
 hframes = 7
 vframes = 12
 frame = 70
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_arlpa")]
+position = Vector2(0, 10)
 action_name = "lockpick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_syylu")
 
 [node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]

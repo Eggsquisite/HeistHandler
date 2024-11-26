@@ -412,6 +412,7 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_cfjew")
 
 [node name="BaseLevel" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMapLayers" type="Node2D" parent="."]
 
@@ -425,11 +426,10 @@ tile_map_data = PackedByteArray("AAAEAPv/AAAMAAQAAAAFAPv/AAANAAQAAAAGAPv/AAANAAQ
 tile_set = SubResource("TileSet_kw86y")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
-z_index = 5
 position = Vector2(114, -40)
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
-position = Vector2(230, -102)
+position = Vector2(230, -118)
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(8, -36)
@@ -457,4 +457,4 @@ position = Vector2(-0.578552, 80.9979)
 texture_filter = 1
 energy = 0.5
 blend_mode = 1
-range_z_max = 15
+range_z_max = 1
