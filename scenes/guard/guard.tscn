@@ -20,10 +20,10 @@ search_dur = 5.0
 search_delay = 1.5
 
 [node name="DetectionBar" parent="." instance=ExtResource("3_hhikg")]
-offset_left = -5.0
-offset_top = -26.0
-offset_right = 11.0
-offset_bottom = -10.0
+offset_left = -7.0
+offset_top = -27.0
+offset_right = 9.0
+offset_bottom = -11.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 3

@@ -1,17 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://t56j5dtc6cj3"]
 
-[ext_resource type="Texture2D" uid="uid://6csvm7xlqxif" path="res://assets/ui/question_mark.png" id="1_6pjh8"]
+[ext_resource type="Texture2D" uid="uid://cu7apnxuh5cnp" path="res://assets/ui/exclamation_mark.png" id="1_vmrlc"]
 [ext_resource type="Script" path="res://scenes/detection_bar/detection_bar.gd" id="1_ymnfx"]
-[ext_resource type="Texture2D" uid="uid://txafn7c8smp7" path="res://assets/ui/question_mark_fill.png" id="2_xx23m"]
+[ext_resource type="Texture2D" uid="uid://dti015iwng05x" path="res://assets/ui/exclamation_mark_fill.png" id="2_uxdor"]
 
 [node name="DetectionBar" type="TextureProgressBar"]
 z_index = 1
 texture_filter = 1
 offset_right = 16.0
 offset_bottom = 16.0
-scale = Vector2(0.75, 0.75)
-value = 60.0
+value = 54.0
 fill_mode = 3
-texture_over = ExtResource("1_6pjh8")
-texture_progress = ExtResource("2_xx23m")
+texture_under = ExtResource("1_vmrlc")
+texture_progress = ExtResource("2_uxdor")
 script = ExtResource("1_ymnfx")

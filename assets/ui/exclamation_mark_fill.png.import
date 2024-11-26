@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu7apnxuh5cnp"
-path="res://.godot/imported/exclamation_mark.png-b72d9f60dd342058b8d30663cbbee0e7.ctex"
+uid="uid://dti015iwng05x"
+path="res://.godot/imported/exclamation_mark_fill.png-ef6b43043b76e0042d9b2dbade381ba3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/exclamation_mark.png"
-dest_files=["res://.godot/imported/exclamation_mark.png-b72d9f60dd342058b8d30663cbbee0e7.ctex"]
+source_file="res://assets/ui/exclamation_mark_fill.png"
+dest_files=["res://.godot/imported/exclamation_mark_fill.png-ef6b43043b76e0042d9b2dbade381ba3.ctex"]
 
 [params]
 
