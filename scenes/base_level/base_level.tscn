@@ -434,6 +434,7 @@ difficulty = "medium"
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(8, -46)
+difficulty = "hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(40, -109)
@@ -457,4 +458,5 @@ position = Vector2(-0.578552, 80.9979)
 texture_filter = 1
 energy = 0.5
 blend_mode = 1
-range_z_max = 1
+range_z_max = 15
+range_layer_max = 15
