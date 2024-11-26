@@ -11,6 +11,7 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var follow_delay: Timer = $Timers/FollowDelay
 @onready var patrol_timer: Timer = $Timers/PatrolTimer
 @onready var search_flip_timer: Timer = $Timers/SearchFlipTimer
+@onready var label: Label = $Label
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
@@ -129,18 +130,18 @@ func set_guard_mode(new_mode: GuardMode) -> void:
 	if _mode == new_mode:
 		return
 	_mode = new_mode
+	label.text = GuardMode.keys()[_mode]
 	
 	match _mode:
 		GuardMode.PATROL:
-			_player_pos = []
 			follow_delay.stop()
 			stop_search()
 			update_target()
 		GuardMode.ALERT:
-			_player_pos = _player.get_nav_points()
 			patrol_timer.stop()
 			follow_delay.start()
 			stop_search()
+			update_last_player_pos()
 			update_target()
 		GuardMode.SEARCH:
 			update_target()
@@ -152,9 +153,8 @@ func stop_search() -> void:
 
 
 func update_last_player_pos() -> void:
-	if _player_pos != []:
-		_player_pos.sort_custom(_sort_by_distance_to_guard)
-		_last_player_pos = _player_pos[0].global_position
+	_player_pos.sort_custom(_sort_by_distance_to_guard)
+	_last_player_pos = _player_pos[0].global_position
 
 
 func _player_in_sight(flag: bool) -> void:
@@ -165,9 +165,10 @@ func _player_in_sight(flag: bool) -> void:
 	if _player_sighted:
 		_dec_detection = false
 		detection_delay.stop()
-	
-		update_last_player_pos()
-		update_target()
+		
+		if _mode == GuardMode.ALERT || _mode == GuardMode.SEARCH:
+			update_last_player_pos()
+			update_target()
 	else:
 		if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
 			update_last_player_pos()
@@ -209,7 +210,7 @@ func check_raycast() -> void:
 	if _player != null:
 		if _player_in_vision_area:
 			ray.enabled = true
-			ray.target_position = global_position.direction_to(_player.global_position) * 150
+			ray.target_position = global_position.direction_to(_player.global_position) * 250
 		
 			if ray.is_colliding():
 				if ray.get_collider() is Player:
@@ -280,3 +281,8 @@ func _on_patrol_delay_timeout() -> void:
 
 func _on_search_flip_timer_timeout() -> void:
 	flip_sprite()
+
+
+func _on_player_detect_area_body_entered(body: Node2D) -> void:
+	# Fill detection to max when player touches guard
+	detection_bar.detection += 100 
