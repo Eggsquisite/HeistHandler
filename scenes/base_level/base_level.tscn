@@ -405,7 +405,7 @@ tile_set = SubResource("TileSet_kw86y")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
 z_index = 5
-position = Vector2(113, -106)
+position = Vector2(175, -141)
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(230, -102)

@@ -15,6 +15,7 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
 @onready var patrol_waypoints: Node2D = $PatrolWaypoints
+@onready var ray: RayCast2D = $RayCast2D
 
 const SPEED_MULT: float = 100
 const DETECT_MULT: float = 10
@@ -25,6 +26,7 @@ var _mode: GuardMode = GuardMode.PATROL
 var _searching: bool = false
 var _dec_detection: bool = false
 var _player_sighted: bool = false
+var _player_in_vision_area: bool = false
 var _player_is_sneaking: bool = false
 var _last_player_pos: Vector2
 var _player_pos: Array[Node2D]
@@ -32,8 +34,6 @@ var _waypoints: Array[Vector2]
 var _wp_index: int = 0
 
 var _sneak_detection_value: float
-var raycast: RayCast2D
-@onready var ray_cast_2d: RayCast2D = $RayCast2D
 
 @export_group("Patrol Variables")
 @export var patrol_speed: float = 15
@@ -50,39 +50,22 @@ var raycast: RayCast2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	nav_agent.navigation_finished.connect(_on_nav_finished)
 	nav_agent.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
 	# make_path()
 	# _target_pos = get_tree().get_first_node_in_group("player").get_nav_points()
 	_sneak_detection_value = detection_inc
 	_waypoints = patrol_waypoints.get_waypoints()
-	print("waypoints:")
-	print(_waypoints)
 	update_target()
+	ray.enabled = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	move_to_target(delta)
 	detect_player(delta)
+	check_raycast()
 	move_and_slide()
 	calculate_states()
-	
-	if _player != null:
-		# ray_cast_2d.target_position = to_local(_player.global_position)
-		ray_cast_2d.target_position = global_position.direction_to(_player.global_position) * 150
-	if ray_cast_2d.is_colliding():
-		if ray_cast_2d.get_collider() is Player:
-			print("Hitting Player")
-		else:
-			print("hitting world")
-
-
-func _on_nav_finished():
-	if _mode == GuardMode.ALERT:
-		pass
-	else:
-		pass
 
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
@@ -90,25 +73,15 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
 
 
-func update_target() -> void: 
-	# print("updating...")
-	if _mode == GuardMode.ALERT:
-		nav_agent.target_position = _last_player_pos
-	elif _mode == GuardMode.PATROL:
-		# print("move to wp %s" % _waypoints[_wp_index])
-		nav_agent.target_position = _waypoints[_wp_index]
-	elif _mode == GuardMode.SEARCH:
-		nav_agent.target_position = self.global_position
-
-
 func move_to_target(delta) -> void:
 	var next_path_pos = nav_agent.get_next_path_position()
 	var direction = global_position.direction_to(next_path_pos)
 	var new_velocity: Vector2
 	if _mode == GuardMode.ALERT:
-		new_velocity = direction * alert_speed * SPEED_MULT * delta
+		new_velocity = lerp(new_velocity, direction * alert_speed * SPEED_MULT, delta)
 	elif _mode == GuardMode.PATROL:
-		new_velocity = direction * patrol_speed * SPEED_MULT * delta
+		new_velocity = lerp(new_velocity, direction * patrol_speed * SPEED_MULT, delta)
+		# new_velocity = direction * patrol_speed * SPEED_MULT * delta
 
 	if nav_agent.avoidance_enabled:
 		nav_agent.velocity = new_velocity
@@ -122,15 +95,25 @@ func _sort_by_distance_to_guard(pos1 : Node2D, pos2: Node2D):
 	return pos1_to_guard < pos2_to_guard
 
 
+func update_target() -> void: 
+	if _mode == GuardMode.ALERT:
+		nav_agent.target_position = _last_player_pos
+	elif _mode == GuardMode.PATROL:
+		# print("move to wp %s" % _waypoints[_wp_index])
+		nav_agent.target_position = _waypoints[_wp_index]
+	elif _mode == GuardMode.SEARCH:
+		nav_agent.target_position = self.global_position
+
+
 func calculate_states() -> void:
 	if velocity.x == 0 and velocity.y == 0:
 		set_enemy_states(EnemyState.IDLE)
 	elif velocity.x != 0 or velocity.y != 0:
 		set_enemy_states(EnemyState.RUN)
-		if velocity.x < 0:
+		if velocity.x <= -0.1:
 			sprite.flip_h = true
 			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 0.9)
-		elif velocity.x > 0:
+		elif velocity.x >= 0.1:
 			sprite.flip_h = false
 			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 0.9)
 
@@ -179,6 +162,18 @@ func _player_in_sight(flag: bool) -> void:
 		return
 		
 	_player_sighted = flag
+	if _player_sighted:
+		_dec_detection = false
+		detection_delay.stop()
+	
+		update_last_player_pos()
+		update_target()
+	else:
+		if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
+			update_last_player_pos()
+			update_target()
+		elif _mode == GuardMode.PATROL || _mode == GuardMode.SEARCH:
+			detection_delay.start()
 
 
 func detect_player(delta) -> void:
@@ -187,7 +182,8 @@ func detect_player(delta) -> void:
 			_sneak_detection_value = detection_inc / 2
 		else:
 			_sneak_detection_value = detection_inc
-	
+
+	# is compares identity, == compares content
 	if _player_sighted:
 		if !detection_bar._get_is_alert():
 			detection_bar.detection += _sneak_detection_value * delta * DETECT_MULT
@@ -209,6 +205,23 @@ func detect_player(delta) -> void:
 	# if player is found, keep following player and reset time
 
 
+func check_raycast() -> void:
+	if _player != null:
+		if _player_in_vision_area:
+			ray.enabled = true
+			ray.target_position = global_position.direction_to(_player.global_position) * 150
+		
+			if ray.is_colliding():
+				if ray.get_collider() is Player:
+					_player_in_sight(true)
+				else:
+					_player_in_sight(false)
+			else:
+				_player_in_sight(false)
+		else:
+			ray.enabled = false
+
+
 func flip_sprite() -> void:
 	if sprite.flip_h:
 		sprite.flip_h = false
@@ -223,22 +236,13 @@ func _on_vision_cone_body_entered(body: Node2D) -> void:
 		_player = body
 		_player_pos = _player.get_nav_points()
 	
-	_player_in_sight(true)
-	_dec_detection = false
-	detection_delay.stop()
-	
-	update_last_player_pos()
-	update_target()
+	# _player_in_sight(true)
+	_player_in_vision_area = true
 
 
 func _on_vision_cone_body_exited(body: Node2D) -> void:
 	_player_in_sight(false)
-	
-	if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
-		update_last_player_pos()
-		update_target()
-	elif _mode == GuardMode.PATROL || _mode == GuardMode.SEARCH:
-		detection_delay.start()
+	_player_in_vision_area = false
 
 
 func _on_navigation_agent_2d_target_reached() -> void:

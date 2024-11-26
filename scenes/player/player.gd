@@ -19,7 +19,6 @@ const LOCKPICK_MULTIPLIER: float = 2.0
 @onready var nav_points: Node2D = $NavPoints
 
 
-
 var _state: PlayerState = PlayerState.IDLE
 var _sneaking: bool = false
 var _interacting: bool = false
