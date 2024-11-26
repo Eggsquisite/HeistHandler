@@ -11,7 +11,6 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var follow_delay: Timer = $Timers/FollowDelay
 @onready var patrol_timer: Timer = $Timers/PatrolTimer
 @onready var search_flip_timer: Timer = $Timers/SearchFlipTimer
-@onready var label: Label = $Label
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
@@ -52,8 +51,7 @@ var _sneak_detection_value: float
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	nav_agent.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
-	# make_path()
-	# _target_pos = get_tree().get_first_node_in_group("player").get_nav_points()
+	
 	_sneak_detection_value = detection_inc
 	_waypoints = patrol_waypoints.get_waypoints()
 	update_target()
@@ -130,7 +128,6 @@ func set_guard_mode(new_mode: GuardMode) -> void:
 	if _mode == new_mode:
 		return
 	_mode = new_mode
-	label.text = GuardMode.keys()[_mode]
 	
 	match _mode:
 		GuardMode.PATROL:

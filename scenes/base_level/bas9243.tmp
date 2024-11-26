@@ -426,19 +426,21 @@ tile_set = SubResource("TileSet_kw86y")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
 z_index = 5
-position = Vector2(114, -40)
+position = Vector2(175, -141)
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(230, -102)
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
-position = Vector2(8, -36)
+position = Vector2(103, -36)
 difficulty = 3
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
 position = Vector2(40, -109)
 rotation = -0.00714274
-alert_speed = 45.0
+patrol_delay = 2.0
+alert_speed = 35.0
+detection_inc = 8.0
 detection_dec = 2.0
 
 [node name="PatrolWaypoints" parent="Guard" instance=ExtResource("6_bjxsp")]
@@ -456,6 +458,5 @@ position = Vector2(133.425, 80.9551)
 position = Vector2(-0.578552, 80.9979)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-texture_filter = 1
 energy = 0.5
 blend_mode = 1
