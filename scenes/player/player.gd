@@ -147,17 +147,19 @@ func get_sneak_status() -> bool:
 	return _sneaking
 
 
-func go_invincible() -> void:
-	_invincible = true
-	invincible_timer.start()
-	invincible_player.play("invincible")
-
-
 func apply_hit() -> void:
 	if _invincible:
 		return
 	
+	print("player hit")
+	SignalManager.on_player_hit.emit()
 	go_invincible()
+
+
+func go_invincible() -> void:
+	_invincible = true
+	invincible_timer.start()
+	invincible_player.play("invincible")
 
 
 func _on_invincible_timer_timeout() -> void:

@@ -14,14 +14,14 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 2
 
 [node name="WordGame" type="CenterContainer"]
-z_index = 5
+z_index = 20
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -44.0
-offset_bottom = -44.0
+offset_top = -49.0
+offset_bottom = -49.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -30,9 +30,11 @@ size_flags_vertical = 4
 script = ExtResource("1_nr105")
 
 [node name="Control" type="Control" parent="."]
+z_index = 20
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
+z_index = 20
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,7 +50,7 @@ grow_vertical = 2
 color = Color(0.176471, 0.0941176, 0.0117647, 0.784314)
 
 [node name="LockpickTriesContainer" type="HBoxContainer" parent="Control/ColorRect"]
-z_index = 5
+z_index = 20
 layout_direction = 1
 layout_mode = 1
 offset_left = 10.6666
@@ -61,17 +63,20 @@ script = ExtResource("2_d0nwn")
 
 [node name="LockpickTries" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
 visible = false
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="LockpickTries2" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
 visible = false
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
+z_index = 20
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -88,10 +93,12 @@ theme_override_constants/separation = 20
 
 [node name="LockpickProgressBar" type="ProgressBar" parent="Control/ColorRect/VBoxContainer"]
 visible = false
+z_index = 20
 layout_mode = 2
 
 [node name="Instructions" type="Label" parent="Control/ColorRect/VBoxContainer"]
 visible = false
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -101,6 +108,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Full Word Container" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -109,6 +117,7 @@ focus_previous = NodePath("../LineEdit")
 theme_override_constants/separation = 8
 
 [node name="LineEdit" type="LineEdit" parent="Control/ColorRect/VBoxContainer"]
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -123,6 +132,7 @@ expand_to_text_length = true
 caret_blink = true
 
 [node name="LockStatus" type="Label" parent="Control/ColorRect/VBoxContainer"]
+z_index = 20
 layout_mode = 2
 text = "3 Guesses "
 label_settings = SubResource("LabelSettings_kjemf")
@@ -131,6 +141,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="ColorRect2" type="ColorRect" parent="Control"]
+z_index = 20
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -146,6 +157,7 @@ grow_vertical = 2
 color = Color(0.298039, 0.2, 0.0980392, 0.686275)
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect2"]
+z_index = 20
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -157,10 +169,12 @@ theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
 [node name="UsedWordsContainer" type="VBoxContainer" parent="Control/ColorRect2/MarginContainer"]
+z_index = 20
 layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="Control/ColorRect2/MarginContainer/UsedWordsContainer"]
+z_index = 20
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Used:"

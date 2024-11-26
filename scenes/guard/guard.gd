@@ -11,14 +11,18 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var follow_delay: Timer = $Timers/FollowDelay
 @onready var patrol_timer: Timer = $Timers/PatrolTimer
 @onready var search_flip_timer: Timer = $Timers/SearchFlipTimer
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var hitbox_shape: CollisionShape2D = $EnemyHitbox/CollisionShape2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
 @onready var patrol_waypoints: Node2D = $PatrolWaypoints
-@onready var ray: RayCast2D = $RayCast2D
+@onready var detect_ray: RayCast2D = $DetectPlayerRay
+@onready var attack_ray: RayCast2D = $AttackPlayerRay
 
 const SPEED_MULT: float = 100
 const DETECT_MULT: float = 10
+const ATTACK_RANGE: float = 15
 
 var _player: Node2D
 var _state: EnemyState = EnemyState.IDLE
@@ -28,6 +32,8 @@ var _dec_detection: bool = false
 var _player_sighted: bool = false
 var _player_in_vision_area: bool = false
 var _player_is_sneaking: bool = false
+var _can_attack: bool = true
+var _extra_searches: int = 0
 var _last_player_pos: Vector2
 var _player_pos: Array[Node2D]
 var _waypoints: Array[Vector2]
@@ -36,13 +42,14 @@ var _wp_index: int = 0
 var _sneak_detection_value: float
 
 @export_group("Patrol Variables")
-@export var patrol_speed: float = 15
+@export var patrol_speed: float = 25
 @export var patrol_delay: float = 2
 
 @export_group("Alert Variables")
-@export var alert_speed: float = 40
+@export var alert_speed: float = 45
 @export var detection_inc: float = 8
-@export var detection_dec: float = 4
+@export var detection_dec: float = 2
+@export var _extra_search_max: int = 2
 
 @export_group("Search Variables")
 @export var search_dur: float = 3
@@ -54,8 +61,9 @@ func _ready() -> void:
 	
 	_sneak_detection_value = detection_inc
 	_waypoints = patrol_waypoints.get_waypoints()
+	detect_ray.enabled = false
+	hitbox_shape.disabled = true
 	update_target()
-	ray.enabled = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -63,8 +71,10 @@ func _physics_process(delta: float) -> void:
 	move_to_target(delta)
 	detect_player(delta)
 	check_raycast()
-	move_and_slide()
 	calculate_states()
+	attack_player()
+	if _state != EnemyState.ATTACK:
+		move_and_slide()
 
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
@@ -73,9 +83,13 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 
 
 func move_to_target(delta) -> void:
+	# Do not move when attacking
+	if _state == EnemyState.ATTACK:
+		return
+	
+	var new_velocity: Vector2
 	var next_path_pos = nav_agent.get_next_path_position()
 	var direction = global_position.direction_to(next_path_pos)
-	var new_velocity: Vector2
 	if _mode == GuardMode.ALERT:
 		new_velocity = lerp(new_velocity, direction * alert_speed * SPEED_MULT, delta)
 	elif _mode == GuardMode.PATROL:
@@ -91,7 +105,7 @@ func move_to_target(delta) -> void:
 func _sort_by_distance_to_guard(pos1 : Node2D, pos2: Node2D):
 	var pos1_to_guard = global_position.distance_to(pos1.global_position)
 	var pos2_to_guard = global_position.distance_to(pos2.global_position)
-	return pos1_to_guard < pos2_to_guard
+	return pos1_to_guard > pos2_to_guard
 
 
 func update_target() -> void: 
@@ -105,23 +119,42 @@ func update_target() -> void:
 
 
 func calculate_states() -> void:
+	if _state == EnemyState.ATTACK:
+		return
+	
 	if velocity.x == 0 and velocity.y == 0:
 		set_enemy_states(EnemyState.IDLE)
 	elif velocity.x != 0 or velocity.y != 0:
 		set_enemy_states(EnemyState.RUN)
-		if velocity.x <= -0.1:
-			sprite.flip_h = true
-			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 0.9)
-		elif velocity.x >= 0.1:
+		if velocity.x >= -0.1:
 			sprite.flip_h = false
-			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 0.9)
+			attack_ray.target_position = Vector2(ATTACK_RANGE, 0)
+			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 1)
+		elif velocity.x <= 0.1:
+			sprite.flip_h = true
+			attack_ray.target_position = Vector2(-ATTACK_RANGE, 0)
+			vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
+
+
+func attack_player() -> void:
+	if attack_ray.is_colliding():
+		set_enemy_states(EnemyState.ATTACK)
 
 
 func set_enemy_states(new_state: EnemyState) -> void:
 	if _state == new_state:
 		return
-	
 	_state = new_state
+	
+	match _state:
+		EnemyState.IDLE:
+			anim_player.play("idle")
+		EnemyState.RUN:
+			anim_player.play("run")
+		EnemyState.ATTACK:
+			if _can_attack:
+				_can_attack = false
+				anim_player.play("attack")
 
 
 func set_guard_mode(new_mode: GuardMode) -> void:
@@ -135,6 +168,7 @@ func set_guard_mode(new_mode: GuardMode) -> void:
 			stop_search()
 			update_target()
 		GuardMode.ALERT:
+			_extra_searches = _extra_search_max
 			patrol_timer.stop()
 			follow_delay.start()
 			stop_search()
@@ -162,12 +196,14 @@ func _player_in_sight(flag: bool) -> void:
 	if _player_sighted:
 		_dec_detection = false
 		detection_delay.stop()
+		_extra_searches = _extra_search_max
 		
 		if _mode == GuardMode.ALERT || _mode == GuardMode.SEARCH:
 			update_last_player_pos()
 			update_target()
 	else:
 		if _mode == GuardMode.ALERT: # If player LoS lost and guard is alerted, go to player's last known pos
+			follow_delay.start()
 			update_last_player_pos()
 			update_target()
 		elif _mode == GuardMode.PATROL || _mode == GuardMode.SEARCH:
@@ -206,26 +242,39 @@ func detect_player(delta) -> void:
 func check_raycast() -> void:
 	if _player != null:
 		if _player_in_vision_area:
-			ray.enabled = true
-			ray.target_position = global_position.direction_to(_player.global_position) * 250
+			detect_ray.enabled = true
+			detect_ray.target_position = global_position.direction_to(_player.global_position) * 250
 		
-			if ray.is_colliding():
-				if ray.get_collider() is Player:
+			if detect_ray.is_colliding():
+				if detect_ray.get_collider() is Player:
 					_player_in_sight(true)
 				else:
 					_player_in_sight(false)
 			else:
 				_player_in_sight(false)
 		else:
-			ray.enabled = false
+			detect_ray.enabled = false
 
 
 func flip_sprite() -> void:
 	if sprite.flip_h:
 		sprite.flip_h = false
+		attack_ray.target_position = Vector2(ATTACK_RANGE, 0)
 		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 1)
 	else:
 		sprite.flip_h = true
+		attack_ray.target_position = Vector2(-ATTACK_RANGE, 0)
+		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
+
+
+func face_player() -> void:
+	if self.global_position.direction_to(_player.global_position) > Vector2.ZERO:
+		sprite.flip_h = false
+		attack_ray.target_position = Vector2(ATTACK_RANGE, 0)
+		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 0.0, 1)
+	elif self.global_position.direction_to(_player.global_position) <= Vector2.ZERO:
+		sprite.flip_h = true
+		attack_ray.target_position = Vector2(-ATTACK_RANGE, 0)
 		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
 
 
@@ -250,9 +299,11 @@ func _on_navigation_agent_2d_target_reached() -> void:
 		call_deferred("flip_sprite")
 		search_flip_timer.start(search_delay)
 	elif _mode == GuardMode.ALERT:
-		if !_player_sighted:
+		if !_player_sighted and _extra_searches == 0:
 			follow_delay.stop()
 			detection_delay.start()
+		else:
+			face_player()
 	elif _mode == GuardMode.PATROL:
 		if _wp_index < _waypoints.size() - 1:
 			_wp_index += 1
@@ -267,6 +318,9 @@ func _on_detection_delay_timeout() -> void:
 
 func _on_follow_delay_timeout() -> void:
 	if _player_sighted:
+		update_last_player_pos()
+	elif !_player_sighted and _extra_searches > 0:
+		_extra_searches -= 1
 		update_last_player_pos()
 	update_target()
 
@@ -283,3 +337,9 @@ func _on_search_flip_timer_timeout() -> void:
 func _on_player_detect_area_body_entered(body: Node2D) -> void:
 	# Fill detection to max when player touches guard
 	detection_bar.detection += 100 
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "attack":
+		_can_attack = true
+		set_enemy_states(EnemyState.IDLE)

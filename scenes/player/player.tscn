@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cf6hjuffh04dw" path="res://assets/player/Medieval Thief Sprite Sheet.png" id="2_myxj4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4u78"]
-size = Vector2(11, 17)
+size = Vector2(11, 14)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjkt"]
 radius = 7.0
-height = 20.0
+height = 18.0
 
 [sub_resource type="Animation" id="Animation_kxpu4"]
 length = 0.001
@@ -194,6 +194,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 4
 collision_layer = 2
 script = ExtResource("1_ki0f4")
 
@@ -204,7 +205,7 @@ vframes = 8
 frame = 21
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 7.5)
+position = Vector2(0.5, 6)
 shape = SubResource("RectangleShape2D_c4u78")
 
 [node name="HitBox" type="Area2D" parent="."]

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://r3j2mfapjudu" path="res://scenes/shield_lock/shield_lock.tscn" id="4_xf4qc"]
 
 [node name="LetterContainer" type="CenterContainer"]
-z_index = 5
+z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

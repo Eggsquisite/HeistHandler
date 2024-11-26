@@ -94,12 +94,10 @@ frame = 70
 action_name = "lockpick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_syylu")
 
 [node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]
 visible = false
-z_index = 20
 
 [node name="ChestAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

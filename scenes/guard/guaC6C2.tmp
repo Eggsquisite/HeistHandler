@@ -117,10 +117,10 @@ _data = {
 }
 
 [node name="Guard" type="CharacterBody2D" groups=["enemy"]]
-z_index = 5
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_8kgwj")
+patrol_speed = 25.0
 search_dur = 5.0
 search_delay = 1.5
 
@@ -131,9 +131,9 @@ vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_oko4g")
-disabled = true
 
 [node name="PlayerDetectArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -148,8 +148,8 @@ collision_mask = 2
 polygon = PackedVector2Array(-45, 25, -45, -25, 0, -50, 200, -150, 200, 150, 0, 50)
 
 [node name="EnemyHitbox" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 0
+collision_layer = 0
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitbox"]
 position = Vector2(2, 0)
@@ -159,7 +159,7 @@ shape = SubResource("CapsuleShape2D_h2ddv")
 collision_mask = 3
 
 [node name="AttackPlayerRay" type="RayCast2D" parent="."]
-target_position = Vector2(20, 0)
+target_position = Vector2(25, 0)
 collision_mask = 2
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
