@@ -6,7 +6,7 @@ const MAX_VALUE = 100
 var detection: float = 0 : set = _set_detection
 var alert: bool = false
 var q_mark = preload("res://assets/ui/question_mark.png")
-var q_mark_fill = preload("res://assets/ui/question_mark_fill-export.png")
+var q_mark_fill = preload("res://assets/ui/question_mark_fill.png")
 var e_mark = preload("res://assets/ui/exclamation_mark.png")
 var e_mark_fill = preload("res://assets/ui/exclamation_mark_fill.png")
 
@@ -16,6 +16,7 @@ func _ready() -> void:
 	texture_under = q_mark
 	texture_progress = q_mark_fill
 	self.hide()
+	
 
 
 func _set_detection(new_value):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://du7cuy1sv0guk"
-path="res://.godot/imported/question_mark_fill-export.png-8307fa00f4c72f29afe83b932528845e.ctex"
+uid="uid://do40kednac0gt"
+path="res://.godot/imported/Royal Swordsman Sprite Sheet.png-58330eef2b8bae101a80e09ffa0468db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/question_mark_fill-export.png"
-dest_files=["res://.godot/imported/question_mark_fill-export.png-8307fa00f4c72f29afe83b932528845e.ctex"]
+source_file="res://assets/guard/Royal Swordsman Sprite Sheet.png"
+dest_files=["res://.godot/imported/Royal Swordsman Sprite Sheet.png-58330eef2b8bae101a80e09ffa0468db.ctex"]
 
 [params]
 

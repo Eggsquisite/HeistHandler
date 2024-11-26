@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://drgbyvpax6s8d" path="res://assets/ui/exclamation_mark_fill.png" id="2_uxdor"]
 
 [node name="DetectionBar" type="TextureProgressBar"]
-z_index = 20
+z_index = 1
 texture_filter = 1
 offset_right = 16.0
 offset_bottom = 16.0

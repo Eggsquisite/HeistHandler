@@ -459,3 +459,4 @@ position = Vector2(-0.578552, 80.9979)
 texture_filter = 1
 energy = 0.5
 blend_mode = 1
+range_z_max = 15

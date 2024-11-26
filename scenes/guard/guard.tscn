@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cxa6y2bqtmt8s"]
 
 [ext_resource type="Script" path="res://scenes/guard/guard.gd" id="1_8kgwj"]
-[ext_resource type="Texture2D" uid="uid://cs3w7om7g84v8" path="res://assets/player/player-single.png" id="1_w8e7d"]
+[ext_resource type="Texture2D" uid="uid://do40kednac0gt" path="res://assets/guard/Royal Swordsman Sprite Sheet.png" id="3_1ouyj"]
 [ext_resource type="PackedScene" uid="uid://t56j5dtc6cj3" path="res://scenes/detection_bar/detection_bar.tscn" id="3_hhikg"]
 [ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="4_oxdxr"]
 
@@ -20,10 +20,10 @@ search_dur = 5.0
 search_delay = 1.5
 
 [node name="DetectionBar" parent="." instance=ExtResource("3_hhikg")]
-offset_left = -7.0
-offset_top = -27.0
-offset_right = 9.0
-offset_bottom = -11.0
+offset_left = -8.0
+offset_top = -31.0
+offset_right = 8.0
+offset_bottom = -15.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 3
@@ -37,7 +37,9 @@ debug_use_custom = true
 debug_path_custom_color = Color(0.731612, 0, 0.0691198, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_w8e7d")
+texture = ExtResource("3_1ouyj")
+hframes = 8
+vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_oko4g")
@@ -58,12 +60,11 @@ one_shot = true
 [node name="SearchFlipTimer" type="Timer" parent="Timers"]
 
 [node name="VisionCone" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionCone"]
-polygon = PackedVector2Array(-25, 30, -25, -30, 25, -100, 200, -150, 200, 150, 25, 100)
+polygon = PackedVector2Array(-45, 25, -45, -25, 0, -50, 200, -150, 200, 150, 0, 50)
 
 [node name="PlayerDetectArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -75,10 +76,19 @@ shape = SubResource("CircleShape2D_62iqj")
 [node name="Light" type="Node2D" parent="."]
 
 [node name="BodyLight" type="PointLight2D" parent="Light"]
+energy = 0.7
 shadow_enabled = true
 shadow_filter = 1
 texture = ExtResource("4_oxdxr")
 texture_scale = 1.5
+
+[node name="BodyLight2" type="PointLight2D" parent="Light"]
+visible = false
+energy = 0.4
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("4_oxdxr")
+texture_scale = 4.0
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="timeout" from="Timers/DetectionDelay" to="." method="_on_detection_delay_timeout"]

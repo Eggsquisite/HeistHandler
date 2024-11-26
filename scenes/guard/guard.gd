@@ -277,7 +277,7 @@ func _on_patrol_delay_timeout() -> void:
 
 
 func _on_search_flip_timer_timeout() -> void:
-	flip_sprite()
+	call_deferred("flip_sprite")
 
 
 func _on_player_detect_area_body_entered(body: Node2D) -> void:
