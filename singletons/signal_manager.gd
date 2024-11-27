@@ -13,6 +13,7 @@ signal on_player_hit(lives: int)
 signal on_level_started(lives: int)
 signal on_level_complete
 signal on_timer_end(elapsed_time: float)
+signal on_loot_end(loot: int)
 
 signal on_guard_alert
 signal on_guard_lost

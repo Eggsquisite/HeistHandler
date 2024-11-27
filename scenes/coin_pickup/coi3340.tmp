@@ -88,27 +88,31 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6d5y"]
-radius = 6.0
+radius = 8.06226
 
-[node name="CoinPickup" type="Area2D"]
+[node name="CoinPickup" type="StaticBody2D"]
 z_index = 5
 y_sort_enabled = true
+scale = Vector2(0.75, 0.75)
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("1_k7o7d")
+type = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_uovm1")
 animation = &"copper"
-frame_progress = 0.631102
+frame_progress = 0.176097
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_d6d5y")
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
 [node name="LifeTimer" type="Timer" parent="."]
-wait_time = 4096.0
+wait_time = 3.0
 one_shot = true
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

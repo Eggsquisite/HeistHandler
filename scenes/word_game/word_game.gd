@@ -246,8 +246,6 @@ func end_minigame(_lives: int) -> void:
 	if !is_interacting: # since now connected to on_player_hit signal, need check
 		return
 	
-	print("ending")
-	
 	# Lock picked or broken, delete minigame
 	if check_lock_finished():
 		# To check if chest is unlock/locked

@@ -1,11 +1,13 @@
-[gd_scene load_steps=16 format=4 uid="uid://ctlcuyeb87x46"]
+[gd_scene load_steps=18 format=4 uid="uid://ctlcuyeb87x46"]
 
+[ext_resource type="Script" path="res://scenes/base_level/base_level.gd" id="1_8i40g"]
 [ext_resource type="Texture2D" uid="uid://td5ecgxvb75o" path="res://assets/tiles/Terrain (16x16).png" id="1_hulus"]
 [ext_resource type="Script" path="res://scenes/base_level/ground.gd" id="2_ewtgt"]
 [ext_resource type="PackedScene" uid="uid://bh0ftwhxdjh1l" path="res://scenes/player/player.tscn" id="2_fl8iu"]
 [ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_7sbiq"]
 [ext_resource type="PackedScene" uid="uid://cxa6y2bqtmt8s" path="res://scenes/guard/guard.tscn" id="4_1vosi"]
 [ext_resource type="PackedScene" uid="uid://bpby7u2fduhbo" path="res://scenes/patrol_waypoints/patrol_waypoints.tscn" id="6_bjxsp"]
+[ext_resource type="PackedScene" uid="uid://bi8ugkv61xqqg" path="res://scenes/coin_pickup/coin_pickup.tscn" id="6_o27eb"]
 [ext_resource type="PackedScene" uid="uid://m4oaqcygjc3l" path="res://scenes/hud/hud.tscn" id="7_towt5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ap1rj"]
@@ -414,6 +416,7 @@ sources/0 = SubResource("TileSetAtlasSource_cfjew")
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_8i40g")
 
 [node name="TileMapLayers" type="Node2D" parent="."]
 
@@ -433,8 +436,13 @@ position = Vector2(114, -40)
 position = Vector2(230, -118)
 difficulty = "medium"
 
+[node name="CoinPickup" parent="." instance=ExtResource("6_o27eb")]
+position = Vector2(237, -17)
+
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(8, -46)
+coin_type = "silver"
+coin_amt = 50
 difficulty = "hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]

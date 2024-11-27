@@ -11,9 +11,11 @@ extends Control
 
 var _hearts: Array
 var _stars: Array
+var _loot: int = 0
 var _time: float = 0.0
 var _time_start: float = 0.0
 var _time_end: float = 0.0
+var _time_elapsed: float = 0.0
 var _minutes: int = 0
 var _seconds: int = 0
 var _msec: int = 0
@@ -27,6 +29,7 @@ func _ready() -> void:
 	SignalManager.on_level_started.connect(on_player_hit)
 	SignalManager.on_level_started.connect(start_game_timer)
 	SignalManager.on_level_complete.connect(stop_game_timer)
+	SignalManager.on_loot_pickup.connect(update_loot_score)
 
 
 func _process(delta: float) -> void:
@@ -42,15 +45,22 @@ func _process(delta: float) -> void:
 func stop_game_timer() -> void:
 	set_process(false)
 	_time_end = Time.get_unix_time_from_system()
-	_time = _time_end - _time_start
-	SignalManager.on_timer_end.emit(_time)
+	_time_elapsed = _time_end - _time_start
+	SignalManager.on_timer_end.emit(_time_elapsed)
+	SignalManager.on_loot_end.emit(_loot)
 
 
-func start_game_timer() -> void:
-	set_process(true)
+func start_game_timer(_val) -> void:
+	_time = 0.0
 	_time_start = Time.get_unix_time_from_system()
+	set_process(true)
 
 
 func on_player_hit(lives: int) -> void:
 	for life in range(_hearts.size()):
 		_hearts[life].visible = lives > life
+
+
+func update_loot_score(loot: int) -> void:
+	_loot += loot
+	loot_score.text = "%03d" % _loot

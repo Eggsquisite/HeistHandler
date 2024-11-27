@@ -86,9 +86,8 @@ size_flags_vertical = 0
 [node name="Minutes" type="Label" parent="MC/HB/TimerPanel"]
 layout_mode = 0
 offset_left = -215.0
-offset_top = -1.0
 offset_right = -167.0
-offset_bottom = 20.0
+offset_bottom = 21.0
 text = "00"
 label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2
@@ -96,10 +95,9 @@ vertical_alignment = 1
 
 [node name="Seconds" type="Label" parent="MC/HB/TimerPanel"]
 layout_mode = 0
-offset_left = -165.0
-offset_top = -1.0
-offset_right = -93.0
-offset_bottom = 20.0
+offset_left = -170.0
+offset_right = -98.0
+offset_bottom = 21.0
 text = ":00"
 label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2
@@ -108,9 +106,8 @@ vertical_alignment = 1
 [node name="Msecs" type="Label" parent="MC/HB/TimerPanel"]
 layout_mode = 0
 offset_left = -100.0
-offset_top = -1.0
-offset_right = -52.0
-offset_bottom = 20.0
+offset_right = -28.0
+offset_bottom = 21.0
 text = ".00"
 label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2

@@ -80,31 +80,26 @@ _data = {
 
 [node name="Chest" type="Node2D"]
 z_index = 5
-y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_b1120")
+coin_amt = 5
+coin_range = 50.0
 reward = 15
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
-position = Vector2(0, 10)
+position = Vector2(0, 9)
 texture = ExtResource("2_23erl")
 hframes = 7
 vframes = 12
 frame = 70
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_arlpa")]
-position = Vector2(0, 10)
+position = Vector2(0, 9)
 action_name = "lockpick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_syylu")
-
-[node name="ChestAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_oy3xa")
-}
-autoplay = "idle"
 
 [node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]
 visible = false
@@ -115,6 +110,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_bottom = -40.0
+offset_top = -38.0
+offset_bottom = -38.0
 size_flags_vertical = 0
+
+[node name="CoinSpawner" type="Node2D" parent="."]
+position = Vector2(0, 6)
+
+[node name="ChestAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oy3xa")
+}
+autoplay = "idle"

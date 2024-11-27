@@ -24,7 +24,7 @@ var _state: PlayerState = PlayerState.IDLE
 var _sneaking: bool = false
 var _interacting: bool = false
 var _invincible: bool = false
-var _max_health: int = 3
+var _max_health: int = 5
 var _current_health: int
 
 
