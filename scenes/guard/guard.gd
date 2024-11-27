@@ -22,7 +22,7 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 
 const SPEED_MULT: float = 100
 const DETECT_MULT: float = 10
-const ATTACK_RANGE: float = 15
+const ATTACK_RANGE: float = 12.5
 
 var _player: Node2D
 var _state: EnemyState = EnemyState.IDLE

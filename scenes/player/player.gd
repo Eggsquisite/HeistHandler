@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 class_name Player
 
-enum PlayerState { IDLE, RUN, SNEAK_IDLE, SNEAK_WALK, LOCKPICK, HURT }
+enum PlayerState { IDLE, RUN, SNEAK_IDLE, SNEAK_WALK, LOCKPICK, HURT, DEATH }
 
 const RUN_SPEED: float = 100.0
 const SNEAK_SPEED: float = 60.0
@@ -17,17 +17,22 @@ const LOCKPICK_MULTIPLIER: float = 2.0
 @onready var invincible_timer: Timer = $InvincibleTimer
 @onready var invincible_player: AnimationPlayer = $InvinciblePlayer
 @onready var nav_points: Node2D = $NavPoints
+@onready var hitbox_collision: CollisionShape2D = $Hurtbox/HitboxCollision2D
 
 
 var _state: PlayerState = PlayerState.IDLE
 var _sneaking: bool = false
 var _interacting: bool = false
 var _invincible: bool = false
+var _max_health: int = 3
+var _current_health: int
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalManager.word_game_started.connect(set_interact_true)
 	SignalManager.word_game_finished.connect(set_interact_false)
+	_current_health = _max_health
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,9 +44,9 @@ func _physics_process(delta: float) -> void:
 
 
 func update_debug_label() -> void:
-	debug_label.text = "%s\nsneak:%s\ninv:%s)" % [
+	debug_label.text = "%s\nhealth:%s\ninv:%s)" % [
 		PlayerState.keys()[_state],
-		_sneaking,
+		_current_health,
 		_invincible
 		]
 
@@ -50,7 +55,7 @@ func get_input() -> void:
 	velocity.x = 0
 	velocity.y = 0
 	
-	if _interacting:
+	if _interacting || _state == PlayerState.HURT:
 		return
 	
 	if _sneaking:
@@ -79,6 +84,9 @@ func calculate_movement(speed: float) -> void:
 
 
 func calculate_states() -> void:
+	if _state == PlayerState.HURT:
+		return
+	
 	if _interacting:
 		set_sneaking(true)
 		set_state(PlayerState.LOCKPICK)
@@ -111,6 +119,10 @@ func set_state(new_state: PlayerState) -> void:
 			anim_player.play("sneak_walk")
 		PlayerState.LOCKPICK:
 			anim_player.play("sneak_idle")
+		PlayerState.HURT:
+			anim_player.play("hurt")
+		PlayerState.DEATH:
+			anim_player.play("death")
 
 
 func set_sneaking(sneak_flag: bool) -> void:
@@ -150,22 +162,46 @@ func get_sneak_status() -> bool:
 func apply_hit() -> void:
 	if _invincible:
 		return
+
+	if reduce_health(1) == false:
+		return
 	
-	print("player hit")
-	SignalManager.on_player_hit.emit()
+	set_state(PlayerState.HURT)
 	go_invincible()
+
+
+func reduce_health(reduction: int) -> bool:
+	_current_health -= reduction
+	SignalManager.on_player_hit.emit(_current_health)
+	if _current_health <= 0:
+		set_state(PlayerState.DEATH)
+		SignalManager.on_game_over.emit()
+		set_physics_process(false)
+		return false
+	return true
 
 
 func go_invincible() -> void:
 	_invincible = true
 	invincible_timer.start()
+	hitbox_collision.disabled = true
 	invincible_player.play("invincible")
+
+
+func get_invincible() -> bool:
+	return _invincible
 
 
 func _on_invincible_timer_timeout() -> void:
 	_invincible = false
+	hitbox_collision.disabled = false
 	invincible_player.stop()
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	apply_hit()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "hurt":
+		set_state(PlayerState.IDLE)
