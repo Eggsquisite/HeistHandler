@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://bh0ftwhxdjh1l"]
+[gd_scene load_steps=20 format=3 uid="uid://bh0ftwhxdjh1l"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ki0f4"]
 [ext_resource type="Texture2D" uid="uid://cf6hjuffh04dw" path="res://assets/player/Medieval Thief Sprite Sheet.png" id="2_myxj4"]
 [ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="3_31wov"]
+[ext_resource type="PackedScene" uid="uid://bhgo8dhr4d6hv" path="res://scenes/player_cam/player_cam.tscn" id="4_1btfe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4u78"]
 size = Vector2(11, 14)
@@ -248,8 +249,8 @@ position = Vector2(-12, 7)
 [node name="RightPoint" type="Node2D" parent="NavPoints"]
 position = Vector2(12, 7)
 
-[node name="PlayerCam" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+[node name="PlayerCam" parent="." instance=ExtResource("4_1btfe")]
+shake_amount = 1.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
