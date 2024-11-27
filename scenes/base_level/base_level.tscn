@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://ctlcuyeb87x46"]
+[gd_scene load_steps=16 format=4 uid="uid://ctlcuyeb87x46"]
 
 [ext_resource type="Texture2D" uid="uid://td5ecgxvb75o" path="res://assets/tiles/Terrain (16x16).png" id="1_hulus"]
 [ext_resource type="Script" path="res://scenes/base_level/ground.gd" id="2_ewtgt"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_7sbiq"]
 [ext_resource type="PackedScene" uid="uid://cxa6y2bqtmt8s" path="res://scenes/guard/guard.tscn" id="4_1vosi"]
 [ext_resource type="PackedScene" uid="uid://bpby7u2fduhbo" path="res://scenes/patrol_waypoints/patrol_waypoints.tscn" id="6_bjxsp"]
+[ext_resource type="PackedScene" uid="uid://m4oaqcygjc3l" path="res://scenes/hud/hud.tscn" id="7_towt5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ap1rj"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -459,4 +460,8 @@ texture_filter = 1
 energy = 0.5
 blend_mode = 1
 range_z_max = 15
-range_layer_max = 15
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("7_towt5")]
+mouse_filter = 2

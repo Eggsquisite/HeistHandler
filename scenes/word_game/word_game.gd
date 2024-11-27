@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 			begin_lockpick()
 	
 	if Input.is_action_just_pressed("escape") and !check_lock_finished():
-		end_minigame()
+		end_minigame(0)
 
 
 func start_minigame_timer(diff: String, pick_time: float, pick_mult: float) -> void:
@@ -242,9 +242,11 @@ func start_finished_timer() -> void:
 		n.word_finished()
 
 
-func end_minigame() -> void:
+func end_minigame(_lives: int) -> void:
 	if !is_interacting: # since now connected to on_player_hit signal, need check
 		return
+	
+	print("ending")
 	
 	# Lock picked or broken, delete minigame
 	if check_lock_finished():
@@ -293,7 +295,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 
 
 func _on_finished_timer_timeout() -> void:
-	end_minigame()
+	end_minigame(0)
 
 
 func _on_start_timer_timeout() -> void:

@@ -1,0 +1,186 @@
+[gd_scene load_steps=8 format=3 uid="uid://m4oaqcygjc3l"]
+
+[ext_resource type="Texture2D" uid="uid://dgw76avo4oaou" path="res://assets/ui/single_heart.png" id="1_2u3ix"]
+[ext_resource type="LabelSettings" uid="uid://brelg5q6shlgn" path="res://resources/fonts/16_wh.tres" id="1_3j8c2"]
+[ext_resource type="LabelSettings" uid="uid://b7pk5anclpjox" path="res://resources/fonts/24_wh.tres" id="2_b6rc2"]
+[ext_resource type="LabelSettings" uid="uid://fcujrqqus5xd" path="res://resources/fonts/48_red.tres" id="3_m40yd"]
+[ext_resource type="LabelSettings" uid="uid://6t30qdmwm2pr" path="res://resources/fonts/48_yellow.tres" id="5_46var"]
+[ext_resource type="Texture2D" uid="uid://dvij25c85hsi0" path="res://assets/ui/single_star_empty.png" id="6_hmht5"]
+[ext_resource type="Texture2D" uid="uid://dyk3vu7bopsco" path="res://assets/ui/single_star_filled.png" id="6_um1lp"]
+
+[node name="HUD" type="Control"]
+z_index = 20
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HB" type="HBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="VB" type="VBoxContainer" parent="MC/HB"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="HBHealth" type="HBoxContainer" parent="MC/HB/VB"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="H1" type="TextureRect" parent="MC/HB/VB/HBHealth"]
+layout_mode = 2
+texture = ExtResource("1_2u3ix")
+stretch_mode = 4
+
+[node name="H2" type="TextureRect" parent="MC/HB/VB/HBHealth"]
+layout_mode = 2
+texture = ExtResource("1_2u3ix")
+stretch_mode = 4
+
+[node name="H3" type="TextureRect" parent="MC/HB/VB/HBHealth"]
+layout_mode = 2
+texture = ExtResource("1_2u3ix")
+stretch_mode = 4
+
+[node name="H4" type="TextureRect" parent="MC/HB/VB/HBHealth"]
+layout_mode = 2
+texture = ExtResource("1_2u3ix")
+stretch_mode = 4
+
+[node name="H5" type="TextureRect" parent="MC/HB/VB/HBHealth"]
+layout_mode = 2
+texture = ExtResource("1_2u3ix")
+stretch_mode = 4
+
+[node name="LootScore" type="Label" parent="MC/HB/VB"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "000"
+label_settings = ExtResource("2_b6rc2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="MC/HB"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "05:00"
+label_settings = ExtResource("2_b6rc2")
+
+[node name="GameOverRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0313726, 0.0745098, 0.054902, 0.87451)
+
+[node name="VBGameOver" type="VBoxContainer" parent="GameOverRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -20.0
+offset_right = 108.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="GameOverRect/VBGameOver"]
+layout_mode = 2
+text = "Game Over"
+label_settings = ExtResource("3_m40yd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="GameOverRect/VBGameOver"]
+layout_mode = 2
+text = "Press Space to Restart"
+label_settings = ExtResource("1_3j8c2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelCompleteRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.403922, 0.870588, 0.87451)
+
+[node name="VBLevelComplete" type="VBoxContainer" parent="LevelCompleteRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -20.0
+offset_right = 108.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="LevelCompleteRect/VBLevelComplete"]
+layout_mode = 2
+text = "Level Complete"
+label_settings = ExtResource("5_46var")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelCompleteRect/VBLevelComplete"]
+layout_mode = 2
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_um1lp")
+stretch_mode = 4
+
+[node name="Star2" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_hmht5")
+stretch_mode = 4
+
+[node name="Star3" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_hmht5")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="LevelCompleteRect/VBLevelComplete"]
+layout_mode = 2
+text = "Press Space to Continue"
+label_settings = ExtResource("1_3j8c2")
+horizontal_alignment = 1
+vertical_alignment = 1

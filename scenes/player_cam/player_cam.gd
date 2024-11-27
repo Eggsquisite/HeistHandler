@@ -1,6 +1,6 @@
 extends Camera2D
 
-@export var shake_amount: float = 5
+@export var shake_amount: float = 1.5
 @onready var shake_timer: Timer = $ShakeTimer
 
 
