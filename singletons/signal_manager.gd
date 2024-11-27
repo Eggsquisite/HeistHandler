@@ -3,12 +3,16 @@ extends Node
 signal word_game_started
 signal word_game_finished(flag: int)
 signal letter_lockpicked
+signal chest_unlocked(pos: Vector2, coin_type: String, coin_amt: int)
 
 signal on_loot_pickup(loot: int)
 signal on_loot_updated(loot: int)
 
-signal on_player_hit(lives: int)
 signal on_game_over
+signal on_player_hit(lives: int)
+signal on_level_started(lives: int)
+signal on_level_complete
+signal on_timer_end(elapsed_time: float)
 
 signal on_guard_alert
 signal on_guard_lost

@@ -7,6 +7,8 @@ extends Interactable
 @onready var chest_anim: AnimationPlayer = $ChestAnimationPlayer
 
 var unlocked: bool = false
+@export_enum("copper", "silver") var coin_type: String = "copper"
+@export var coin_amt: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,5 +36,5 @@ func unlock_chest(flag: int) -> void:
 	elif flag == 1: # Lock unlocked
 		chest_anim.stop()
 		chest_anim.play("unlocked")
-	
+		SignalManager.chest_unlocked.emit(self.global_position, coin_type)
 	interaction_area.queue_free()

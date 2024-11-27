@@ -30,9 +30,14 @@ var _current_health: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_current_health = _max_health
+	call_deferred("late_setup")
 	SignalManager.word_game_started.connect(set_interact_true)
 	SignalManager.word_game_finished.connect(set_interact_false)
-	_current_health = _max_health
+
+
+func late_setup() -> void:
+	SignalManager.on_level_started.emit(_current_health)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

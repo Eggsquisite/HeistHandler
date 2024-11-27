@@ -80,6 +80,7 @@ _data = {
 
 [node name="Chest" type="Node2D"]
 z_index = 5
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_b1120")
 reward = 15
@@ -107,6 +108,8 @@ autoplay = "idle"
 
 [node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]
 visible = false
+light_mask = 0
+visibility_layer = 2
 anchors_preset = 15
 anchor_left = 0.0
 anchor_top = 0.0
