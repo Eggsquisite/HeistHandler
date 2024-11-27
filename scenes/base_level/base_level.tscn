@@ -442,7 +442,6 @@ position = Vector2(237, -17)
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(8, -46)
 coin_type = "silver"
-coin_amt = 50
 difficulty = "hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]

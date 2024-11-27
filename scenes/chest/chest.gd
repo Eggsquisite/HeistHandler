@@ -60,4 +60,4 @@ func spawn_coins() -> void:
 		)
 		coin_spawner.add_child(c)
 		c.setup_coin(coin_type, true)
-		c.set_move_location(tmp_pos)
+		c.move_to_location(tmp_pos)
