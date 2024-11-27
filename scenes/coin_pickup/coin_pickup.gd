@@ -28,12 +28,11 @@ func setup_coin(coin_type: String, timer_flag: bool) -> void:
 		life_timer.start()
 	else:
 		life_timer.stop()
+		coll.disabled = false
 
 
 func move_to_location(pos: Vector2) -> void:
 	target_pos = pos
-	# coll.disabled = true
-	move_timer.start(travel_dur)
 	anim_player.play("travel")
 	
 	var tween := create_tween()
@@ -46,6 +45,7 @@ func release_me() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	anim.stop()
 	anim_player.play("pickup")
 	SignalManager.on_loot_pickup.emit(value_amt)
 	# play sound
@@ -53,11 +53,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_life_timer_timeout() -> void:
 	release_me()
-
-
-func _on_move_timer_timeout() -> void:
-	pass
-	# coll.disabled = false
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

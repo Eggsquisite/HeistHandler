@@ -3,7 +3,6 @@ extends Node
 signal word_game_started
 signal word_game_finished(flag: int)
 signal letter_lockpicked
-signal chest_unlocked(pos: Vector2, coin_type: String, coin_amt: int)
 
 signal on_loot_pickup(loot: int)
 signal on_loot_updated(loot: int)

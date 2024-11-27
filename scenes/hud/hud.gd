@@ -1,7 +1,7 @@
 extends Control
 
 @onready var hb_hearts: HBoxContainer = $MC/HB/VB/HBHearts
-@onready var loot_score: Label = $MC/HB/VB/LootScore
+@onready var loot_score: Label = $MC/HB/VB/HB/LootScore
 @onready var game_over_rect: ColorRect = $GameOverRect
 @onready var level_complete_rect: ColorRect = $LevelCompleteRect
 @onready var hb_stars: HBoxContainer = $LevelCompleteRect/VBLevelComplete/HBStars
@@ -63,4 +63,4 @@ func on_player_hit(lives: int) -> void:
 
 func update_loot_score(loot: int) -> void:
 	_loot += loot
-	loot_score.text = "%03d" % _loot
+	loot_score.text = ":%03d" % _loot

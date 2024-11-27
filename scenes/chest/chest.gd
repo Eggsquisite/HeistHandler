@@ -8,12 +8,14 @@ var coin = preload("res://scenes/coin_pickup/coin_pickup.tscn")
 @onready var chest_sprite: Sprite2D = $ChestSprite
 @onready var chest_anim: AnimationPlayer = $ChestAnimationPlayer
 @onready var coin_spawner: Node2D = $CoinSpawner
+@onready var coin_timer: Timer = $CoinTimer
 
 var unlocked: bool = false
 var coin_pos: Vector2
+var coin_count: int = 0
 @export_enum("copper", "silver") var coin_type: String = "copper"
 @export var coin_amt: int = 1
-@export var coin_range: float = 2.0
+@export var coin_range: float = 25.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,19 +43,14 @@ func unlock_chest(flag: int) -> void:
 	elif flag == 1: # Lock unlocked
 		chest_anim.stop()
 		chest_anim.play("unlocked")
-		spawn_coins()
 		# SignalManager.chest_unlocked.emit(self.global_position, coin_type)
 	interaction_area.queue_free()
 
 
 func spawn_coins() -> void:
 	var tmp_pos = to_local(coin_spawner.global_position)
-	for i in range(coin_amt):
+	for i in range(0, coin_amt):
 		var c = coin.instantiate()
-		#coin_pos = Vector2(
-			#randf_range(tmp_pos.x - coin_range, tmp_pos.x + coin_range),
-			#randf_range(tmp_pos.y - coin_range, tmp_pos.y + coin_range)
-		#)
 		tmp_pos = Vector2(
 			randf_range(-coin_range, coin_range),
 			randf_range(-coin_range, coin_range)
@@ -61,3 +58,18 @@ func spawn_coins() -> void:
 		coin_spawner.add_child(c)
 		c.setup_coin(coin_type, true)
 		c.move_to_location(tmp_pos)
+
+
+func _on_chest_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "unlocked":
+		spawn_coins()
+		#coin_timer.start()
+
+
+
+func _on_coin_timer_timeout() -> void:
+	if coin_count < coin_amt:
+		spawn_coins()
+		coin_count += 1
+	else:
+		coin_timer.stop()

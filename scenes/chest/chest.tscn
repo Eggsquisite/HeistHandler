@@ -82,9 +82,9 @@ _data = {
 z_index = 5
 texture_filter = 1
 script = ExtResource("1_b1120")
-coin_amt = 5
-coin_range = 50.0
-reward = 15
+coin_amt = 25
+time_to_pick = 1.25
+mult_to_pick = 1.25
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
 position = Vector2(0, 9)
@@ -114,11 +114,17 @@ offset_top = -38.0
 offset_bottom = -38.0
 size_flags_vertical = 0
 
-[node name="CoinSpawner" type="Node2D" parent="."]
-position = Vector2(0, 6)
-
 [node name="ChestAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_oy3xa")
 }
 autoplay = "idle"
+
+[node name="CoinSpawner" type="Node2D" parent="."]
+position = Vector2(0, 6)
+
+[node name="CoinTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="animation_finished" from="ChestAnimationPlayer" to="." method="_on_chest_animation_player_animation_finished"]
+[connection signal="timeout" from="CoinTimer" to="." method="_on_coin_timer_timeout"]

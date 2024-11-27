@@ -174,7 +174,8 @@ func begin_lockpick() -> void:
 	if lockpick_count == 1:
 		lp_time = _time_to_pick
 	else:
-		lp_time = _time_to_pick * (_multiplier_to_pick * lockpick_count)
+		lp_time = _time_to_pick * (_multiplier_to_pick * lockpick_count / 2)
+	# print("lp time: %s" % lp_time)
 	
 	setup_line_edit(false)
 	lockpick_timer.start(lp_time)

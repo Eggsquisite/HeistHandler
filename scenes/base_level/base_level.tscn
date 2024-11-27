@@ -418,6 +418,11 @@ sources/0 = SubResource("TileSetAtlasSource_cfjew")
 y_sort_enabled = true
 script = ExtResource("1_8i40g")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("7_towt5")]
+mouse_filter = 2
+
 [node name="TileMapLayers" type="Node2D" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="TileMapLayers"]
@@ -436,12 +441,8 @@ position = Vector2(114, -40)
 position = Vector2(230, -118)
 difficulty = "medium"
 
-[node name="CoinPickup" parent="." instance=ExtResource("6_o27eb")]
-position = Vector2(237, -17)
-
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(8, -46)
-coin_type = "silver"
 difficulty = "hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
@@ -468,7 +469,116 @@ energy = 0.5
 blend_mode = 1
 range_z_max = 15
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Coins" type="Node2D" parent="."]
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource("7_towt5")]
-mouse_filter = 2
+[node name="CoinPickup" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(76, -2)
+disable_mode = 2
+
+[node name="CoinPickup2" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(68, 4)
+disable_mode = 2
+
+[node name="CoinPickup3" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(64, 14)
+disable_mode = 2
+
+[node name="CoinPickup4" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(72, 22)
+disable_mode = 2
+
+[node name="CoinPickup5" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(82, 25)
+disable_mode = 2
+
+[node name="CoinPickup6" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(73, 36)
+disable_mode = 2
+
+[node name="CoinPickup7" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(62, 43)
+disable_mode = 2
+
+[node name="CoinPickup8" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(70, 53)
+disable_mode = 2
+
+[node name="CoinPickup9" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(83, 58)
+disable_mode = 2
+
+[node name="CoinPickup10" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(93, 52)
+disable_mode = 2
+
+[node name="CoinPickup11" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(102, 41)
+disable_mode = 2
+
+[node name="CoinPickup12" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(113, 33)
+disable_mode = 2
+
+[node name="CoinPickup13" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(129, 35)
+disable_mode = 2
+
+[node name="CoinPickup14" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(142, 35)
+disable_mode = 2
+
+[node name="CoinPickup15" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(155, 35)
+disable_mode = 2
+
+[node name="CoinPickup16" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(165, 35)
+disable_mode = 2
+
+[node name="CoinPickup17" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(175, 35)
+disable_mode = 2
+
+[node name="CoinPickup18" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(183, 24)
+disable_mode = 2
+
+[node name="CoinPickup19" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(183, 12)
+disable_mode = 2
+
+[node name="CoinPickup20" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(176, 2)
+disable_mode = 2
+
+[node name="CoinPickup21" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(161, 0)
+disable_mode = 2
+
+[node name="CoinPickup22" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(149, 0)
+disable_mode = 2
+
+[node name="CoinPickup23" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(135, 2)
+disable_mode = 2
+
+[node name="CoinPickup24" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(125, 3)
+disable_mode = 2
+
+[node name="CoinPickup25" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(114, 4)
+disable_mode = 2
+
+[node name="CoinPickup26" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(106, 8)
+disable_mode = 2
+
+[node name="CoinPickup27" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(97, 4)
+disable_mode = 2
+
+[node name="CoinPickup28" parent="Coins" instance=ExtResource("6_o27eb")]
+position = Vector2(87, 0)
+disable_mode = 2

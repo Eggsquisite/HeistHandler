@@ -6,5 +6,4 @@ class_name Interactable
 # @export var max_tries: int = 3
 @export_enum("easy", "medium", "hard") var difficulty: String = "easy"
 @export var time_to_pick: float = 1
-@export var mult_to_pick: float = 1.25
-@export var reward: int = 0
+@export var mult_to_pick: float = 1.15
