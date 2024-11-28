@@ -218,22 +218,24 @@ collision_layer = 2
 script = ExtResource("1_ki0f4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
 texture = ExtResource("2_myxj4")
 hframes = 10
 vframes = 8
 frame = 21
 
 [node name="Light" type="PointLight2D" parent="."]
-position = Vector2(0, 6)
+position = Vector2(0, -7)
 energy = 0.4
 texture = ExtResource("3_31wov")
 texture_scale = 0.75
 
 [node name="PlayerCollision2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 6)
+position = Vector2(0.5, -7)
 shape = SubResource("RectangleShape2D_c4u78")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(0, -13)
 collision_layer = 8
 collision_mask = 16
 
@@ -242,6 +244,7 @@ position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_tvjkt")
 
 [node name="NavPoints" type="Node2D" parent="."]
+position = Vector2(0, -13)
 
 [node name="LeftPoint" type="Node2D" parent="NavPoints"]
 position = Vector2(-12, 7)
@@ -250,6 +253,7 @@ position = Vector2(-12, 7)
 position = Vector2(12, 7)
 
 [node name="PlayerCam" parent="." instance=ExtResource("4_1btfe")]
+position = Vector2(0, -13)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -268,9 +272,9 @@ one_shot = true
 
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = -12.0
-offset_top = -24.0
+offset_top = -37.0
 offset_right = 107.0
-offset_bottom = 155.0
+offset_bottom = 142.0
 scale = Vector2(0.199999, 0.199999)
 theme_override_font_sizes/font_size = 64
 text = "test

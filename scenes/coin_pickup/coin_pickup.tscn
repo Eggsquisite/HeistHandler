@@ -17,7 +17,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -8)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -46,7 +46,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -40)]
+"values": [Vector2(0, -8), Vector2(0, -50)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -71,10 +71,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.25, 0.35, 0.45, 0.7, 0.75, 0.85, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.35, 0.7, 0.75, 0.85, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -16), Vector2(0, -20), Vector2(0, -20), Vector2(0, -18), Vector2(0, 0), Vector2(0, 0), Vector2(0, -6), Vector2(0, 0)]
+"values": [Vector2(0, -8), Vector2(0, -30), Vector2(0, -40), Vector2(0, -40), Vector2(0, -8), Vector2(0, -8), Vector2(0, -14), Vector2(0, -8)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -97,19 +97,22 @@ _data = {
 }
 
 [node name="CoinPickup" type="Area2D"]
-z_index = 4
+z_index = 5
+z_as_relative = false
 scale = Vector2(0.6, 0.6)
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("1_k7o7d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
 sprite_frames = ExtResource("2_gossu")
 animation = &"copper"
 frame = 4
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8.33333)
 shape = SubResource("CircleShape2D_d6d5y")
 disabled = true
 

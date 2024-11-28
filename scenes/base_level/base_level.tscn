@@ -442,7 +442,7 @@ position = Vector2(230, -118)
 difficulty = "medium"
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
-position = Vector2(8, -46)
+position = Vector2(7, -33)
 difficulty = "hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
@@ -470,9 +470,11 @@ blend_mode = 1
 range_z_max = 15
 
 [node name="Coins" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(-9, -6)
 
 [node name="CoinPickup" parent="Coins" instance=ExtResource("6_o27eb")]
-position = Vector2(76, -2)
+position = Vector2(22, -24)
 disable_mode = 2
 
 [node name="CoinPickup2" parent="Coins" instance=ExtResource("6_o27eb")]
