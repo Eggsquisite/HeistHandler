@@ -26,6 +26,9 @@ func get_random_word(difficulty: String) -> String:
 		"medium":
 			if _word_list_med != []:
 				return _word_list_med.pick_random()
+		"medium-hard":
+			if _word_list_med != []:
+				return _word_list_med.pick_random()
 		"hard":
 			if _word_list_hard != []:
 				return _word_list_hard.pick_random()

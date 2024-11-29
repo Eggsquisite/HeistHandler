@@ -114,7 +114,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_next = NodePath("../LineEdit")
 focus_previous = NodePath("../LineEdit")
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
 [node name="LineEdit" type="LineEdit" parent="Control/ColorRect/VBoxContainer"]
 z_index = 20
@@ -125,7 +125,6 @@ focus_next = NodePath("../Full Word Container")
 theme_override_constants/minimum_character_width = 6
 theme_override_fonts/font = ExtResource("3_bsct3")
 theme_override_font_sizes/font_size = 16
-alignment = 1
 max_length = 5
 editable = false
 expand_to_text_length = true

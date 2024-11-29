@@ -19,10 +19,7 @@ func hide_letter() -> void:
 	reenable_focus()
 
 
-func show_letter() -> void:
-	if no_more_reveals:
-		return
-	
+func show_letter() -> void:	
 	# shield_lock.hide()
 	shield_lock.play_unlock()
 	selector.hide()
@@ -53,7 +50,7 @@ func disable_focus() -> void:
 
 
 func reenable_focus() -> void:
-	if !is_hidden:
+	if !is_hidden or no_more_reveals:
 		return
 	
 	focus_mode = FOCUS_ALL

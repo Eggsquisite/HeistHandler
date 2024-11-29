@@ -130,13 +130,18 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 			_max_tries = 3
 			tries_left = _max_tries
 		"medium":
+			letter_covers = 3
+			lockpick_max = 1
+			_max_tries = 4
+			tries_left = _max_tries
+		"medium-hard":
 			letter_covers = 4
-			lockpick_max = 2
+			lockpick_max = 1
 			_max_tries = 5
 			tries_left = _max_tries
 		"hard":
 			letter_covers = 5
-			lockpick_max = 3
+			lockpick_max = 2
 			_max_tries = 6
 			tries_left = _max_tries
 
@@ -214,9 +219,8 @@ func success() -> void:
 	is_lock_picked = true 
 	update_lock_label()
 	start_finished_timer()
-	SignalManager.letter_lockpicked.emit()
-	# reward player
 	# play unlock sound
+	SignalManager.letter_lockpicked.emit() # plays chest anim
 
 
 func failure() -> void:
@@ -224,7 +228,7 @@ func failure() -> void:
 	line_edit.clear()
 	lock_status.text = "Wrong Guess!"
 	label_timer.start()
-	SignalManager.letter_lockpicked.emit()
+	SignalManager.letter_lockpicked.emit() # plays chest anim
 	
 	if tries_left <= 0:
 		# play lock broken sound
@@ -291,6 +295,21 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		var instance = used_word_label.instantiate()
 		instance.text = new_text
 		used_words.add_child(instance)
+		compare_letters(new_text)
+
+
+func compare_letters(new_text: String) -> void:
+	var new: Array[String]
+	var old: Array[String]
+	
+	for char in new_text:
+		new.push_back(char)
+	for char in full_word:
+		old.push_back(char)
+	
+	for i in range(0, new.size()):
+		if new[i] == old[i]:
+			letter_containers[i].show_letter()
 
 
 func _on_finished_timer_timeout() -> void:

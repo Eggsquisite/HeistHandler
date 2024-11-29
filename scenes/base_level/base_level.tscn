@@ -2376,12 +2376,12 @@ sources/2 = SubResource("TileSetAtlasSource_rhpmn")
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
+position = Vector2(-12, 24)
 script = ExtResource("1_8i40g")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("7_towt5")]
-mouse_filter = 2
 
 [node name="TileMapLayers" type="Node2D" parent="."]
 
@@ -2395,7 +2395,7 @@ tile_map_data = PackedByteArray("AAAEAPv/AAAMAAQAAAAFAPv/AAANAAQAAAAGAPv/AAANAAQ
 tile_set = SubResource("TileSet_kw86y")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
-position = Vector2(114, -40)
+position = Vector2(117, -41)
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(230, -118)
@@ -2403,25 +2403,26 @@ difficulty = "medium"
 
 [node name="Chest2" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(7, -33)
-difficulty = "hard"
+difficulty = "medium-hard"
 
 [node name="Guard" parent="." instance=ExtResource("4_1vosi")]
-position = Vector2(40, -109)
+position = Vector2(42, -132)
 rotation = -0.00714274
 
 [node name="PatrolWaypoints" parent="Guard" instance=ExtResource("6_bjxsp")]
+top_level = true
 
 [node name="wp1" type="Marker2D" parent="Guard/PatrolWaypoints"]
-position = Vector2(0.349991, -48.9987)
+position = Vector2(31.9285, -143)
 
 [node name="wp2" type="Marker2D" parent="Guard/PatrolWaypoints"]
-position = Vector2(134.004, -0.042856)
+position = Vector2(165.583, -94.0442)
 
 [node name="wp3" type="Marker2D" parent="Guard/PatrolWaypoints"]
-position = Vector2(133.425, 80.9551)
+position = Vector2(165.004, -13.0462)
 
 [node name="wp4" type="Marker2D" parent="Guard/PatrolWaypoints"]
-position = Vector2(-0.578552, 80.9979)
+position = Vector2(31, -13.0034)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 texture_filter = 1

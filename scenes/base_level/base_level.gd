@@ -6,7 +6,7 @@ var _is_level_complete: bool = false
 var _total_loot: int = 0
 
 @export_group("Loot Rank Percent")
-@export var three_star: float = 70
+@export var three_star: float = 80
 @export var two_star: float = 50
 @export var one_star: float = 30
 
@@ -33,7 +33,8 @@ func _process(delta: float) -> void:
 		GameManager.load_next_level_scene()
 	
 	if Input.is_action_just_pressed("lockpick"):
-		SignalManager.on_level_complete.emit()
+		pass
+		# SignalManager.on_level_complete.emit()
 
 
 func get_total_loot() -> int:
