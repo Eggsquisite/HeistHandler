@@ -4,7 +4,7 @@ const SCORE_FILE: String = "user://HeistScores.json"
 const MAIN = preload("res://scenes/main/main.tscn")
 const TOTAL_LEVELS = 5
 const DEFAULT_LOOT = 0
-const DEFAULT_TIME = 0.0
+const DEFAULT_TIME = 1000.0
 
 var guards_alerted: int = 0
 var alert_began: bool = false
@@ -49,7 +49,9 @@ func set_scores_for_level(loot: int, time: float, level: String) -> void:
 	if _level_scores[level][0] < loot:
 		_level_scores[level][0] = loot
 	if _level_scores[level][1] > time:
+		print(time)
 		_level_scores[level][1] = time
+	print(_level_scores[level])
 
 
 func get_best_for_level(level: String) -> Array:
@@ -71,7 +73,7 @@ func set_next_level() -> void:
 	_level_selected += 1
 	if _level_selected > TOTAL_LEVELS:
 		_level_selected = 1
-		pass
+		# TODO create a final scene
 
 
 func reset_level() -> void:
@@ -88,6 +90,7 @@ func guard_alerted() -> void:
 func guard_lost() -> void:
 	guards_alerted -= 1
 	if alert_began and guards_alerted == 0:
+		alert_began = false
 		SignalManager.on_alert_end.emit() # if no remaining guards alerted, end alarm
 
 
