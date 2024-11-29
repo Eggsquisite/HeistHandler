@@ -29,9 +29,10 @@ func _ready() -> void:
 	_level_number = GameManager.get_level_selected()
 	SignalManager.on_player_hit.connect(on_player_hit)
 	SignalManager.on_level_started.connect(on_player_hit)
-	SignalManager.on_level_started.connect(start_game_timer)
-	SignalManager.on_level_complete.connect(stop_game_timer)
+	SignalManager.on_level_started.connect(start_level)
+	SignalManager.on_level_complete.connect(level_complete)
 	SignalManager.on_loot_pickup.connect(update_loot_score)
+	SignalManager.on_game_over.connect(game_over)
 
 
 func _process(delta: float) -> void:
@@ -44,14 +45,21 @@ func _process(delta: float) -> void:
 	msecs.text = ".%02d" % _msec
 
 
-func stop_game_timer() -> void:
+func game_over() -> void:
 	set_process(false)
+	game_over_rect.show()
+
+
+func level_complete() -> void:
+	set_process(false)
+	level_complete_rect.show()
 	_time_end = Time.get_unix_time_from_system()
 	_time_elapsed = _time_end - _time_start
 	SignalManager.on_score_end.emit(_loot, _time_elapsed, str(_level_number))
 
 
-func start_game_timer(_val) -> void:
+func start_level(_val) -> void:
+	_loot = 0
 	_time = 0.0
 	_time_start = Time.get_unix_time_from_system()
 	set_process(true)
