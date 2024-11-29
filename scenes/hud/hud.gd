@@ -5,6 +5,7 @@ extends Control
 @onready var hb_hearts: HBoxContainer = $MC/HB/VB/HBHearts
 @onready var hb_loot: HBoxContainer = $MC/HB/VB/HBLoot
 @onready var loot_score: Label = $MC/HB/VB/HBLoot/LootScore
+@onready var t_loot1: Label = $MC/HB/VB/HBLoot/TotalLoot1
 @onready var current_timer: Panel = $MC/HB/CurrentTimer
 @onready var c_mins: Label = $MC/HB/CurrentTimer/Minutes
 @onready var c_secs: Label = $MC/HB/CurrentTimer/Seconds
@@ -14,11 +15,10 @@ extends Control
 
 @onready var hb_stars: HBoxContainer = $LCRect/VBLC/HBStars
 @onready var lc_label: Label = $LCRect/VBLC/LCLabel
-@onready var t_loot: Label = $LCRect/VBLC/HB/HB/TotalLoot
+@onready var t_loot2: Label = $LCRect/VBLC/HB/HB/TotalLoot2
 @onready var t_mins: Label = $LCRect/VBLC/HB/TotalTimer/TotalMinutes
 @onready var t_secs: Label = $LCRect/VBLC/HB/TotalTimer/TotalSeconds
 @onready var t_msecs: Label = $LCRect/VBLC/HB/TotalTimer/TotalMsecs
-
 
 var _hearts: Array
 var _stars: Array
@@ -39,7 +39,7 @@ func _ready() -> void:
 	_stars = hb_stars.get_children()
 	_level_number = GameManager.get_level_selected()
 	SignalManager.on_player_hit.connect(on_player_hit)
-	SignalManager.on_level_started.connect(on_player_hit)
+	SignalManager.on_player_started.connect(on_player_hit)
 	SignalManager.on_level_started.connect(start_level)
 	SignalManager.on_level_complete.connect(level_complete)
 	SignalManager.on_loot_pickup.connect(update_loot_score)
@@ -57,10 +57,12 @@ func _process(delta: float) -> void:
 	c_msecs.text = ".%02d" % _msecs
 
 
-func start_level(_val) -> void:
+func start_level(total_loot) -> void:
 	_loot = 0
 	_time = 0.0
 	_time_start = Time.get_unix_time_from_system()
+	loot_score.text = ":%03d/" % _loot
+	t_loot1.text = "%03d" % total_loot
 	set_process(true)
 
 
@@ -82,7 +84,7 @@ func set_rank(rank: int, tl: int) -> void:
 	current_timer.hide()
 	lc_label.text = "Level %d Complete" % _level_number
 	
-	t_loot.text = ":%03d / %03d" % [_loot, tl]
+	t_loot2.text = ":%03d / %03d" % [_loot, tl]
 	
 	_msecs = fmod(_time_elapsed, 1) * 100
 	_secs = fmod(_time_elapsed, 60)
@@ -100,7 +102,7 @@ func set_rank(rank: int, tl: int) -> void:
 
 func update_loot_score(loot: int) -> void:
 	_loot += loot
-	loot_score.text = ":%03d" % _loot
+	loot_score.text = ":%03d/" % _loot
 
 
 func game_over() -> void:

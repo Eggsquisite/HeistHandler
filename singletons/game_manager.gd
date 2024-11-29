@@ -49,7 +49,6 @@ func set_scores_for_level(loot: int, time: float, level: String) -> void:
 	if _level_scores[level][0] < loot:
 		_level_scores[level][0] = loot
 	if _level_scores[level][1] > time:
-		print(time)
 		_level_scores[level][1] = time
 	print(_level_scores[level])
 

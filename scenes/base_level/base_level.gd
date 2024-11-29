@@ -16,8 +16,7 @@ func _ready() -> void:
 	_is_game_over = false
 	_is_level_complete = false
 	get_total_loot()
-	print(_total_loot)
-	SignalManager.on_level_started.emit()
+	SignalManager.on_level_started.emit(_total_loot)
 	
 	SignalManager.on_game_over.connect(game_over)
 	SignalManager.on_level_complete.connect(level_complete)
@@ -37,12 +36,13 @@ func _process(delta: float) -> void:
 		SignalManager.on_level_complete.emit()
 
 
-func get_total_loot() -> void:
+func get_total_loot() -> int:
 	for l in get_tree().get_nodes_in_group("chest"):
 		_total_loot += l.get_loot_amt()
 	
 	for l in get_tree().get_nodes_in_group("loot"):
 		_total_loot += l.get_loot_amt()
+	return _total_loot
 
 
 func calculate_rank(loot: int, _time: float, _lvl: String) -> void:

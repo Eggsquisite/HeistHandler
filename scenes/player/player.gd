@@ -38,7 +38,7 @@ func _ready() -> void:
 
 
 func late_setup() -> void:
-	SignalManager.on_level_started.emit(_current_health)
+	SignalManager.on_player_started.emit(_current_health)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
