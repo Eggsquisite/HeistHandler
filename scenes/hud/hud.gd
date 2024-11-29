@@ -1,13 +1,23 @@
 extends Control
 
+@onready var empty_star = "res://assets/ui/single_star_empty.png"
+@onready var full_star = "res://assets/ui/single_star_filled.png"
 @onready var hb_hearts: HBoxContainer = $MC/HB/VB/HBHearts
-@onready var loot_score: Label = $MC/HB/VB/HB/LootScore
-@onready var game_over_rect: ColorRect = $GameOverRect
-@onready var level_complete_rect: ColorRect = $LevelCompleteRect
-@onready var hb_stars: HBoxContainer = $LevelCompleteRect/VBLevelComplete/HBStars
-@onready var minutes: Label = $MC/HB/TimerPanel/Minutes
-@onready var seconds: Label = $MC/HB/TimerPanel/Seconds
-@onready var msecs: Label = $MC/HB/TimerPanel/Msecs
+@onready var loot_score: Label = $MC/HB/VB/HBLoot/LootScore
+@onready var current_timer: Panel = $MC/HB/CurrentTimer
+@onready var c_mins: Label = $MC/HB/CurrentTimer/Minutes
+@onready var c_secs: Label = $MC/HB/CurrentTimer/Seconds
+@onready var c_msecs: Label = $MC/HB/CurrentTimer/Msecs
+@onready var go_rect: ColorRect = $GORect
+@onready var lc_rect: ColorRect = $LCRect
+
+@onready var hb_stars: HBoxContainer = $LCRect/VBLC/HBStars
+@onready var lc_label: Label = $LCRect/VBLC/LCLabel
+@onready var t_loot: Label = $LCRect/VBLC/HB/HB/TotalLoot
+@onready var t_mins: Label = $LCRect/VBLC/HB/TotalTimer/TotalMinutes
+@onready var t_secs: Label = $LCRect/VBLC/HB/TotalTimer/TotalSeconds
+@onready var t_msecs: Label = $LCRect/VBLC/HB/TotalTimer/TotalMsecs
+
 
 var _hearts: Array
 var _stars: Array
@@ -16,9 +26,9 @@ var _time: float = 0.0
 var _time_start: float = 0.0
 var _time_end: float = 0.0
 var _time_elapsed: float = 0.0
-var _minutes: int = 0
-var _seconds: int = 0
-var _msec: int = 0
+var _mins: int = 0
+var _secs: int = 0
+var _msecs: int = 0
 var _level_number: int = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -32,30 +42,18 @@ func _ready() -> void:
 	SignalManager.on_level_started.connect(start_level)
 	SignalManager.on_level_complete.connect(level_complete)
 	SignalManager.on_loot_pickup.connect(update_loot_score)
+	SignalManager.on_rank_set.connect(set_rank)
 	SignalManager.on_game_over.connect(game_over)
 
 
 func _process(delta: float) -> void:
 	_time += delta
-	_msec = fmod(_time, 1) * 100
-	_seconds = fmod(_time, 60)
-	_minutes = fmod(_time, 3600) / 60
-	minutes.text = "%02d:" % _minutes
-	seconds.text = "%02d" % _seconds
-	msecs.text = ".%02d" % _msec
-
-
-func game_over() -> void:
-	set_process(false)
-	game_over_rect.show()
-
-
-func level_complete() -> void:
-	set_process(false)
-	level_complete_rect.show()
-	_time_end = Time.get_unix_time_from_system()
-	_time_elapsed = _time_end - _time_start
-	SignalManager.on_score_end.emit(_loot, _time_elapsed, str(_level_number))
+	_msecs = fmod(_time, 1) * 100
+	_secs = fmod(_time, 60)
+	_mins = fmod(_time, 3600) / 60
+	c_mins.text = "%02d:" % _mins
+	c_secs.text = "%02d" % _secs
+	c_msecs.text = ".%02d" % _msecs
 
 
 func start_level(_val) -> void:
@@ -70,6 +68,40 @@ func on_player_hit(lives: int) -> void:
 		_hearts[life].visible = lives > life
 
 
+func level_complete() -> void:
+	set_process(false)
+	lc_rect.show()
+	_time_end = Time.get_unix_time_from_system()
+	_time_elapsed = _time_end - _time_start
+	SignalManager.on_score_end.emit(_loot, _time_elapsed, str(_level_number))
+
+
+func set_rank(rank: int, tl: int) -> void:
+	loot_score.hide()
+	current_timer.hide()
+	lc_label.text = "Level %d Complete" % _level_number
+	
+	t_loot.text = ":%03d / %03d" % [_loot, tl]
+	
+	_msecs = fmod(_time_elapsed, 1) * 100
+	_secs = fmod(_time_elapsed, 60)
+	_mins = fmod(_time_elapsed, 3600) / 60
+	t_mins.text = "%02d:" % _mins
+	t_secs.text = "%02d" % _secs
+	t_msecs.text = ".%02d" % _msecs
+	
+	for star in range(_stars.size()):
+		if rank > star:
+			_stars[star].texture = load(full_star)
+		else:
+			_stars[star].texture = load(empty_star)
+
+
 func update_loot_score(loot: int) -> void:
 	_loot += loot
 	loot_score.text = ":%03d" % _loot
+
+
+func game_over() -> void:
+	set_process(false)
+	go_rect.show()

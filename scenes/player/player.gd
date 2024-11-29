@@ -34,6 +34,7 @@ func _ready() -> void:
 	call_deferred("late_setup")
 	SignalManager.word_game_started.connect(set_interact_true)
 	SignalManager.word_game_finished.connect(set_interact_false)
+	SignalManager.on_level_complete.connect(level_completed)
 
 
 func late_setup() -> void:
@@ -201,6 +202,11 @@ func _on_invincible_timer_timeout() -> void:
 	_invincible = false
 	hitbox_collision.disabled = false
 	invincible_player.stop()
+
+
+func level_completed() -> void:
+	set_state(PlayerState.IDLE)
+	set_physics_process(false)
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:

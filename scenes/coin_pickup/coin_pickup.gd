@@ -39,6 +39,10 @@ func move_to_location(start_pos: Vector2, pos: Vector2) -> void:
 	tween.tween_property(self, "position", target_pos, travel_dur).from(start_pos)
 
 
+func get_loot_amt() -> int:
+	return value_amt
+
+
 func release_me() -> void:
 	hide()
 	queue_free()

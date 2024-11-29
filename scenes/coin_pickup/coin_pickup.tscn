@@ -96,7 +96,7 @@ _data = {
 "travel": SubResource("Animation_n8gil")
 }
 
-[node name="CoinPickup" type="Area2D"]
+[node name="CoinPickup" type="Area2D" groups=["loot"]]
 z_index = 5
 z_as_relative = false
 scale = Vector2(0.7, 0.7)

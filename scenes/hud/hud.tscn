@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m4oaqcygjc3l"]
+[gd_scene load_steps=9 format=3 uid="uid://m4oaqcygjc3l"]
 
 [ext_resource type="Texture2D" uid="uid://dgw76avo4oaou" path="res://assets/ui/single_heart.png" id="1_2u3ix"]
 [ext_resource type="LabelSettings" uid="uid://brelg5q6shlgn" path="res://resources/fonts/16_wh.tres" id="1_3j8c2"]
@@ -8,7 +8,6 @@
 [ext_resource type="LabelSettings" uid="uid://fcujrqqus5xd" path="res://resources/fonts/48_red.tres" id="3_m40yd"]
 [ext_resource type="LabelSettings" uid="uid://6t30qdmwm2pr" path="res://resources/fonts/48_yellow.tres" id="5_46var"]
 [ext_resource type="Texture2D" uid="uid://dvij25c85hsi0" path="res://assets/ui/single_star_empty.png" id="6_hmht5"]
-[ext_resource type="Texture2D" uid="uid://dyk3vu7bopsco" path="res://assets/ui/single_star_filled.png" id="6_um1lp"]
 
 [node name="HUD" type="Control"]
 z_index = 20
@@ -71,14 +70,14 @@ layout_mode = 2
 texture = ExtResource("1_2u3ix")
 stretch_mode = 4
 
-[node name="HB" type="HBoxContainer" parent="MC/HB/VB"]
+[node name="HBLoot" type="HBoxContainer" parent="MC/HB/VB"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MC/HB/VB/HB"]
+[node name="TextureRect" type="TextureRect" parent="MC/HB/VB/HBLoot"]
 layout_mode = 2
 texture = ExtResource("3_g5b1o")
 
-[node name="LootScore" type="Label" parent="MC/HB/VB/HB"]
+[node name="LootScore" type="Label" parent="MC/HB/VB/HBLoot"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = ":000"
@@ -86,12 +85,12 @@ label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimerPanel" type="Panel" parent="MC/HB"]
+[node name="CurrentTimer" type="Panel" parent="MC/HB"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Minutes" type="Label" parent="MC/HB/TimerPanel"]
+[node name="Minutes" type="Label" parent="MC/HB/CurrentTimer"]
 layout_mode = 0
 offset_left = -215.0
 offset_right = -167.0
@@ -101,7 +100,7 @@ label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Seconds" type="Label" parent="MC/HB/TimerPanel"]
+[node name="Seconds" type="Label" parent="MC/HB/CurrentTimer"]
 layout_mode = 0
 offset_left = -170.0
 offset_right = -98.0
@@ -111,7 +110,7 @@ label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Msecs" type="Label" parent="MC/HB/TimerPanel"]
+[node name="Msecs" type="Label" parent="MC/HB/CurrentTimer"]
 layout_mode = 0
 offset_left = -100.0
 offset_right = -28.0
@@ -148,7 +147,7 @@ label_settings = ExtResource("2_b6rc2")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="GameOverRect" type="ColorRect" parent="."]
+[node name="GORect" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -158,7 +157,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0313726, 0.0745098, 0.054902, 0.87451)
 
-[node name="VBGameOver" type="VBoxContainer" parent="GameOverRect"]
+[node name="VBGameOver" type="VBoxContainer" parent="GORect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -173,21 +172,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 24
 
-[node name="Label" type="Label" parent="GameOverRect/VBGameOver"]
+[node name="Label" type="Label" parent="GORect/VBGameOver"]
 layout_mode = 2
 text = "Game Over"
 label_settings = ExtResource("3_m40yd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="GameOverRect/VBGameOver"]
+[node name="Label2" type="Label" parent="GORect/VBGameOver"]
 layout_mode = 2
 text = "Press Space to Restart"
 label_settings = ExtResource("1_3j8c2")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelCompleteRect" type="ColorRect" parent="."]
+[node name="LCRect" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -197,7 +196,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.188235, 0.403922, 0.870588, 0.87451)
 
-[node name="VBLevelComplete" type="VBoxContainer" parent="LevelCompleteRect"]
+[node name="VBLC" type="VBoxContainer" parent="LCRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -212,36 +211,92 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 24
 
-[node name="Label" type="Label" parent="LevelCompleteRect/VBLevelComplete"]
+[node name="LCLabel" type="Label" parent="LCRect/VBLC"]
 layout_mode = 2
-text = "Level Complete"
+text = "Level 99 Complete"
 label_settings = ExtResource("5_46var")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBStars" type="HBoxContainer" parent="LevelCompleteRect/VBLevelComplete"]
+[node name="HB" type="HBoxContainer" parent="LCRect/VBLC"]
+layout_mode = 2
+theme_override_constants/separation = 400
+alignment = 1
+
+[node name="HB" type="HBoxContainer" parent="LCRect/VBLC/HB"]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="LCRect/VBLC/HB/HB"]
+layout_mode = 2
+texture = ExtResource("3_g5b1o")
+
+[node name="TotalLoot" type="Label" parent="LCRect/VBLC/HB/HB"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = ":000"
+label_settings = ExtResource("2_b6rc2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalTimer" type="Panel" parent="LCRect/VBLC/HB"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="TotalMinutes" type="Label" parent="LCRect/VBLC/HB/TotalTimer"]
+layout_mode = 0
+offset_left = -200.0
+offset_right = -152.0
+offset_bottom = 21.0
+text = "00"
+label_settings = ExtResource("2_b6rc2")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TotalSeconds" type="Label" parent="LCRect/VBLC/HB/TotalTimer"]
+layout_mode = 0
+offset_left = -150.0
+offset_right = -78.0
+offset_bottom = 21.0
+text = ":00"
+label_settings = ExtResource("2_b6rc2")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TotalMsecs" type="Label" parent="LCRect/VBLC/HB/TotalTimer"]
+layout_mode = 0
+offset_left = -75.0
+offset_top = 0.5
+offset_right = -3.0
+offset_bottom = 21.5
+text = ".00"
+label_settings = ExtResource("2_b6rc2")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HBStars" type="HBoxContainer" parent="LCRect/VBLC"]
 layout_mode = 2
 alignment = 1
 
-[node name="Star1" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBStars"]
-texture_filter = 1
-layout_mode = 2
-texture = ExtResource("6_um1lp")
-stretch_mode = 4
-
-[node name="Star2" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBStars"]
+[node name="Star1" type="TextureRect" parent="LCRect/VBLC/HBStars"]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("6_hmht5")
 stretch_mode = 4
 
-[node name="Star3" type="TextureRect" parent="LevelCompleteRect/VBLevelComplete/HBStars"]
+[node name="Star2" type="TextureRect" parent="LCRect/VBLC/HBStars"]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("6_hmht5")
 stretch_mode = 4
 
-[node name="Label2" type="Label" parent="LevelCompleteRect/VBLevelComplete"]
+[node name="Star3" type="TextureRect" parent="LCRect/VBLC/HBStars"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_hmht5")
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="LCRect/VBLC"]
 layout_mode = 2
 text = "Press Space to Continue"
 label_settings = ExtResource("1_3j8c2")

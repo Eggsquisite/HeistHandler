@@ -65,6 +65,14 @@ func spawn_coins() -> void:
 		c.move_to_location(tmp_spawn, tmp_pos)
 
 
+func get_loot_amt() -> int:
+	if coin_type == "copper":
+		return coin_amt
+	elif coin_type == "silver":
+		return coin_amt * 5
+	return 0
+
+
 func _on_chest_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "unlocked":
 		spawn_coins()

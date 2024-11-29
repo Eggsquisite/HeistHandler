@@ -78,7 +78,7 @@ _data = {
 "unlocked": SubResource("Animation_5e4wo")
 }
 
-[node name="Chest" type="Node2D"]
+[node name="Chest" type="Node2D" groups=["chest"]]
 z_index = 5
 y_sort_enabled = true
 texture_filter = 1
