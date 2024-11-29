@@ -132,17 +132,17 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 		"medium":
 			letter_covers = 3
 			lockpick_max = 1
-			_max_tries = 4
+			_max_tries = 3
 			tries_left = _max_tries
 		"medium-hard":
 			letter_covers = 4
 			lockpick_max = 1
-			_max_tries = 5
+			_max_tries = 3
 			tries_left = _max_tries
 		"hard":
 			letter_covers = 5
 			lockpick_max = 2
-			_max_tries = 6
+			_max_tries = 5
 			tries_left = _max_tries
 
 
@@ -275,6 +275,20 @@ func end_minigame(_lives: int) -> void:
 		lockpick_timer.stop()
 
 
+func compare_letters(new_text: String) -> void:
+	var new: Array[String]
+	var old: Array[String]
+	
+	for char in new_text:
+		new.push_back(char)
+	for char in full_word:
+		old.push_back(char)
+	
+	for i in range(0, new.size()):
+		if new[i] == old[i]:
+			letter_containers[i].show_letter()
+
+
 func check_lock_finished() -> bool:
 	if is_lock_broken or is_lock_picked:
 		return true
@@ -295,21 +309,8 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		var instance = used_word_label.instantiate()
 		instance.text = new_text
 		used_words.add_child(instance)
-		compare_letters(new_text)
-
-
-func compare_letters(new_text: String) -> void:
-	var new: Array[String]
-	var old: Array[String]
-	
-	for char in new_text:
-		new.push_back(char)
-	for char in full_word:
-		old.push_back(char)
-	
-	for i in range(0, new.size()):
-		if new[i] == old[i]:
-			letter_containers[i].show_letter()
+		# REMOVE if want to take out letter compare unlocks
+		# compare_letters(new_text)
 
 
 func _on_finished_timer_timeout() -> void:

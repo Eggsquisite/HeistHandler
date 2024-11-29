@@ -125,6 +125,7 @@ focus_next = NodePath("../Full Word Container")
 theme_override_constants/minimum_character_width = 6
 theme_override_fonts/font = ExtResource("3_bsct3")
 theme_override_font_sizes/font_size = 16
+alignment = 1
 max_length = 5
 editable = false
 expand_to_text_length = true

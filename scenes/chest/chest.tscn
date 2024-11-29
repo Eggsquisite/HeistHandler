@@ -84,8 +84,6 @@ y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_b1120")
 coin_amt = 25
-time_to_pick = 1.25
-mult_to_pick = 1.25
 
 [node name="ChestSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -6)
