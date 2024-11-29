@@ -8,7 +8,7 @@ extends Area2D
 
 var value_amt: int
 var target_pos: Vector2
-var travel_dur: float = 0.75
+var travel_dur: float = 0.7
 @export_enum("copper", "silver") var type: String = "copper"
 
 # Called when the node enters the scene tree for the first time.
@@ -31,12 +31,12 @@ func setup_coin(coin_type: String, timer_flag: bool) -> void:
 		coll.disabled = false
 
 
-func move_to_location(pos: Vector2) -> void:
+func move_to_location(start_pos: Vector2, pos: Vector2) -> void:
 	target_pos = pos
 	anim_player.play("travel")
 	
 	var tween := create_tween()
-	tween.tween_property(self, "position", target_pos, travel_dur).from(Vector2.ZERO)
+	tween.tween_property(self, "position", target_pos, travel_dur).from(start_pos)
 
 
 func release_me() -> void:

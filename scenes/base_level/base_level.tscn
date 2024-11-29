@@ -474,7 +474,7 @@ y_sort_enabled = true
 position = Vector2(-9, -6)
 
 [node name="CoinPickup" parent="Coins" instance=ExtResource("6_o27eb")]
-position = Vector2(22, -24)
+position = Vector2(-10, -39)
 disable_mode = 2
 
 [node name="CoinPickup2" parent="Coins" instance=ExtResource("6_o27eb")]

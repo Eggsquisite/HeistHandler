@@ -53,17 +53,22 @@ func spawn_coins() -> void:
 		var c = coin.instantiate()
 		tmp_pos = Vector2(
 			randf_range(-coin_range, coin_range),
-			randf_range(-coin_range, coin_range)
+			randf_range(0, coin_range * 1.5)
 		)
 		coin_spawner.add_child(c)
+		var tmp = to_local(coin_spawner.global_position)
+		var tmp_spawn = Vector2(
+			randf_range(tmp.x - 2, tmp.x + 2),
+			0
+		)
 		c.setup_coin(coin_type, true)
-		c.move_to_location(tmp_pos)
+		c.move_to_location(tmp_spawn, tmp_pos)
 
 
 func _on_chest_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "unlocked":
 		spawn_coins()
-		#coin_timer.start()
+		# coin_timer.start()
 
 
 

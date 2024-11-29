@@ -19,12 +19,14 @@ var _time_elapsed: float = 0.0
 var _minutes: int = 0
 var _seconds: int = 0
 var _msec: int = 0
+var _level_number: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_process(false)
 	_hearts = hb_hearts.get_children()
 	_stars = hb_stars.get_children()
+	_level_number = GameManager.get_level_selected()
 	SignalManager.on_player_hit.connect(on_player_hit)
 	SignalManager.on_level_started.connect(on_player_hit)
 	SignalManager.on_level_started.connect(start_game_timer)
@@ -46,8 +48,7 @@ func stop_game_timer() -> void:
 	set_process(false)
 	_time_end = Time.get_unix_time_from_system()
 	_time_elapsed = _time_end - _time_start
-	SignalManager.on_timer_end.emit(_time_elapsed)
-	SignalManager.on_loot_end.emit(_loot)
+	SignalManager.on_score_end.emit(_loot, _time_elapsed, str(_level_number))
 
 
 func start_game_timer(_val) -> void:

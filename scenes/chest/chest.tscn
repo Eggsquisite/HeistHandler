@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bc04p6e3xp50b" path="res://scenes/word_game/word_game.tscn" id="4_oi5mk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syylu"]
-size = Vector2(21, 20)
+size = Vector2(26, 10)
 
 [sub_resource type="Animation" id="Animation_2tr66"]
 length = 0.001
@@ -99,7 +99,7 @@ position = Vector2(0, -6)
 action_name = "lockpick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-position = Vector2(0.5, 0)
+position = Vector2(1, 5)
 shape = SubResource("RectangleShape2D_syylu")
 
 [node name="WordGame" parent="." instance=ExtResource("4_oi5mk")]
@@ -117,6 +117,7 @@ size_flags_vertical = 0
 
 [node name="CoinSpawner" type="Node2D" parent="."]
 y_sort_enabled = true
+position = Vector2(0, -4)
 
 [node name="CoinTimer" type="Timer" parent="."]
 wait_time = 0.1

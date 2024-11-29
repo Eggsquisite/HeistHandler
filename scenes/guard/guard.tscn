@@ -137,7 +137,6 @@ search_dur = 5.0
 search_delay = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -11)
 texture = ExtResource("3_1ouyj")
 hframes = 8
 vframes = 7
@@ -177,23 +176,20 @@ position = Vector2(2, 0)
 shape = SubResource("CapsuleShape2D_h2ddv")
 
 [node name="DetectPlayerRay" type="RayCast2D" parent="."]
-position = Vector2(0, -11)
 collision_mask = 3
 
 [node name="AttackPlayerRay" type="RayCast2D" parent="."]
-position = Vector2(0, -11)
 target_position = Vector2(20, 0)
 collision_mask = 8
 collide_with_areas = true
 
 [node name="DetectionBar" parent="." instance=ExtResource("3_hhikg")]
 offset_left = -8.0
-offset_top = -42.0
+offset_top = -31.0
 offset_right = 8.0
-offset_bottom = -26.0
+offset_bottom = -15.0
 
 [node name="Light" type="Node2D" parent="."]
-position = Vector2(0, -11)
 
 [node name="BodyLight" type="PointLight2D" parent="Light"]
 energy = 0.7
