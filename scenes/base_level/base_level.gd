@@ -8,6 +8,8 @@ var _is_level_complete: bool = false
 func _ready() -> void:
 	_is_game_over = false
 	_is_level_complete = false
+	SignalManager.on_level_started.emit()
+	
 	SignalManager.on_game_over.connect(game_over)
 	SignalManager.on_level_complete.connect(level_complete)
 
@@ -15,10 +17,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("lockpick"):
+	if Input.is_action_just_pressed("lockpick") and _is_game_over:
 		GameManager.reset_level()
 	
-	if Input.is_action_just_pressed("lockpick"):
+	if Input.is_action_just_pressed("lockpick") and _is_level_complete:
 		GameManager.load_next_level_scene()
 	
 

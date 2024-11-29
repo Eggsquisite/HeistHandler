@@ -9,6 +9,14 @@ const base_text: String = "[E] to "
 var active_areas: Array[InteractionArea] = []
 var can_interact: bool = true
 
+func _ready() -> void:
+	SignalManager.on_level_started.connect(setup_player)
+
+
+func setup_player(_val) -> void:
+	player = get_tree().get_first_node_in_group("player")
+
+
 func register_area(area: InteractionArea) -> void:
 	active_areas.push_back(area)
 
