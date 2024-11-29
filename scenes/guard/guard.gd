@@ -312,6 +312,12 @@ func _on_navigation_agent_2d_target_reached() -> void:
 		patrol_timer.start(patrol_delay)
 
 
+func level_end() -> void:
+	set_enemy_states(EnemyState.IDLE)
+	set_process(false)
+	set_physics_process(false)
+
+
 func _on_detection_delay_timeout() -> void:
 	_dec_detection = true
 

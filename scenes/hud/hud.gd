@@ -1,8 +1,9 @@
 extends Control
 
 @onready var empty_star = "res://assets/ui/single_star_empty.png"
-@onready var full_star = "res://assets/ui/single_star_filled.png"
+@onready var full_star = "res://resources/full_star/full_star.tres"
 @onready var hb_hearts: HBoxContainer = $MC/HB/VB/HBHearts
+@onready var hb_loot: HBoxContainer = $MC/HB/VB/HBLoot
 @onready var loot_score: Label = $MC/HB/VB/HBLoot/LootScore
 @onready var current_timer: Panel = $MC/HB/CurrentTimer
 @onready var c_mins: Label = $MC/HB/CurrentTimer/Minutes
@@ -77,7 +78,7 @@ func level_complete() -> void:
 
 
 func set_rank(rank: int, tl: int) -> void:
-	loot_score.hide()
+	hb_loot.hide()
 	current_timer.hide()
 	lc_label.text = "Level %d Complete" % _level_number
 	

@@ -93,11 +93,9 @@ func guard_lost() -> void:
 
 func game_over() -> void:
 	for enemies in get_tree().get_nodes_in_group("enemy"):
-		enemies.set_process(false)
-		enemies.set_physics_process(false)
+		enemies.level_end()
 
 
 func level_complete() -> void:
 	for enemies in get_tree().get_nodes_in_group("enemy"):
-		enemies.set_process(false)
-		enemies.set_physics_process(false)
+		enemies.level_end()

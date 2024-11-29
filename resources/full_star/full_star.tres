@@ -1,0 +1,44 @@
+[gd_resource type="AnimatedTexture" load_steps=14 format=3 uid="uid://b6j14p3y5nvl6"]
+
+[ext_resource type="Texture2D" uid="uid://cq8bvhiqww2gy" path="res://assets/ui/full_star/Star-1.png" id="1_hnawn"]
+[ext_resource type="Texture2D" uid="uid://cs27g1r0vnyji" path="res://assets/ui/full_star/Star-2.png" id="2_o4826"]
+[ext_resource type="Texture2D" uid="uid://uhqqummshdd1" path="res://assets/ui/full_star/Star-11.png" id="3_tl030"]
+[ext_resource type="Texture2D" uid="uid://d118jggoa4rr5" path="res://assets/ui/full_star/Star-12.png" id="4_hjcph"]
+[ext_resource type="Texture2D" uid="uid://bqbvsp5e7ws57" path="res://assets/ui/full_star/Star-13.png" id="5_molh2"]
+[ext_resource type="Texture2D" uid="uid://dacim1ggxyxet" path="res://assets/ui/full_star/Star-3.png" id="6_4uc8n"]
+[ext_resource type="Texture2D" uid="uid://cmwugo1tavumc" path="res://assets/ui/full_star/Star-4.png" id="7_iqh60"]
+[ext_resource type="Texture2D" uid="uid://c06hoxvoafcqh" path="res://assets/ui/full_star/Star-5.png" id="8_ux1y2"]
+[ext_resource type="Texture2D" uid="uid://bypwbre5jyfgp" path="res://assets/ui/full_star/Star-6.png" id="9_nxw2l"]
+[ext_resource type="Texture2D" uid="uid://gusb17xegjk3" path="res://assets/ui/full_star/Star-7.png" id="10_p27xr"]
+[ext_resource type="Texture2D" uid="uid://c8q7yjao8hquu" path="res://assets/ui/full_star/Star-8.png" id="11_3elvy"]
+[ext_resource type="Texture2D" uid="uid://das5dvqbxop6m" path="res://assets/ui/full_star/Star-9.png" id="12_cq2q5"]
+[ext_resource type="Texture2D" uid="uid://t1clktfy5gj6" path="res://assets/ui/full_star/Star-10.png" id="13_2o21a"]
+
+[resource]
+frames = 13
+speed_scale = 10.0
+frame_0/texture = ExtResource("1_hnawn")
+frame_1/texture = ExtResource("2_o4826")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("6_4uc8n")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("7_iqh60")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("8_ux1y2")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("9_nxw2l")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("10_p27xr")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("11_3elvy")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("12_cq2q5")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("13_2o21a")
+frame_9/duration = 1.0
+frame_10/texture = ExtResource("3_tl030")
+frame_10/duration = 1.0
+frame_11/texture = ExtResource("4_hjcph")
+frame_11/duration = 1.0
+frame_12/texture = ExtResource("5_molh2")
+frame_12/duration = 1.0
