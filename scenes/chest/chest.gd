@@ -53,13 +53,13 @@ func spawn_coins() -> void:
 		var c = coin.instantiate()
 		tmp_pos = Vector2(
 			randf_range(-coin_range, coin_range),
-			randf_range(0, coin_range * 1.5)
+			randf_range(10, coin_range * 2)
 		)
 		coin_spawner.add_child(c)
 		var tmp = to_local(coin_spawner.global_position)
 		var tmp_spawn = Vector2(
 			randf_range(tmp.x - 2, tmp.x + 2),
-			0
+			0 #lol
 		)
 		c.setup_coin(coin_type, true)
 		c.move_to_location(tmp_spawn, tmp_pos)
