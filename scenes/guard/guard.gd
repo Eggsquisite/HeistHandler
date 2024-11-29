@@ -242,8 +242,9 @@ func detect_player(delta) -> void:
 func check_raycast() -> void:
 	if _player != null:
 		if _player_in_vision_area:
+			var tmp = Vector2(_player.global_position.x, _player.global_position.y - 8)
 			detect_ray.enabled = true
-			detect_ray.target_position = global_position.direction_to(_player.global_position) * 250
+			detect_ray.target_position = global_position.direction_to(tmp) * 250
 		
 			if detect_ray.is_colliding():
 				if detect_ray.get_collider() is Player:
@@ -276,6 +277,13 @@ func face_player() -> void:
 		sprite.flip_h = true
 		attack_ray.target_position = Vector2(-ATTACK_RANGE, 0)
 		vision_cone.rotation_degrees = lerp(vision_cone.rotation_degrees, 180.0, 1)
+
+
+func level_end() -> void:
+	detection_bar.hide()
+	set_enemy_states(EnemyState.IDLE)
+	set_process(false)
+	set_physics_process(false)
 
 
 func _on_vision_cone_body_entered(body: Node2D) -> void:
@@ -311,11 +319,6 @@ func _on_navigation_agent_2d_target_reached() -> void:
 			_wp_index = 0
 		patrol_timer.start(patrol_delay)
 
-
-func level_end() -> void:
-	set_enemy_states(EnemyState.IDLE)
-	set_process(false)
-	set_physics_process(false)
 
 
 func _on_detection_delay_timeout() -> void:
