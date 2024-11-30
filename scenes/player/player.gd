@@ -34,10 +34,13 @@ func _ready() -> void:
 	call_deferred("late_setup")
 	SignalManager.word_game_started.connect(set_interact_true)
 	SignalManager.word_game_finished.connect(set_interact_false)
+	SignalManager.on_leave_start.connect(set_interact_true)
+	SignalManager.on_leave_end.connect(set_interact_false)
 	SignalManager.on_level_complete.connect(level_completed)
 
 
 func late_setup() -> void:
+	set_interact_false(0)
 	SignalManager.on_player_started.emit(_current_health)
 
 
@@ -145,7 +148,7 @@ func set_interact_true() -> void:
 	_interacting = true
 
 
-func set_interact_false(flag) -> void:
+func set_interact_false(_flag) -> void:
 	if _interacting == false:
 		return
 
@@ -207,6 +210,7 @@ func _on_invincible_timer_timeout() -> void:
 func level_completed() -> void:
 	set_state(PlayerState.IDLE)
 	set_physics_process(false)
+	hide()
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:

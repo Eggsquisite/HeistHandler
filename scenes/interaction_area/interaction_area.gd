@@ -3,6 +3,7 @@ extends Area2D
 class_name InteractionArea
 
 @export var action_name: String = "interact"
+@onready var label: Label = $Label
 
 var interact: Callable = func():
 	pass
