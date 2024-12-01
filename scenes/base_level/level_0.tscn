@@ -1,16 +1,27 @@
-[gd_scene load_steps=6 format=4 uid="uid://cvxrhon0pt8yd"]
+[gd_scene load_steps=9 format=4 uid="uid://cvxrhon0pt8yd"]
 
+[ext_resource type="Script" path="res://scenes/base_level/base_level.gd" id="1_7yiy0"]
 [ext_resource type="PackedScene" uid="uid://m4oaqcygjc3l" path="res://scenes/hud/hud.tscn" id="1_ivwbb"]
 [ext_resource type="TileSet" uid="uid://hpif8l1rw0fc" path="res://resources/tilemap_dungeon/tilemap_dungeon_ground.tres" id="2_bftg4"]
 [ext_resource type="Script" path="res://scenes/base_level/ground.gd" id="3_cygce"]
 [ext_resource type="PackedScene" uid="uid://bh0ftwhxdjh1l" path="res://scenes/player/player.tscn" id="3_jfw3g"]
 [ext_resource type="TileSet" uid="uid://sld4t64uqsg4" path="res://resources/tilemap_dungeon/tilemap_dungeon_walls.tres" id="3_lwp46"]
+[ext_resource type="PackedScene" uid="uid://p3twftf4ppbt" path="res://scenes/start_ladder/start_ladder.tscn" id="5_l7t2d"]
+[ext_resource type="PackedScene" uid="uid://cognfqqs651nu" path="res://scenes/goal_ladder/goal_ladder.tscn" id="6_354ex"]
 
 [node name="Level_0" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_7yiy0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("1_ivwbb")]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+texture_filter = 1
+energy = 0.6
+blend_mode = 1
+range_z_max = 15
 
 [node name="TileMapLayers" type="Node2D" parent="."]
 
@@ -20,13 +31,18 @@ tile_set = ExtResource("2_bftg4")
 script = ExtResource("3_cygce")
 
 [node name="Walls" type="TileMapLayer" parent="TileMapLayers"]
-tile_map_data = PackedByteArray("AADs//b/AAAAAAIAAADs//f/AAAAAAMAAADs//j/AAAAAAQAAADs//n/AAAAAAUAAADs//r/AAAAAAYAAADs//v/AAAAAAcAAADt//b/AAABAAIAAADt//f/AAABAAMAAADt//j/AAABAAQAAADt//n/AAABAAUAAADt//r/AAABAAYAAADt//v/AAABAAcAAADu//b/AAACAAIAAADu//f/AAACAAMAAADu//j/AAACAAQAAADu//n/AAACAAUAAADu//r/AAACAAYAAADu//v/AAACAAcAAADv//b/AAADAAIAAADv//f/AAADAAMAAADv//j/AAADAAQAAADv//n/AAADAAUAAADv//r/AAADAAYAAADv//v/AAADAAcAAADw//b/AAAEAAIAAADw//f/AAAEAAMAAADw//j/AAAEAAQAAADw//n/AAAEAAUAAADw//r/AAAEAAYAAADw//v/AAAEAAcAAADx//b/AAAFAAIAAADx//f/AAAFAAMAAADx//j/AAAFAAQAAADx//n/AAAFAAUAAADx//r/AAAFAAYAAADx//v/AAAFAAcAAADk//f/AAACAB0AAADl//f/AAADAB0AAAA=")
+z_index = 4
 tile_set = ExtResource("3_lwp46")
 
 [node name="WallsOver" type="TileMapLayer" parent="TileMapLayers"]
 z_index = 6
-tile_map_data = PackedByteArray("AADs//T/AAAAAAAAAADs//X/AAAAAAEAAADt//T/AAABAAAAAADt//X/AAABAAEAAADu//T/AAACAAAAAADu//X/AAACAAEAAADv//T/AAADAAAAAADv//X/AAADAAEAAADw//T/AAAEAAAAAADw//X/AAAEAAEAAADx//T/AAAFAAAAAADx//X/AAAFAAEAAADk//T/AAACABoAAADk//X/AAACABsAAADk//b/AAACABwAAADl//T/AAADABoAAADl//X/AAADABsAAADl//b/AAADABwAAAA=")
 tile_set = ExtResource("3_lwp46")
 
+[node name="StartLadder" parent="." instance=ExtResource("5_l7t2d")]
+position = Vector2(-120, -125)
+
 [node name="Player" parent="." instance=ExtResource("3_jfw3g")]
-position = Vector2(-347, -122)
+position = Vector2(-99, -100)
+
+[node name="GoalLadder" parent="." instance=ExtResource("6_354ex")]
+position = Vector2(56, -110)
