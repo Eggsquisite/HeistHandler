@@ -31,10 +31,6 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("lockpick") and _is_level_complete:
 		GameManager.load_next_level_scene()
-	
-	if Input.is_action_just_pressed("lockpick"):
-		pass
-		# SignalManager.on_level_complete.emit()
 
 
 func get_total_loot() -> int:

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bc04p6e3xp50b" path="res://scenes/word_game/word_game.tscn" id="4_4irbt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y47rp"]
-size = Vector2(48, 7)
+size = Vector2(8, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qos5f"]
 size = Vector2(48, 35)
@@ -41,22 +41,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("StaticBody2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Lock:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Lock:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -89,18 +77,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2i(0, 0)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("StaticBody2D/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_8bm2g"]
 resource_name = "lock"
@@ -131,22 +107,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("StaticBody2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Lock:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Lock:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -178,8 +142,9 @@ region_rect = Rect2(200, 520, 16, 16)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(2, 4.5)
+[node name="Coll" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2, 5)
+rotation = 1.5708
 shape = SubResource("RectangleShape2D_y47rp")
 disabled = true
 

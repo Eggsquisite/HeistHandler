@@ -90,6 +90,7 @@ func guard_lost() -> void:
 	guards_alerted -= 1
 	if alert_began and guards_alerted == 0:
 		alert_began = false
+		print("alert over")
 		SignalManager.on_alert_end.emit() # if no remaining guards alerted, end alarm
 
 
