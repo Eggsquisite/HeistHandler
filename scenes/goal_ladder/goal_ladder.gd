@@ -15,7 +15,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if leaving:
 		if Input.is_action_just_released("interact"):
-			end_leave()
+			end_leave(0)
 		progress += delta
 		progress_bar.value = progress
 
@@ -28,7 +28,7 @@ func _on_interact() -> void:
 	await SignalManager.on_leave_end
 
 
-func end_leave() -> void:
+func end_leave(_val: int) -> void:
 	progress_bar.hide()
 	leaving = false
 	progress = 0.0

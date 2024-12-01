@@ -24,8 +24,8 @@ var _state: PlayerState = PlayerState.IDLE
 var _sneaking: bool = false
 var _interacting: bool = false
 var _invincible: bool = false
-var _max_health: int = 1
 var _current_health: int
+@export var _max_health: int = 3
 
 
 # Called when the node enters the scene tree for the first time.
