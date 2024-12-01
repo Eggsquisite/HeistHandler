@@ -145,7 +145,7 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 		"medium-hard":
 			letter_covers = 4
 			lockpick_max = 2
-			_max_tries = 3
+			_max_tries = 4
 			tries_left = _max_tries
 		"hard":
 			letter_covers = 5

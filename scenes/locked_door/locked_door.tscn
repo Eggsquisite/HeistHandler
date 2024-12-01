@@ -125,6 +125,7 @@ _data = {
 }
 
 [node name="LockedDoor" type="Node2D"]
+z_index = 5
 script = ExtResource("1_maawx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
