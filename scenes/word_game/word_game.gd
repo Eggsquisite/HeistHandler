@@ -11,6 +11,7 @@ extends CenterContainer
 @onready var lock_status: Label = $Control/ColorRect/VBoxContainer/LockStatus
 @onready var used_words: VBoxContainer = $Control/ColorRect2/MarginContainer/UsedWordsContainer
 @onready var instructions: Label = $Control/ColorRect/VBoxContainer/Instructions
+@onready var lockpick_bar: TextureProgressBar = $Control/ColorRect/VBoxContainer/Control/LockpickProgressBar
 
 var letter_node = preload("res://scenes/letter/letter.tscn")
 var lockpick_tries = preload("res://scenes/lockpick_tries/lockpick_tries.tscn")
@@ -33,6 +34,7 @@ var is_lock_broken: bool = false
 var is_paused: bool = false
 var is_interacting: bool = false
 var letter_covers: int
+var lp_time: float = 0.0
 
 var _max_tries: int
 var _difficulty: String
@@ -53,6 +55,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("escape") and !check_lock_finished():
 		end_minigame(0)
+	
+	if is_lockpicking:
+		lp_time += delta
+		lockpick_bar.value = lp_time
 
 
 func start_minigame_timer(diff: String, pick_time: float, pick_mult: float) -> void:
@@ -122,6 +128,8 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 	_difficulty = diff
 	_time_to_pick = pick_time
 	_multiplier_to_pick = pick_mult
+	lockpick_bar.hide()
+	lockpick_bar.value = 0.0
 	
 	match _difficulty:
 		"easy":
@@ -131,17 +139,17 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 			tries_left = _max_tries
 		"medium":
 			letter_covers = 3
-			lockpick_max = 1
+			lockpick_max = 2
 			_max_tries = 3
 			tries_left = _max_tries
 		"medium-hard":
 			letter_covers = 4
-			lockpick_max = 1
+			lockpick_max = 2
 			_max_tries = 3
 			tries_left = _max_tries
 		"hard":
 			letter_covers = 5
-			lockpick_max = 2
+			lockpick_max = 3
 			_max_tries = 5
 			tries_left = _max_tries
 
@@ -174,12 +182,16 @@ func begin_lockpick() -> void:
 	
 	is_lockpicking = true
 	lockpick_count += 1
+	lockpick_bar.show()
 	
 	var lp_time: float
 	if lockpick_count == 1:
 		lp_time = _time_to_pick
 	else:
-		lp_time = _time_to_pick * (_multiplier_to_pick * lockpick_count / 2)
+		lp_time = _time_to_pick + (
+			_time_to_pick * (_multiplier_to_pick - 1) * lockpick_count
+			)
+	lockpick_bar.max_value = lp_time
 	# print("lp time: %s" % lp_time)
 	
 	setup_line_edit(false)
@@ -198,6 +210,7 @@ func end_lockpick() -> void:
 	letter_focus.show_letter()
 	letter_focus.release_focus()
 	
+	reset_lockpick_bar()
 	setup_line_edit(true)
 	lockpick_tries_container.remove_lockpick()
 	SignalManager.letter_lockpicked.emit()
@@ -269,10 +282,18 @@ func end_minigame(_lives: int) -> void:
 	is_interacting = false
 	line_edit.editable = false
 	
+	reset_lockpick_bar()
+	
 	if is_lockpicking:
 		lockpick_count -= 1
 		is_lockpicking = false
 		lockpick_timer.stop()
+
+
+func reset_lockpick_bar() -> void:
+	lockpick_bar.hide()
+	lp_time = 0.0
+	lockpick_bar.value = 0.0
 
 
 func compare_letters(new_text: String) -> void:

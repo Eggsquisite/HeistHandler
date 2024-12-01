@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://ctlcuyeb87x46"]
+[gd_scene load_steps=24 format=4 uid="uid://ctlcuyeb87x46"]
 
 [ext_resource type="Script" path="res://scenes/base_level/base_level.gd" id="1_8i40g"]
 [ext_resource type="Texture2D" uid="uid://td5ecgxvb75o" path="res://assets/tiles/Terrain (16x16).png" id="1_hulus"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b3rjocfurxm7x" path="res://assets/tiles/Dungeon_Tileset.png" id="4_etvgi"]
 [ext_resource type="PackedScene" uid="uid://bpby7u2fduhbo" path="res://scenes/patrol_waypoints/patrol_waypoints.tscn" id="6_bjxsp"]
 [ext_resource type="PackedScene" uid="uid://bi8ugkv61xqqg" path="res://scenes/coin_pickup/coin_pickup.tscn" id="6_o27eb"]
+[ext_resource type="PackedScene" uid="uid://bhgo8dhr4d6hv" path="res://scenes/player_cam/player_cam.tscn" id="7_t1jur"]
 [ext_resource type="PackedScene" uid="uid://m4oaqcygjc3l" path="res://scenes/hud/hud.tscn" id="7_towt5"]
 [ext_resource type="PackedScene" uid="uid://beacmbeyduipt" path="res://scenes/locked_door/locked_door.tscn" id="7_untbo"]
 [ext_resource type="PackedScene" uid="uid://cognfqqs651nu" path="res://scenes/goal_ladder/goal_ladder.tscn" id="11_1ctuu"]
@@ -2398,6 +2399,9 @@ tile_set = SubResource("TileSet_kw86y")
 
 [node name="Player" parent="." instance=ExtResource("2_fl8iu")]
 position = Vector2(113, -40)
+
+[node name="PlayerCam" parent="Player" instance=ExtResource("7_t1jur")]
+position_smoothing_speed = 16.0
 
 [node name="Chest" parent="." instance=ExtResource("3_7sbiq")]
 position = Vector2(230, -118)

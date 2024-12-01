@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bc04p6e3xp50b"]
+[gd_scene load_steps=10 format=3 uid="uid://bc04p6e3xp50b"]
 
 [ext_resource type="Script" path="res://scenes/word_game/word_game.gd" id="1_nr105"]
 [ext_resource type="Script" path="res://scenes/word_game/lockpick_tries_container.gd" id="2_d0nwn"]
 [ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="3_bsct3"]
 [ext_resource type="PackedScene" uid="uid://do4egjvbe7aut" path="res://scenes/lockpick_tries/lockpick_tries.tscn" id="3_lrdoi"]
+[ext_resource type="Texture2D" uid="uid://cvt0op4ynxq7c" path="res://assets/leave_bar/leave_bar1.png" id="4_g71d5"]
+[ext_resource type="Texture2D" uid="uid://doq7uq8gsjnxp" path="res://assets/leave_bar/leave_bar2.png" id="5_1r0ey"]
 [ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="5_dlkik"]
+[ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="6_nkump"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kjemf"]
 font = ExtResource("3_bsct3")
@@ -91,10 +94,27 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="LockpickProgressBar" type="ProgressBar" parent="Control/ColorRect/VBoxContainer"]
-visible = false
-z_index = 20
+[node name="Control" type="Control" parent="Control/ColorRect/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LockpickProgressBar" type="TextureProgressBar" parent="Control/ColorRect/VBoxContainer/Control"]
+z_index = 20
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 19.5
+offset_top = -15.0
+offset_right = -68.5
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 1)
+step = 0.001
+value = 50.0
+texture_under = ExtResource("4_g71d5")
+texture_progress = ExtResource("5_1r0ey")
 
 [node name="Instructions" type="Label" parent="Control/ColorRect/VBoxContainer"]
 visible = false
@@ -194,6 +214,12 @@ wait_time = 0.1
 one_shot = true
 
 [node name="LabelTimer" type="Timer" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-24, 0)
+energy = 0.7
+texture = ExtResource("6_nkump")
+texture_scale = 5.0
 
 [connection signal="focus_entered" from="Control/ColorRect/VBoxContainer/LineEdit" to="." method="_on_line_edit_focus_entered"]
 [connection signal="focus_exited" from="Control/ColorRect/VBoxContainer/LineEdit" to="." method="_on_line_edit_focus_exited"]

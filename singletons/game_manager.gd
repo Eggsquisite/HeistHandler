@@ -2,7 +2,8 @@ extends Node
 
 const SCORE_FILE: String = "user://HeistScores.json"
 const MAIN = preload("res://scenes/main/main.tscn")
-const TOTAL_LEVELS = 5
+const TOTAL_LEVELS = 7
+const SECRET_LEVELS = 3
 const DEFAULT_LOOT = 0
 const DEFAULT_TIME = 1000.0
 

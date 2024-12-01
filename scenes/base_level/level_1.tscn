@@ -1,5 +1,50 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpckikmxbrood"]
+[gd_scene load_steps=4 format=3 uid="uid://dpckikmxbrood"]
 
 [ext_resource type="PackedScene" uid="uid://cvxrhon0pt8yd" path="res://scenes/base_level/level_0.tscn" id="1_iopsd"]
+[ext_resource type="PackedScene" uid="uid://bi8ugkv61xqqg" path="res://scenes/coin_pickup/coin_pickup.tscn" id="2_lfwda"]
+[ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_vnu18"]
 
-[node name="Level_0" instance=ExtResource("1_iopsd")]
+[node name="Level_1" instance=ExtResource("1_iopsd")]
+
+[node name="StartLadder" parent="." index="3"]
+position = Vector2(-251, -134)
+
+[node name="Player" parent="." index="4"]
+position = Vector2(-227, -109)
+
+[node name="PlayerCam" parent="Player" index="9"]
+limit_left = -300
+limit_top = -225
+limit_right = 300
+
+[node name="GoalLadder" parent="." index="5"]
+z_index = 5
+position = Vector2(225, -175)
+
+[node name="Chest" parent="." index="6" instance=ExtResource("3_vnu18")]
+position = Vector2(125, -100)
+coin_amt = 10
+
+[node name="Coin1" parent="Coins" index="0" instance=ExtResource("2_lfwda")]
+position = Vector2(-125, -100)
+
+[node name="Coin2" parent="Coins" index="1" instance=ExtResource("2_lfwda")]
+position = Vector2(-75, -100)
+
+[node name="Coin3" parent="Coins" index="2" instance=ExtResource("2_lfwda")]
+position = Vector2(-25, -100)
+
+[node name="Coin4" parent="Coins" index="3" instance=ExtResource("2_lfwda")]
+position = Vector2(25, -100)
+
+[node name="Coin5" parent="Coins" index="4" instance=ExtResource("2_lfwda")]
+position = Vector2(75, -100)
+
+[node name="Coin6" parent="Coins" index="5" instance=ExtResource("2_lfwda")]
+position = Vector2(175, -100)
+
+[node name="Coin7" parent="Coins" index="6" instance=ExtResource("2_lfwda")]
+position = Vector2(225, -100)
+
+[node name="Coin9" parent="Coins" index="7" instance=ExtResource("2_lfwda")]
+position = Vector2(225, -135)

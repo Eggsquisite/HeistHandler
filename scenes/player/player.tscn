@@ -1,9 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://bh0ftwhxdjh1l"]
+[gd_scene load_steps=19 format=3 uid="uid://bh0ftwhxdjh1l"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ki0f4"]
 [ext_resource type="Texture2D" uid="uid://cf6hjuffh04dw" path="res://assets/player/Medieval Thief Sprite Sheet.png" id="2_myxj4"]
 [ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="3_31wov"]
-[ext_resource type="PackedScene" uid="uid://bhgo8dhr4d6hv" path="res://scenes/player_cam/player_cam.tscn" id="4_1btfe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4u78"]
 size = Vector2(11, 9)
@@ -218,24 +217,24 @@ collision_layer = 2
 script = ExtResource("1_ki0f4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -11)
 texture = ExtResource("2_myxj4")
 hframes = 10
 vframes = 8
 frame = 21
 
 [node name="Light" type="PointLight2D" parent="."]
-position = Vector2(0, -3)
+position = Vector2(0, -5)
 energy = 0.4
 texture = ExtResource("3_31wov")
 texture_scale = 0.75
 
 [node name="PlayerCollision2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -0.5)
+position = Vector2(0.5, -2.5)
 shape = SubResource("RectangleShape2D_c4u78")
 
 [node name="Hurtbox" type="Area2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -11)
 collision_layer = 8
 collision_mask = 16
 
@@ -244,20 +243,13 @@ position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_tvjkt")
 
 [node name="NavPoints" type="Node2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -11)
 
 [node name="LeftPoint" type="Node2D" parent="NavPoints"]
 position = Vector2(-12, 7)
 
 [node name="RightPoint" type="Node2D" parent="NavPoints"]
 position = Vector2(12, 7)
-
-[node name="PlayerCam" parent="." instance=ExtResource("4_1btfe")]
-position = Vector2(0, -9)
-limit_left = -500
-limit_top = -400
-limit_right = 500
-limit_bottom = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

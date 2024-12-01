@@ -242,7 +242,7 @@ func detect_player(delta) -> void:
 func check_raycast() -> void:
 	if _player != null:
 		if _player_in_vision_area:
-			var tmp = Vector2(_player.global_position.x, _player.global_position.y - 8)
+			var tmp = Vector2(_player.global_position.x, _player.global_position.y - 4)
 			detect_ray.enabled = true
 			detect_ray.target_position = global_position.direction_to(tmp) * 250
 		
