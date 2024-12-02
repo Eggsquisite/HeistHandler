@@ -190,7 +190,7 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="GORect/VBGameOver"]
 layout_mode = 2
-text = "Press Space to Restart"
+text = "Press R to Restart"
 label_settings = ExtResource("1_3j8c2")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -308,6 +308,13 @@ stretch_mode = 4
 [node name="Label2" type="Label" parent="LCRect/VBLC"]
 layout_mode = 2
 text = "Press Space to Continue"
+label_settings = ExtResource("1_3j8c2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="LCRect/VBLC"]
+layout_mode = 2
+text = "Press R to Restart"
 label_settings = ExtResource("1_3j8c2")
 horizontal_alignment = 1
 vertical_alignment = 1

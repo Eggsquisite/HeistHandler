@@ -80,8 +80,7 @@ func start_minigame() -> void:
 	if is_paused:
 		resume_minigame()
 		return
-	
-	print("restarting")
+
 	self.show()
 	is_game_started = true
 	is_interacting = true

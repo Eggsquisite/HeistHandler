@@ -23,6 +23,7 @@ extends Control
 var _hearts: Array
 var _stars: Array
 var _loot: int = 0
+var _total_loot: int = 0
 var _time: float = 0.0
 var _time_start: float = 0.0
 var _time_end: float = 0.0
@@ -60,9 +61,10 @@ func _process(delta: float) -> void:
 func start_level(total_loot) -> void:
 	_loot = 0
 	_time = 0.0
+	_total_loot = total_loot
 	_time_start = Time.get_unix_time_from_system()
 	loot_score.text = ":%03d/" % _loot
-	t_loot1.text = "%03d" % total_loot
+	t_loot1.text = "%03d" % _total_loot
 	set_process(true)
 
 
@@ -79,12 +81,12 @@ func level_complete() -> void:
 	SignalManager.on_score_end.emit(_loot, _time_elapsed, str(_level_number))
 
 
-func set_rank(rank: int, tl: int) -> void:
+func set_rank(rank: int) -> void:
 	hb_loot.hide()
 	current_timer.hide()
 	lc_label.text = "Level %d Complete" % _level_number
 	
-	t_loot2.text = ":%03d / %03d" % [_loot, tl]
+	t_loot2.text = ":%03d / %03d" % [_loot, _total_loot]
 	
 	_msecs = fmod(_time_elapsed, 1) * 100
 	_secs = fmod(_time_elapsed, 60)

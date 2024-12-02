@@ -20,8 +20,8 @@ var _time: float = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for ln in range(1, TOTAL_LEVELS + 1):
-		_level_scenes[ln] = load("res://scenes/base_level/base_level.tscn")
-		#_level_scenes[ln] = load("res://scenes/base_level/level_%d.tscn" % ln)
+		# _level_scenes[ln] = load("res://scenes/base_level/base_level.tscn")
+		_level_scenes[ln] = load("res://scenes/base_level/level_%d.tscn" % ln)
 	
 	SignalManager.on_guard_alert.connect(guard_alerted)
 	SignalManager.on_guard_lost.connect(guard_lost)

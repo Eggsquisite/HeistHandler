@@ -2556,5 +2556,4 @@ disable_mode = 2
 position = Vector2(204, -13)
 
 [node name="LockedDoor" parent="." instance=ExtResource("7_untbo")]
-z_index = 5
 position = Vector2(-44, -86)

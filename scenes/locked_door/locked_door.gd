@@ -32,4 +32,3 @@ func unlock_door(success: int) -> void:
 		interaction_area.queue_free()
 	elif success == 0: # Lock broken
 		failed = true
-		print("broke")

@@ -6,9 +6,15 @@ var _is_level_complete: bool = false
 var _total_loot: int = 0
 
 @export_group("Loot Rank Percent")
-@export var three_star: float = 80
-@export var two_star: float = 50
-@export var one_star: float = 30
+@export var loot_three_star: float = 80
+@export var loot_two_star: float = 50
+@export var loot_one_star: float = 30
+
+@export_group("Time Rank in Seconds")
+@export var time_three_star: float = 60
+@export var time_two_star: float = 90
+@export var time_one_star: float = 120
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -26,11 +32,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("lockpick") and _is_game_over:
+	if Input.is_action_just_pressed("restart") and _is_game_over:
 		GameManager.reset_level()
 	
 	if Input.is_action_just_pressed("lockpick") and _is_level_complete:
 		GameManager.load_next_level_scene()
+	
+	if Input.is_action_just_pressed("restart") and _is_level_complete:
+		GameManager.reset_level()
 
 
 func get_total_loot() -> int:
@@ -42,18 +51,26 @@ func get_total_loot() -> int:
 	return _total_loot
 
 
-func calculate_rank(loot: int, _time: float, _lvl: String) -> void:
+func calculate_rank(loot: int, time: float, _lvl: String) -> void:
 	# Will not implement time for 1.0
 	var tmp_rank: int
-	if loot >= _total_loot * three_star / 100:
-		tmp_rank = 3
-	elif loot >= _total_loot * two_star / 100:
-		tmp_rank = 2
-	elif loot >= _total_loot * one_star / 100:
+	if loot >= _total_loot * loot_three_star / 100:
+		if time <= time_three_star:
+			tmp_rank = 3
+		elif time <= time_two_star:
+			tmp_rank = 2
+		elif time > time_two_star:
+			tmp_rank = 3
+	elif loot >= _total_loot * loot_two_star / 100:
+		if time <= time_two_star:
+			tmp_rank = 2
+		elif time > time_two_star:
+			tmp_rank = 1
+	elif loot >= _total_loot * loot_one_star / 100:
 		tmp_rank = 1
 	else:
 		tmp_rank = 0
-	SignalManager.on_rank_set.emit(tmp_rank, _total_loot)
+	SignalManager.on_rank_set.emit(tmp_rank)
 
 
 func game_over() -> void:
