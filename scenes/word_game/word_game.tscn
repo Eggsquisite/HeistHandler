@@ -65,14 +65,18 @@ alignment = 1
 script = ExtResource("2_d0nwn")
 
 [node name="LockpickTries" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
-visible = false
 z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="LockpickTries2" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
-visible = false
+z_index = 20
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LockpickTries3" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
 z_index = 20
 layout_mode = 2
 size_flags_horizontal = 4

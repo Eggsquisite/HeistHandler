@@ -6,6 +6,8 @@ extends Interactable
 @onready var lock: Sprite2D = $Lock
 @onready var coll: CollisionShape2D = $StaticBody2D/Coll
 
+var failed: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	coll.disabled = false
@@ -27,4 +29,7 @@ func unlock_door(success: int) -> void:
 	elif success == 1: # Lock unlocked
 		door_anim.play("unlock")
 		coll.disabled = true
-	interaction_area.queue_free()
+		interaction_area.queue_free()
+	elif success == 0: # Lock broken
+		failed = true
+		print("broke")

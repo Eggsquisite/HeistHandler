@@ -24,7 +24,7 @@ limit_left = -250
 limit_right = 175
 
 [node name="GoalLadder" parent="." index="5"]
-position = Vector2(118, -63)
+position = Vector2(77, -61)
 
 [node name="Coin1" parent="Coins" index="0" instance=ExtResource("2_d5sj7")]
 position = Vector2(-86, -315)
@@ -75,16 +75,16 @@ position = Vector2(-205, -53)
 position = Vector2(-142, -53)
 
 [node name="Coin17" parent="Coins" index="16" instance=ExtResource("2_d5sj7")]
-position = Vector2(-83, -57)
+position = Vector2(-83, -55)
 
 [node name="Coin18" parent="Coins" index="17" instance=ExtResource("2_d5sj7")]
-position = Vector2(-32, -57)
+position = Vector2(147, -138)
 
 [node name="Coin19" parent="Coins" index="18" instance=ExtResource("2_d5sj7")]
-position = Vector2(22, -57)
+position = Vector2(23, -54)
 
 [node name="Coin20" parent="Coins" index="19" instance=ExtResource("2_d5sj7")]
-position = Vector2(72, -57)
+position = Vector2(123, -55)
 
 [node name="LockedDoor" parent="." index="7" instance=ExtResource("2_4k1k2")]
 position = Vector2(126, -228)
@@ -94,5 +94,10 @@ position = Vector2(-210, -100)
 
 [node name="Chest" parent="." index="9" instance=ExtResource("3_8at61")]
 position = Vector2(-32, -177)
+coin_amt = 10
+difficulty = "medium"
+
+[node name="Chest2" parent="." index="10" instance=ExtResource("3_8at61")]
+position = Vector2(-32, -58)
 coin_amt = 10
 difficulty = "medium"

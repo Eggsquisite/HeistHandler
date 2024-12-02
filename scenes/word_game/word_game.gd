@@ -13,9 +13,12 @@ extends CenterContainer
 @onready var instructions: Label = $Control/ColorRect/VBoxContainer/Instructions
 @onready var lockpick_bar: TextureProgressBar = $Control/ColorRect/VBoxContainer/Control/LockpickProgressBar
 
+@export_enum("Chest", "Door") var unlock_type: String = "Chest"
+
 var letter_node = preload("res://scenes/letter/letter.tscn")
 var lockpick_tries = preload("res://scenes/lockpick_tries/lockpick_tries.tscn")
 var used_word_label = preload("res://scenes/used_word/used_word.tscn")
+var word_game = preload("res://scenes/word_game/word_game.tscn")
 
 var full_word: String = ''
 var letter_index: int
@@ -26,6 +29,7 @@ var letter_array: Array[String] = []
 var tries_left: int = 0
 var lockpick_count: int = 0
 var lockpick_max: int = 0
+var lockpick_current: int = 0
 var letter_focus: Control
 var is_game_started: bool = false
 var is_lockpicking: bool = false
@@ -43,6 +47,7 @@ var _multiplier_to_pick: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.hide()
 	SignalManager.on_player_hit.connect(end_minigame)
 
 
@@ -68,7 +73,7 @@ func start_minigame_timer(diff: String, pick_time: float, pick_mult: float) -> v
 	# If starting game for the first time, init interactable variables
 	if !is_game_started:
 		setup_variables(diff, pick_time, pick_mult)
-		lockpick_tries_container.setup_lockpick_amt(lockpick_max)
+		lockpick_tries_container.update_lockpick_amt(lockpick_max)
 
 
 func start_minigame() -> void:
@@ -76,11 +81,13 @@ func start_minigame() -> void:
 		resume_minigame()
 		return
 	
+	print("restarting")
 	self.show()
 	is_game_started = true
 	is_interacting = true
 	SignalManager.word_game_started.emit()
 	
+	full_word = ""
 	full_word = WordManager.get_random_word(_difficulty)
 	for letter in full_word:
 		letter_array.append(letter)
@@ -137,21 +144,25 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 			lockpick_max = 1
 			_max_tries = 3
 			tries_left = _max_tries
+			lockpick_current = lockpick_max
 		"medium":
 			letter_covers = 3
 			lockpick_max = 2
 			_max_tries = 3
 			tries_left = _max_tries
+			lockpick_current = lockpick_max
 		"medium-hard":
 			letter_covers = 4
 			lockpick_max = 2
 			_max_tries = 4
 			tries_left = _max_tries
+			lockpick_current = lockpick_max
 		"hard":
 			letter_covers = 5
 			lockpick_max = 3
 			_max_tries = 5
 			tries_left = _max_tries
+			lockpick_current = lockpick_max
 
 
 func setup_line_edit(flag: bool) -> void:
@@ -173,7 +184,10 @@ func update_lock_label() -> void:
 	elif tries_left > 0:
 		lock_status.text = "%s Guesses" % tries_left
 	elif tries_left <= 0:
-		lock_status.text = "Lock broken!"
+		if unlock_type == "Chest":
+			lock_status.text = "Lock broken!"
+		elif unlock_type == "Door":
+			lock_status.text = "Try again!"
 
 
 func begin_lockpick() -> void:
@@ -212,7 +226,8 @@ func end_lockpick() -> void:
 	
 	reset_lockpick_bar()
 	setup_line_edit(true)
-	lockpick_tries_container.remove_lockpick()
+	lockpick_current -= 1
+	lockpick_tries_container.update_lockpick_amt(lockpick_current)
 	SignalManager.letter_lockpicked.emit()
 	
 	for n in letter_containers:
@@ -271,7 +286,11 @@ func end_minigame(_lives: int) -> void:
 			SignalManager.word_game_finished.emit(1)
 		elif is_lock_broken:
 			SignalManager.word_game_finished.emit(0)
-		queue_free()
+			if unlock_type == "Chest":
+				queue_free()
+			elif unlock_type == "Door":
+				reset_game()
+				return
 	
 	# Pause game
 	SignalManager.word_game_finished.emit(2)
@@ -288,6 +307,28 @@ func end_minigame(_lives: int) -> void:
 		lockpick_count -= 1
 		is_lockpicking = false
 		lockpick_timer.stop()
+
+
+func reset_game() -> void:
+	self.hide()
+	line_edit.clear()
+	letter_array.clear()
+	letter_containers.clear()
+	is_interacting = false
+	line_edit.editable = false
+
+	lockpick_count = 0
+	tries_left = _max_tries
+	lockpick_current = lockpick_max
+	
+	update_lock_label()
+	reset_lockpick_bar()
+	
+	for n in used_words.get_children():
+		if !n.name.contains("Title"):
+			n.queue_free()
+	for n in full_word_container.get_children():
+		n.queue_free()
 
 
 func reset_lockpick_bar() -> void:
