@@ -12,6 +12,7 @@ extends CenterContainer
 @onready var used_words: VBoxContainer = $Control/ColorRect2/MarginContainer/UsedWordsContainer
 @onready var instructions: Label = $Control/ColorRect/VBoxContainer/Instructions
 @onready var lockpick_bar: TextureProgressBar = $Control/ColorRect/VBoxContainer/Control/LockpickProgressBar
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 @export_enum("Chest", "Door") var unlock_type: String = "Chest"
 
@@ -247,6 +248,7 @@ func success() -> void:
 	update_lock_label()
 	start_finished_timer()
 	# play unlock sound
+	SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)
 	SignalManager.letter_lockpicked.emit() # plays chest anim
 
 
@@ -283,6 +285,8 @@ func end_minigame(_lives: int) -> void:
 		# To check if chest is unlock/locked
 		if is_lock_picked:
 			SignalManager.word_game_finished.emit(1)
+			if unlock_type == "Chest":
+				SoundManager.play_clip(sound, SoundManager.SOUND_CHEST_OPEN)
 		elif is_lock_broken:
 			SignalManager.word_game_finished.emit(0)
 			if unlock_type == "Chest":
