@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjielb8muwwwi"]
+[gd_scene load_steps=5 format=3 uid="uid://bjielb8muwwwi"]
 
 [ext_resource type="PackedScene" uid="uid://sm0oivof73qe" path="res://scenes/main_button/main_button.tscn" id="1_lbdgt"]
 [ext_resource type="Script" path="res://scenes/main_button/play_button.gd" id="2_xrbj8"]
+[ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="3_g8l2n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nrvay"]
+font = ExtResource("3_g8l2n")
+font_size = 24
+font_color = Color(0.733333, 0, 0, 1)
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
 
 [node name="PlayButton" instance=ExtResource("1_lbdgt")]
 script = ExtResource("2_xrbj8")
+
+[node name="Label" parent="MarginContainer" index="0"]
+label_settings = SubResource("LabelSettings_nrvay")

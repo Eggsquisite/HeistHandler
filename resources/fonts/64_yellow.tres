@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://wpmy1wvl2uq0"]
+
+[ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="1_v6ckw"]
+
+[resource]
+font = ExtResource("1_v6ckw")
+font_size = 64
+font_color = Color(0.861069, 0.737337, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4

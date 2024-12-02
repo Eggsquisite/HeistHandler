@@ -1,0 +1,103 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxcp0jje3thpi"]
+
+[ext_resource type="PackedScene" uid="uid://cvxrhon0pt8yd" path="res://scenes/base_level/level_0.tscn" id="1_c58mr"]
+[ext_resource type="LabelSettings" uid="uid://wpmy1wvl2uq0" path="res://resources/fonts/64_yellow.tres" id="2_acdlb"]
+[ext_resource type="PackedScene" uid="uid://cxa6y2bqtmt8s" path="res://scenes/guard/guard.tscn" id="3_cv6sb"]
+[ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_pjucg"]
+[ext_resource type="PackedScene" uid="uid://bpby7u2fduhbo" path="res://scenes/patrol_waypoints/patrol_waypoints.tscn" id="4_2epdr"]
+[ext_resource type="PackedScene" uid="uid://bi8ugkv61xqqg" path="res://scenes/coin_pickup/coin_pickup.tscn" id="4_lxjd3"]
+
+[node name="Pics" instance=ExtResource("1_c58mr")]
+
+[node name="HUD" parent="CanvasLayer" index="0"]
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer" index="1"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "Hasty Heists"
+label_settings = ExtResource("2_acdlb")
+
+[node name="Guard" parent="." index="3" instance=ExtResource("3_cv6sb")]
+position = Vector2(145, -204)
+patrol_delay = 200.0
+
+[node name="PatrolWaypoints" parent="Guard" index="13" instance=ExtResource("4_2epdr")]
+
+[node name="Marker2D" type="Marker2D" parent="Guard/PatrolWaypoints" index="0"]
+position = Vector2(162, -205)
+
+[node name="Guard2" parent="." index="4" instance=ExtResource("3_cv6sb")]
+position = Vector2(-194, -201)
+patrol_delay = 200.0
+alert_speed = 0.1
+detection_inc = 1.0
+
+[node name="PatrolWaypoints" parent="Guard2" index="13" instance=ExtResource("4_2epdr")]
+
+[node name="Marker2D" type="Marker2D" parent="Guard2/PatrolWaypoints" index="0"]
+position = Vector2(-56, -205)
+
+[node name="StartLadder" parent="." index="5"]
+position = Vector2(-204, -112)
+
+[node name="PlayerCam" parent="Player" index="10"]
+position = Vector2(-4, -46)
+
+[node name="GoalLadder" parent="." index="7"]
+position = Vector2(425, -95)
+
+[node name="Chest" parent="." index="8" instance=ExtResource("3_pjucg")]
+position = Vector2(50, -200)
+coin_amt = 15
+difficulty = "medium"
+
+[node name="CoinPickup" parent="Coins" index="0" instance=ExtResource("4_lxjd3")]
+position = Vector2(-25, -200)
+
+[node name="CoinPickup2" parent="Coins" index="1" instance=ExtResource("4_lxjd3")]
+position = Vector2(-25, -150)
+
+[node name="CoinPickup6" parent="Coins" index="2" instance=ExtResource("4_lxjd3")]
+position = Vector2(25, -150)
+
+[node name="CoinPickup7" parent="Coins" index="3" instance=ExtResource("4_lxjd3")]
+position = Vector2(75, -150)
+
+[node name="CoinPickup8" parent="Coins" index="4" instance=ExtResource("4_lxjd3")]
+position = Vector2(125, -150)
+
+[node name="CoinPickup9" parent="Coins" index="5" instance=ExtResource("4_lxjd3")]
+position = Vector2(125, -200)
+
+[node name="CoinPickup10" parent="Coins" index="6" instance=ExtResource("4_lxjd3")]
+position = Vector2(125, -250)
+
+[node name="CoinPickup3" parent="Coins" index="7" instance=ExtResource("4_lxjd3")]
+position = Vector2(-25, -250)
+
+[node name="CoinPickup4" parent="Coins" index="8" instance=ExtResource("4_lxjd3")]
+position = Vector2(25, -250)
+
+[node name="CoinPickup5" parent="Coins" index="9" instance=ExtResource("4_lxjd3")]
+position = Vector2(75, -250)

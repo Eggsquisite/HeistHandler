@@ -1,21 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfv8o6alsyqe5"]
+[gd_scene load_steps=9 format=3 uid="uid://bfv8o6alsyqe5"]
 
 [ext_resource type="Texture2D" uid="uid://8vhth6cc1rdo" path="res://assets/ui/game_background_3.1.png" id="1_jyrx6"]
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_vrqgl"]
-[ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="1_wut7f"]
+[ext_resource type="LabelSettings" uid="uid://wpmy1wvl2uq0" path="res://resources/fonts/64_yellow.tres" id="3_oiknr"]
 [ext_resource type="PackedScene" uid="uid://bjielb8muwwwi" path="res://scenes/main_button/play_button.tscn" id="4_egwr5"]
 [ext_resource type="PackedScene" uid="uid://dwwmh04xtb5ex" path="res://scenes/main_button/rules_button.tscn" id="5_oyo41"]
 [ext_resource type="PackedScene" uid="uid://do2w6fqt04ne6" path="res://scenes/main_button/credits_button.tscn" id="6_cspcj"]
 [ext_resource type="PackedScene" uid="uid://bxhwbjosh67bq" path="res://scenes/main_button/quit_button.tscn" id="7_oup0n"]
 [ext_resource type="LabelSettings" uid="uid://b7pk5anclpjox" path="res://resources/fonts/24_wh.tres" id="9_xurnf"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_q5yo7"]
-font = ExtResource("1_wut7f")
-font_size = 64
-font_color = Color(0.861069, 0.737337, 0, 1)
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 4
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -50,7 +42,7 @@ layout_mode = 2
 [node name="Title" type="Label" parent="MC/VB"]
 layout_mode = 2
 text = "Hasty Heists"
-label_settings = SubResource("LabelSettings_q5yo7")
+label_settings = ExtResource("3_oiknr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
