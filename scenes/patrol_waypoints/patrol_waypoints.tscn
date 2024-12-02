@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scenes/patrol_waypoints/patrol_waypoints.gd" id="1_htk36"]
 
 [node name="PatrolWaypoints" type="Node2D"]
+top_level = true
 script = ExtResource("1_htk36")

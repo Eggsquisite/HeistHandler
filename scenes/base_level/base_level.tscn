@@ -2416,7 +2416,6 @@ position = Vector2(42, -132)
 rotation = -0.00714274
 
 [node name="PatrolWaypoints" parent="Guard" instance=ExtResource("6_bjxsp")]
-top_level = true
 
 [node name="wp1" type="Marker2D" parent="Guard/PatrolWaypoints"]
 position = Vector2(31.9285, -143)

@@ -59,15 +59,20 @@ func calculate_rank(loot: int, time: float, _lvl: String) -> void:
 			tmp_rank = 3
 		elif time <= time_two_star:
 			tmp_rank = 2
-		elif time > time_two_star:
-			tmp_rank = 3
+		elif time <= time_two_star:
+			tmp_rank = 1
 	elif loot >= _total_loot * loot_two_star / 100:
 		if time <= time_two_star:
 			tmp_rank = 2
-		elif time > time_two_star:
+		elif time <= time_two_star:
 			tmp_rank = 1
+		elif time > time_one_star:
+			tmp_rank = 0
 	elif loot >= _total_loot * loot_one_star / 100:
-		tmp_rank = 1
+		if time <= time_one_star:
+			tmp_rank = 1
+		elif time > time_one_star:
+			tmp_rank = 0
 	else:
 		tmp_rank = 0
 	SignalManager.on_rank_set.emit(tmp_rank)
