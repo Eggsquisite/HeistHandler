@@ -69,7 +69,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CRRules" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,39 +94,39 @@ theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "WASD: 			Move
+text = "WASD: 					Move
 "
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "Shift: 		Sneak
+text = "Shift: 				Sneak
 "
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "E: 						Interact"
+text = "E: 								Interact"
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
 [node name="Label4" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "Tab: 				Cycle Letters"
+text = "Tab: 						Cycle Letters"
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
 [node name="Label5" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "Space: 		Lockpick Letters"
+text = "Space: 				Lockpick Letters"
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
 [node name="Label6" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
-text = "Esc: 				Stop Unlock"
+text = "Esc/Ctrl: 	Stop Unlock"
 label_settings = ExtResource("9_xurnf")
 vertical_alignment = 1
 
