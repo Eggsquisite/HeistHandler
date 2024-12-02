@@ -82,6 +82,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="LockpickTries4" parent="Control/ColorRect/LockpickTriesContainer" instance=ExtResource("3_lrdoi")]
+z_index = 20
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
 z_index = 20
 layout_mode = 1
@@ -119,17 +125,6 @@ step = 0.001
 value = 50.0
 texture_under = ExtResource("4_g71d5")
 texture_progress = ExtResource("5_1r0ey")
-
-[node name="Instructions" type="Label" parent="Control/ColorRect/VBoxContainer"]
-visible = false
-z_index = 20
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "SPACE: Lockpick"
-label_settings = ExtResource("5_dlkik")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Full Word Container" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
 z_index = 20

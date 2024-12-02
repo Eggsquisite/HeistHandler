@@ -300,7 +300,6 @@ func end_minigame(_lives: int) -> void:
 	is_paused = true
 	is_interacting = false
 	line_edit.editable = false
-	
 	reset_lockpick_bar()
 	
 	if is_lockpicking:
@@ -315,6 +314,7 @@ func reset_game() -> void:
 	letter_array.clear()
 	letter_containers.clear()
 	is_interacting = false
+	is_lock_broken = false
 	line_edit.editable = false
 
 	lockpick_count = 0
@@ -323,6 +323,7 @@ func reset_game() -> void:
 	
 	update_lock_label()
 	reset_lockpick_bar()
+	lockpick_tries_container.update_lockpick_amt(lockpick_max)
 	
 	for n in used_words.get_children():
 		if !n.name.contains("Title"):
