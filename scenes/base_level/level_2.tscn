@@ -6,8 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dn3wn221hgqsy" path="res://scenes/chest/chest.tscn" id="3_8at61"]
 
 [node name="Level_2" instance=ExtResource("1_qlyi1")]
-time_three_star = 45.0
-time_two_star = 60.0
+time_two_star = 75.0
 time_one_star = 90.0
 
 [node name="Walls" parent="TileMapLayers" index="2"]

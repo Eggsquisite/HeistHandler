@@ -99,6 +99,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="CRRules/Rules"]
 layout_mode = 2
@@ -161,6 +162,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
 
 [node name="Label2" type="Label" parent="CRCredits/Credits"]
 layout_mode = 2

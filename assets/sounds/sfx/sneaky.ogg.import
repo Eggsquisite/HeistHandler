@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/sneaky.ogg-db68c5dc77629f9e368fd54295a57d38.o
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

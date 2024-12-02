@@ -26,7 +26,7 @@ func _ready() -> void:
 		_level_scenes[ln] = load("res://scenes/base_level/level_%d.tscn" % ln)
 	
 	# load_main_scene()
-	SignalManager.on_play_button_pressed.connect(load_next_level_scene)
+	SignalManager.on_play_button_pressed.connect(load_first_level)
 	SignalManager.on_guard_alert.connect(guard_alerted)
 	SignalManager.on_guard_lost.connect(guard_lost)
 	SignalManager.on_game_over.connect(game_over)
@@ -66,6 +66,11 @@ func get_best_for_level(level: String) -> Array:
 func load_main_scene() -> void:
 	_level_selected = 0
 	get_tree().change_scene_to_packed(MAIN)
+
+
+func load_first_level() -> void:
+	_level_selected = 1
+	get_tree().change_scene_to_packed(_level_scenes[_level_selected])
 
 
 func load_next_level_scene() -> void:

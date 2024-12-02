@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxhwbjosh67bq"]
 
 [ext_resource type="PackedScene" uid="uid://sm0oivof73qe" path="res://scenes/main_button/main_button.tscn" id="1_2hsql"]
-[ext_resource type="Script" path="res://scenes/main_button/credits_button.gd" id="2_d4717"]
+[ext_resource type="Script" path="res://scenes/main_button/quit_button.gd" id="2_wpn8v"]
 
 [node name="QuitButton" instance=ExtResource("1_2hsql")]
-script = ExtResource("2_d4717")
+script = ExtResource("2_wpn8v")
 
 [node name="Label" parent="MarginContainer" index="0"]
 text = "Quit

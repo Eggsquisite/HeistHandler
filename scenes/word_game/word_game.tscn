@@ -50,7 +50,7 @@ offset_right = 82.5
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.176471, 0.0941176, 0.0117647, 0.784314)
+color = Color(0.176471, 0.0941176, 0.0117647, 0.843137)
 
 [node name="LockpickTriesContainer" type="HBoxContainer" parent="Control/ColorRect"]
 z_index = 20
@@ -173,7 +173,7 @@ offset_right = -82.0
 offset_bottom = 50.0
 grow_horizontal = 0
 grow_vertical = 2
-color = Color(0.298039, 0.2, 0.0980392, 0.686275)
+color = Color(0.298039, 0.2, 0.0980392, 0.843137)
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect2"]
 z_index = 20
