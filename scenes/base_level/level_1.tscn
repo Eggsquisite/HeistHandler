@@ -6,6 +6,9 @@
 [ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="4_713cp"]
 
 [node name="Level_1" instance=ExtResource("1_iopsd")]
+loot_three_star = 100.0
+loot_two_star = 80.0
+loot_one_star = 50.0
 time_three_star = 30.0
 time_two_star = 45.0
 time_one_star = 60.0
