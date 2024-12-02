@@ -2,7 +2,7 @@ extends Node
 
 const SCORE_FILE: String = "user://HeistScores.json"
 const MAIN = preload("res://scenes/main/main.tscn")
-const TOTAL_LEVELS = 7
+const TOTAL_LEVELS = 6
 const SECRET_LEVELS = 3
 const DEFAULT_LOOT = 0
 const DEFAULT_TIME = 1000.0
@@ -15,6 +15,8 @@ var _level_selected: int = 1
 var _level_scores: Dictionary = {}
 var _loot: int = 0
 var _time: float = 0.0
+var _final_level: bool = false
+var _final_scene: PackedScene = load("res://scenes/base_level/final_level.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -66,13 +68,16 @@ func load_main_scene() -> void:
 
 func load_next_level_scene() -> void:
 	set_next_level()
-	get_tree().change_scene_to_packed(_level_scenes[_level_selected])
+	if _final_level:
+		get_tree().change_scene_to_packed(_final_scene)
+	else:
+		get_tree().change_scene_to_packed(_level_scenes[_level_selected])
 
 
 func set_next_level() -> void:
 	_level_selected += 1
 	if _level_selected > TOTAL_LEVELS:
-		_level_selected = 1
+		_final_level = true
 		# TODO create a final scene
 
 

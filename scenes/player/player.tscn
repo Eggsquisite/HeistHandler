@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="3_31wov"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3345x"]
-radius = 6.5
-height = 13.0
+radius = 5.5
+height = 11.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjkt"]
 radius = 7.0
@@ -216,6 +216,7 @@ _data = {
 z_index = 5
 collision_layer = 2
 script = ExtResource("1_ki0f4")
+_max_health = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -11)
