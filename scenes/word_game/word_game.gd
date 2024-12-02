@@ -228,6 +228,7 @@ func end_lockpick() -> void:
 	setup_line_edit(true)
 	lockpick_current -= 1
 	lockpick_tries_container.update_lockpick_amt(lockpick_current)
+	SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)
 	SignalManager.letter_lockpicked.emit()
 	
 	for n in letter_containers:

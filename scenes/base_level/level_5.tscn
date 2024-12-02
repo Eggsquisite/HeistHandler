@@ -79,22 +79,25 @@ position = Vector2(-81, -129)
 
 [node name="LockedDoor" parent="." index="7" instance=ExtResource("3_d3aa1")]
 position = Vector2(-2, -164)
-difficulty = "medium"
+difficulty = "medium-hard"
 
 [node name="LockedDoor2" parent="." index="8" instance=ExtResource("3_d3aa1")]
 position = Vector2(158, -92)
+difficulty = "medium-hard"
 
 [node name="Chest" parent="." index="9" instance=ExtResource("4_smyao")]
 position = Vector2(0, -275)
-coin_amt = 10
+coin_amt = 15
+difficulty = "medium"
 
 [node name="Chest2" parent="." index="10" instance=ExtResource("4_smyao")]
 position = Vector2(-130, -79)
-coin_amt = 10
+coin_amt = 15
+difficulty = "medium"
 
 [node name="Guard" parent="." index="11" instance=ExtResource("5_2ue7h")]
 position = Vector2(-145, -268)
-patrol_delay = 3.0
+patrol_delay = 4.0
 
 [node name="PatrolWaypoints" parent="Guard" index="12" instance=ExtResource("6_0yamw")]
 
@@ -106,7 +109,7 @@ position = Vector2(-145, -270)
 
 [node name="Guard2" parent="." index="12" instance=ExtResource("5_2ue7h")]
 position = Vector2(-162, -85)
-patrol_delay = 3.0
+patrol_delay = 4.0
 
 [node name="PatrolWaypoints" parent="Guard2" index="12" instance=ExtResource("6_0yamw")]
 
