@@ -13,6 +13,7 @@ enum GuardMode { PATROL, ALERT, SEARCH }
 @onready var search_flip_timer: Timer = $Timers/SearchFlipTimer
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox_shape: CollisionShape2D = $EnemyHitbox/CollisionShape2D
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var vision_cone: Area2D = $VisionCone
@@ -213,7 +214,7 @@ func _player_in_sight(flag: bool) -> void:
 func detect_player(delta) -> void:
 	if _player != null:
 		if _player.get_sneak_status():
-			_sneak_detection_value = detection_inc / 2
+			_sneak_detection_value = detection_inc / 2.5
 		else:
 			_sneak_detection_value = detection_inc
 
@@ -242,7 +243,7 @@ func detect_player(delta) -> void:
 func check_raycast() -> void:
 	if _player != null:
 		if _player_in_vision_area:
-			var tmp = Vector2(_player.global_position.x, _player.global_position.y - 4)
+			var tmp = Vector2(_player.global_position.x, _player.global_position.y - 3)
 			detect_ray.enabled = true
 			detect_ray.target_position = global_position.direction_to(tmp) * 250
 		
@@ -284,6 +285,10 @@ func level_end() -> void:
 	set_enemy_states(EnemyState.IDLE)
 	set_process(false)
 	set_physics_process(false)
+
+
+func play_sword_slash() -> void:
+	SoundManager.play_clip(sound, SoundManager.SOUND_SLASH)
 
 
 func _on_vision_cone_body_entered(body: Node2D) -> void:

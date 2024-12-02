@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var sound: AudioStreamPlayer2D = $Sound
+
 
 var _is_game_over: bool = false
 var _is_level_complete: bool = false
@@ -84,3 +86,4 @@ func game_over() -> void:
 
 func level_complete() -> void:
 	_is_level_complete = true
+	SoundManager.play_clip(sound, SoundManager.SOUND_LVL_END)

@@ -1,3 +1,246 @@
-[gd_scene format=3 uid="uid://bfv8o6alsyqe5"]
+[gd_scene load_steps=10 format=3 uid="uid://bfv8o6alsyqe5"]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://8vhth6cc1rdo" path="res://assets/ui/game_background_3.1.png" id="1_jyrx6"]
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_vrqgl"]
+[ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="1_wut7f"]
+[ext_resource type="PackedScene" uid="uid://bjielb8muwwwi" path="res://scenes/main_button/play_button.tscn" id="4_egwr5"]
+[ext_resource type="PackedScene" uid="uid://dwwmh04xtb5ex" path="res://scenes/main_button/rules_button.tscn" id="5_oyo41"]
+[ext_resource type="PackedScene" uid="uid://do2w6fqt04ne6" path="res://scenes/main_button/credits_button.tscn" id="6_cspcj"]
+[ext_resource type="PackedScene" uid="uid://bxhwbjosh67bq" path="res://scenes/main_button/quit_button.tscn" id="7_oup0n"]
+[ext_resource type="LabelSettings" uid="uid://b7pk5anclpjox" path="res://resources/fonts/24_wh.tres" id="9_xurnf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5yo7"]
+font = ExtResource("1_wut7f")
+font_size = 64
+font_color = Color(0.861069, 0.737337, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vrqgl")
+
+[node name="CR" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jyrx6")
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 100
+
+[node name="VB" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MC/VB"]
+layout_mode = 2
+text = "Hasty Heists"
+label_settings = SubResource("LabelSettings_q5yo7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MC" type="MarginContainer" parent="MC/VB"]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MC/VB/MC"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="PlayButton" parent="MC/VB/MC/VBoxContainer" instance=ExtResource("4_egwr5")]
+layout_mode = 2
+
+[node name="RulesButton" parent="MC/VB/MC/VBoxContainer" instance=ExtResource("5_oyo41")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="CreditsButton" parent="MC/VB/MC/VBoxContainer" instance=ExtResource("6_cspcj")]
+layout_mode = 2
+
+[node name="QuitButton" parent="MC/VB/MC/VBoxContainer" instance=ExtResource("7_oup0n")]
+layout_mode = 2
+
+[node name="CRRules" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.152941, 0.231373, 0.945098)
+
+[node name="Rules" type="VBoxContainer" parent="CRRules"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "WASD: 			Move
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "Shift: 		Sneak
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "E: 						Interact"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "Tab: 				Cycle Letters"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "Space: 		Lockpick Letters"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="CRRules/Rules"]
+layout_mode = 2
+text = "Esc: 				Stop Unlock"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="CRCredits" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.152941, 0.231373, 0.945098)
+
+[node name="Credits" type="VBoxContainer" parent="CRCredits"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Code: 								Eggsquisite
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Music: 							Nick Ryan
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Characters: 		Elthen Pixel Art Shop
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Tileset: 					Elthen Pixel Art Shop
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Assets: 						Elthen Pixel Art Shop
+"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label7" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Keys: 								Karsiori"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Coins: 							La Red Games"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label8" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Coin SFX: 				DrMinky"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label9" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Hurt SFX: 				thecheeseman"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label10" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Sword SFX: 			deleted_user_13668154"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label11" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Unlock SFX: 		BeezleFM"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label12" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Puff SFX: 				SmartSound FX"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1
+
+[node name="Label13" type="Label" parent="CRCredits/Credits"]
+layout_mode = 2
+text = "Lvl End SFX:		Soundroll"
+label_settings = ExtResource("9_xurnf")
+vertical_alignment = 1

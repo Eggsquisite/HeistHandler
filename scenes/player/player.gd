@@ -18,6 +18,7 @@ const LOCKPICK_MULTIPLIER: float = 2.0
 @onready var invincible_player: AnimationPlayer = $InvinciblePlayer
 @onready var nav_points: Node2D = $NavPoints
 @onready var hitbox_collision: CollisionShape2D = $Hurtbox/HitboxCollision2D
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 
 var _state: PlayerState = PlayerState.IDLE
@@ -37,6 +38,7 @@ func _ready() -> void:
 	SignalManager.on_leave_start.connect(set_interact_true)
 	SignalManager.on_leave_end.connect(set_interact_false)
 	SignalManager.on_level_complete.connect(level_completed)
+	SignalManager.on_pickup_sound.connect(play_pickup)
 
 
 func late_setup() -> void:
@@ -175,6 +177,7 @@ func apply_hit() -> void:
 	if reduce_health(1) == false:
 		return
 	
+	SoundManager.play_clip(sound, SoundManager.SOUND_HURT)
 	set_state(PlayerState.HURT)
 	go_invincible()
 
@@ -211,6 +214,13 @@ func level_completed() -> void:
 	set_state(PlayerState.IDLE)
 	set_physics_process(false)
 	hide()
+
+func get_sound() -> AudioStreamPlayer2D:
+	return sound
+
+
+func play_pickup() -> void:
+	SoundManager.play_clip(sound, SoundManager.SOUND_PICKUP)
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:

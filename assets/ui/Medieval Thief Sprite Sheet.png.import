@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcpkhidjv4nip"
-path="res://.godot/imported/Medieval Thief Sprite Sheet.png-7e16255494aa0e9202ff740a099664a6.ctex"
+path="res://.godot/imported/Medieval Thief Sprite Sheet.png-98ff073f46649dfc9c8490d739b92377.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/chest/Medieval Thief Sprite Sheet.png"
-dest_files=["res://.godot/imported/Medieval Thief Sprite Sheet.png-7e16255494aa0e9202ff740a099664a6.ctex"]
+source_file="res://assets/ui/Medieval Thief Sprite Sheet.png"
+dest_files=["res://.godot/imported/Medieval Thief Sprite Sheet.png-98ff073f46649dfc9c8490d739b92377.ctex"]
 
 [params]
 

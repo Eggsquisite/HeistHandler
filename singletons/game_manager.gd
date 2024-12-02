@@ -25,6 +25,8 @@ func _ready() -> void:
 		# _level_scenes[ln] = load("res://scenes/base_level/base_level.tscn")
 		_level_scenes[ln] = load("res://scenes/base_level/level_%d.tscn" % ln)
 	
+	# load_main_scene()
+	SignalManager.on_play_button_pressed.connect(load_next_level_scene)
 	SignalManager.on_guard_alert.connect(guard_alerted)
 	SignalManager.on_guard_lost.connect(guard_lost)
 	SignalManager.on_game_over.connect(game_over)

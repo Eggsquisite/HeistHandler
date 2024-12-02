@@ -9,6 +9,7 @@ var coin = preload("res://scenes/coin_pickup/coin_pickup.tscn")
 @onready var chest_anim: AnimationPlayer = $ChestAnimationPlayer
 @onready var coin_spawner: Node2D = $CoinSpawner
 @onready var coin_timer: Timer = $CoinTimer
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var unlocked: bool = false
 var coin_pos: Vector2
@@ -43,6 +44,7 @@ func unlock_chest(flag: int) -> void:
 	elif flag == 1: # Lock unlocked
 		chest_anim.stop()
 		chest_anim.play("unlocked")
+		SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK_CHEST)
 		# SignalManager.chest_unlocked.emit(self.global_position, coin_type)
 	interaction_area.queue_free()
 

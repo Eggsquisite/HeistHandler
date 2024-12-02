@@ -58,6 +58,7 @@ func _on_area_entered(area: Area2D) -> void:
 	warn_player.stop()
 	anim_player.play("pickup")
 	SignalManager.on_loot_pickup.emit(value_amt)
+	SignalManager.on_pickup_sound.emit()
 	# play sound
 
 

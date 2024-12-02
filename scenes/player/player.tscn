@@ -281,6 +281,8 @@ test"
 label_settings = SubResource("LabelSettings_dgkft")
 metadata/_edit_use_anchors_ = true
 
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="InvincibleTimer" to="." method="_on_invincible_timer_timeout"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="HeistHandler"
-run/main_scene="res://scenes/base_level/base_level.tscn"
+run/main_scene="res://scenes/main/main.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,8 @@ SignalManager="*res://singletons/signal_manager.gd"
 WordManager="*res://singletons/word_manager.gd"
 GameManager="*res://singletons/game_manager.gd"
 InteractionManager="*res://singletons/interaction_manager/interaction_manager.tscn"
+SoundManager="*res://singletons/sound_manager.gd"
+GlobalAudio="*res://scenes/global_audio/global_audio.tscn"
 
 [display]
 

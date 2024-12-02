@@ -5,6 +5,7 @@ extends Interactable
 @onready var interaction_area: InteractionArea = $InteractionArea
 @onready var lock: Sprite2D = $Lock
 @onready var coll: CollisionShape2D = $StaticBody2D/Coll
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var failed: bool = false
 
@@ -28,6 +29,7 @@ func unlock_door(success: int) -> void:
 		return
 	elif success == 1: # Lock unlocked
 		door_anim.play("unlock")
+		SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK_DOOR)
 		coll.disabled = true
 		interaction_area.queue_free()
 	elif success == 0: # Lock broken

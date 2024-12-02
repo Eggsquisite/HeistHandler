@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwwmh04xtb5ex"]
+
+[ext_resource type="PackedScene" uid="uid://sm0oivof73qe" path="res://scenes/main_button/main_button.tscn" id="1_fiiyd"]
+[ext_resource type="Script" path="res://scenes/main_button/rules_button.gd" id="2_t5igm"]
+
+[node name="RulesButton" instance=ExtResource("1_fiiyd")]
+script = ExtResource("2_t5igm")
+
+[node name="Label" parent="MarginContainer" index="0"]
+text = "Rules"

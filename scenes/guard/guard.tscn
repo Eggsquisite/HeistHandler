@@ -71,6 +71,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_sword_slash"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_hn2rw"]
 resource_name = "idle"
@@ -240,6 +254,8 @@ wait_time = 2.0
 one_shot = true
 
 [node name="SearchFlipTimer" type="Timer" parent="Timers"]
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_player_detect_area_body_entered"]
 [connection signal="body_entered" from="VisionCone" to="." method="_on_vision_cone_body_entered"]

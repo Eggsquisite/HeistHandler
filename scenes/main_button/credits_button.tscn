@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://do2w6fqt04ne6"]
+
+[ext_resource type="PackedScene" uid="uid://sm0oivof73qe" path="res://scenes/main_button/main_button.tscn" id="1_vhcqf"]
+[ext_resource type="Script" path="res://scenes/main_button/credits_button.gd" id="2_v3xr6"]
+[ext_resource type="FontFile" uid="uid://d2lju81y6meld" path="res://assets/fonts/dogica.ttf" id="3_irve4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3ohkf"]
+font = ExtResource("3_irve4")
+font_size = 24
+font_color = Color(0.733333, 0, 0, 1)
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+
+[node name="CreditsButton" instance=ExtResource("1_vhcqf")]
+offset_left = -95.0
+offset_top = -24.5
+offset_right = 95.0
+offset_bottom = 24.5
+script = ExtResource("2_v3xr6")
+
+[node name="Label" parent="MarginContainer" index="0"]
+text = "Credits"
+label_settings = SubResource("LabelSettings_3ohkf")

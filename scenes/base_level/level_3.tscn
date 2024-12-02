@@ -8,7 +8,7 @@
 [ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="6_vdybj"]
 
 [node name="Level_3" instance=ExtResource("1_e1mij")]
-time_three_star = 30.0
+time_three_star = 40.0
 time_two_star = 60.0
 time_one_star = 90.0
 
@@ -24,7 +24,7 @@ position = Vector2(-257, -112)
 [node name="Player" parent="." index="4"]
 position = Vector2(-232, -87)
 
-[node name="PlayerCam" parent="Player" index="9"]
+[node name="PlayerCam" parent="Player" index="10"]
 limit_left = -300
 limit_top = -250
 limit_right = 300

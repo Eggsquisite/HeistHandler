@@ -168,3 +168,6 @@ libraries = {
 "": SubResource("AnimationLibrary_51go7")
 }
 autoplay = "lock"
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+volume_db = 5.0

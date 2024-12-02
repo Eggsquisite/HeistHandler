@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://df4bgxx3jpj4t"]
+
+[ext_resource type="AudioStream" uid="uid://sagi5hhb5a2i" path="res://assets/sounds/sfx/sneaky.ogg" id="1_w206q"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_w206q")
+volume_db = -10.0
+autoplay = true
+parameters/looping = true

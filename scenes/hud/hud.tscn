@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://scenes/hud/hud.gd" id="1_uqrgx"]
 [ext_resource type="LabelSettings" uid="uid://b7pk5anclpjox" path="res://resources/fonts/24_wh.tres" id="2_b6rc2"]
 [ext_resource type="Texture2D" uid="uid://qnm0qghl7sq7" path="res://assets/coins/single_coin.png" id="3_g5b1o"]
-[ext_resource type="LabelSettings" uid="uid://fcujrqqus5xd" path="res://resources/fonts/48_red.tres" id="3_m40yd"]
 [ext_resource type="LabelSettings" uid="uid://6t30qdmwm2pr" path="res://resources/fonts/48_yellow.tres" id="5_46var"]
+[ext_resource type="LabelSettings" uid="uid://cccvtxuj4h2eu" path="res://resources/fonts/64_red.tres" id="5_71yy0"]
 [ext_resource type="Texture2D" uid="uid://dvij25c85hsi0" path="res://assets/ui/single_star_empty.png" id="6_hmht5"]
 
 [node name="HUD" type="Control"]
@@ -184,7 +184,7 @@ theme_override_constants/separation = 24
 [node name="Label" type="Label" parent="GORect/VBGameOver"]
 layout_mode = 2
 text = "Game Over"
-label_settings = ExtResource("3_m40yd")
+label_settings = ExtResource("5_71yy0")
 horizontal_alignment = 1
 vertical_alignment = 1
 

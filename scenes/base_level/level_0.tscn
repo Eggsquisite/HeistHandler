@@ -56,3 +56,5 @@ position = Vector2(56, -110)
 
 [node name="Coins" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
