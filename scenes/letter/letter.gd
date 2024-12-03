@@ -19,13 +19,16 @@ func hide_letter() -> void:
 	reenable_focus()
 
 
-func show_letter() -> void:	
+func show_letter(sound: AudioStreamPlayer2D) -> void:
+	if !is_hidden || sound == null:
+		return
 	# shield_lock.hide()
 	shield_lock.play_unlock()
 	selector.hide()
 	is_hidden = false
 	disable_focus()
 	focus_next
+	SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)
 	# Play unlock sound
 
 
@@ -85,5 +88,5 @@ func end_lockpick() -> void:
 
 
 func _on_timer_timeout() -> void:
-	show_letter()
+	show_letter(null)
 	# end unlocking sound

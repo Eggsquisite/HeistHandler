@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dn3wn221hgqsy"]
+[gd_scene load_steps=12 format=3 uid="uid://dn3wn221hgqsy"]
 
 [ext_resource type="Script" path="res://scenes/chest/chest.gd" id="1_b1120"]
 [ext_resource type="Texture2D" uid="uid://cp11xx1xygnga" path="res://assets/chest/Destructible Objects Sprite Sheet.png" id="2_23erl"]
 [ext_resource type="PackedScene" uid="uid://c6558piuwf6fw" path="res://scenes/interaction_area/interaction_area.tscn" id="2_arlpa"]
+[ext_resource type="Texture2D" uid="uid://bhysjr1o4b6uq" path="res://assets/shadow/shadow.png" id="3_6hn15"]
 [ext_resource type="PackedScene" uid="uid://bc04p6e3xp50b" path="res://scenes/word_game/word_game.tscn" id="4_oi5mk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syylu"]
@@ -91,6 +92,14 @@ texture = ExtResource("2_23erl")
 hframes = 7
 vframes = 12
 frame = 70
+
+[node name="Shadow" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.529412)
+z_index = 1
+z_as_relative = false
+position = Vector2(1, 5.96046e-08)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_6hn15")
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_arlpa")]
 position = Vector2(0, -6)

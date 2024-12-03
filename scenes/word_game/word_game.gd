@@ -221,7 +221,7 @@ func begin_lockpick() -> void:
 
 func end_lockpick() -> void:
 	is_lockpicking = false
-	letter_focus.show_letter()
+	letter_focus.show_letter(sound)
 	letter_focus.release_focus()
 	
 	reset_lockpick_bar()
@@ -353,8 +353,7 @@ func compare_letters(new_text: String) -> void:
 	
 	for i in range(0, new.size()):
 		if new[i] == old[i]:
-			letter_containers[i].show_letter()
-			SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)
+			letter_containers[i].show_letter(sound)
 			
 			# ADD if want to match unlocks
 			#if lockpick_current > 0:
