@@ -9,7 +9,6 @@
 
 [node name="Level_4" instance=ExtResource("1_1qhd7")]
 loot_two_star = 60.0
-loot_one_star = 50.0
 time_three_star = 180.0
 time_two_star = 200.0
 time_one_star = 240.0
@@ -96,6 +95,31 @@ position = Vector2(-55, -66)
 scale = Vector2(0.706699, 0.699912)
 type = "silver"
 
+[node name="Coin19" parent="Coins" index="17" instance=ExtResource("2_eht78")]
+position = Vector2(44, -88)
+scale = Vector2(0.706699, 0.699912)
+type = "silver"
+
+[node name="Coin20" parent="Coins" index="18" instance=ExtResource("2_eht78")]
+position = Vector2(76, -88)
+scale = Vector2(0.706699, 0.699912)
+type = "silver"
+
+[node name="Coin21" parent="Coins" index="19" instance=ExtResource("2_eht78")]
+position = Vector2(76, -50)
+scale = Vector2(0.706699, 0.699912)
+type = "silver"
+
+[node name="Coin22" parent="Coins" index="20" instance=ExtResource("2_eht78")]
+position = Vector2(44, -50)
+scale = Vector2(0.706699, 0.699912)
+type = "silver"
+
+[node name="Coin23" parent="Coins" index="21" instance=ExtResource("2_eht78")]
+position = Vector2(60, -67)
+scale = Vector2(0.706699, 0.699912)
+type = "silver"
+
 [node name="LockedDoor" parent="." index="7" instance=ExtResource("2_j0igd")]
 position = Vector2(-178, -132)
 difficulty = "medium-hard"
@@ -105,25 +129,27 @@ position = Vector2(158, -132)
 difficulty = "medium-hard"
 
 [node name="Chest2" parent="." index="9" instance=ExtResource("3_c40hg")]
-position = Vector2(56, -74)
+position = Vector2(-10, -237)
 coin_amt = 15
 coin_range = 20.0
-difficulty = "medium"
+difficulty = "medium-hard"
 
 [node name="Guard" parent="." index="10" instance=ExtResource("4_4mbfv")]
-position = Vector2(-99, -75)
+position = Vector2(-120, -69)
 patrol_speed = 10.0
+detection_inc = 10.0
 
 [node name="PatrolWaypoints" parent="Guard" index="12" instance=ExtResource("5_m88nj")]
 
 [node name="Marker2D" type="Marker2D" parent="Guard/PatrolWaypoints" index="0"]
-position = Vector2(-91, -75)
+position = Vector2(-112, -69)
 
 [node name="Guard2" parent="." index="11" instance=ExtResource("4_4mbfv")]
-position = Vector2(128, -75)
+position = Vector2(122, -71)
 patrol_speed = 10.0
+detection_inc = 10.0
 
 [node name="PatrolWaypoints" parent="Guard2" index="12" instance=ExtResource("5_m88nj")]
 
 [node name="Marker2D" type="Marker2D" parent="Guard2/PatrolWaypoints" index="0"]
-position = Vector2(93, -75)
+position = Vector2(113, -71)

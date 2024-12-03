@@ -8,7 +8,6 @@
 [node name="Level_1" instance=ExtResource("1_iopsd")]
 loot_three_star = 100.0
 loot_two_star = 80.0
-loot_one_star = 50.0
 time_one_star = 100.0
 
 [node name="Misc" parent="TileMapLayers" index="1"]

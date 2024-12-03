@@ -97,10 +97,10 @@ position = Vector2(-217, -122)
 [node name="PatrolWaypoints" parent="Guard" index="12" instance=ExtResource("6_xbfvg")]
 
 [node name="Marker2D" type="Marker2D" parent="Guard/PatrolWaypoints" index="0"]
-position = Vector2(-160, -125)
+position = Vector2(-199, -125)
 
 [node name="Marker2D3" type="Marker2D" parent="Guard/PatrolWaypoints" index="1"]
-position = Vector2(125, -125)
+position = Vector2(157, -125)
 
 [node name="Guard2" parent="." index="10" instance=ExtResource("5_oibgr")]
 position = Vector2(246, -30)
@@ -108,10 +108,10 @@ position = Vector2(246, -30)
 [node name="PatrolWaypoints" parent="Guard2" index="12" instance=ExtResource("6_xbfvg")]
 
 [node name="Marker2D" type="Marker2D" parent="Guard2/PatrolWaypoints" index="0"]
-position = Vector2(245, -34)
+position = Vector2(178, -34)
 
 [node name="Marker2D3" type="Marker2D" parent="Guard2/PatrolWaypoints" index="1"]
-position = Vector2(-192, -34)
+position = Vector2(-166, -31)
 
 [node name="Guard3" parent="." index="11" instance=ExtResource("5_oibgr")]
 position = Vector2(-65, -224)
