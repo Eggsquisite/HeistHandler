@@ -147,20 +147,20 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 			lockpick_current = lockpick_max
 		"medium":
 			letter_covers = 3
-			lockpick_max = 2
-			_max_tries = 3
+			lockpick_max = 1
+			_max_tries = 5
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 		"medium-hard":
 			letter_covers = 4
-			lockpick_max = 2
-			_max_tries = 4
+			lockpick_max = 1
+			_max_tries = 5
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 		"hard":
 			letter_covers = 5
-			lockpick_max = 3
-			_max_tries = 5
+			lockpick_max = 2
+			_max_tries = 6
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 
@@ -354,6 +354,12 @@ func compare_letters(new_text: String) -> void:
 	for i in range(0, new.size()):
 		if new[i] == old[i]:
 			letter_containers[i].show_letter()
+			SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)
+			
+			# ADD if want to match unlocks
+			#if lockpick_current > 0:
+				#lockpick_current -= 1
+				#lockpick_tries_container.update_lockpick_amt(lockpick_current)
 
 
 func check_lock_finished() -> bool:
@@ -377,7 +383,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		instance.text = new_text
 		used_words.add_child(instance)
 		# REMOVE if want to take out letter compare unlocks
-		# compare_letters(new_text)
+		compare_letters(new_text)
 
 
 func _on_finished_timer_timeout() -> void:

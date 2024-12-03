@@ -9,7 +9,7 @@
 loot_three_star = 100.0
 loot_two_star = 80.0
 loot_one_star = 50.0
-time_three_star = 30.0
+time_three_star = 40.0
 time_two_star = 45.0
 time_one_star = 60.0
 
@@ -28,7 +28,7 @@ position = Vector2(-252, -84)
 [node name="Player" parent="." index="4"]
 position = Vector2(-228, -59)
 
-[node name="PlayerCam" parent="Player" index="10"]
+[node name="PlayerCam" parent="Player" index="11"]
 limit_left = -300
 limit_top = -225
 limit_right = 300
@@ -86,21 +86,21 @@ label_settings = ExtResource("4_713cp")
 
 [node name="TabLabel" type="Label" parent="." index="10"]
 z_index = 20
-offset_left = -163.0
-offset_top = -104.0
-offset_right = -3.0
-offset_bottom = -97.0
-text = "Press [TAB] to Cycle"
+offset_left = -182.0
+offset_top = -103.0
+offset_right = 34.0
+offset_bottom = -96.0
+text = "Press [TAB] to Cycle Letter"
 label_settings = ExtResource("4_713cp")
 horizontal_alignment = 1
 
 [node name="SpaceLabel" type="Label" parent="." index="11"]
 z_index = 20
-offset_left = -174.0
+offset_left = -198.0
 offset_top = -92.0
-offset_right = 10.0
+offset_right = 58.0
 offset_bottom = -85.0
-text = "Press [SPACE] to Lockpick"
+text = "Press [SPACE] to Lockpick Letter"
 label_settings = ExtResource("4_713cp")
 horizontal_alignment = 1
 

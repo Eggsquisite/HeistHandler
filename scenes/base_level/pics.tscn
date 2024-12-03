@@ -71,7 +71,7 @@ position = Vector2(-25, -205)
 [node name="StartLadder" parent="." index="5"]
 position = Vector2(-204, -112)
 
-[node name="PlayerCam" parent="Player" index="10"]
+[node name="PlayerCam" parent="Player" index="11"]
 position = Vector2(-3, -46)
 
 [node name="GoalLadder" parent="." index="7"]

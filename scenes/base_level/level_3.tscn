@@ -8,8 +8,7 @@
 [ext_resource type="LabelSettings" uid="uid://b1qevyssocoso" path="res://resources/fonts/8_wh.tres" id="6_vdybj"]
 
 [node name="Level_3" instance=ExtResource("1_e1mij")]
-time_three_star = 45.0
-time_two_star = 60.0
+time_two_star = 75.0
 time_one_star = 90.0
 
 [node name="Walls" parent="TileMapLayers" index="2"]
@@ -24,7 +23,7 @@ position = Vector2(-257, -112)
 [node name="Player" parent="." index="4"]
 position = Vector2(-232, -87)
 
-[node name="PlayerCam" parent="Player" index="10"]
+[node name="PlayerCam" parent="Player" index="11"]
 limit_left = -300
 limit_top = -250
 limit_right = 300
@@ -47,7 +46,7 @@ position = Vector2(-142, -104)
 [node name="Chest" parent="." index="7" instance=ExtResource("3_r6823")]
 position = Vector2(-1, -100)
 coin_amt = 20
-difficulty = "medium"
+difficulty = "medium-hard"
 
 [node name="Coin1" parent="Coins" index="0" instance=ExtResource("2_qqtxm")]
 position = Vector2(-112, -16)

@@ -5,8 +5,8 @@ class_name Player
 
 enum PlayerState { IDLE, RUN, SNEAK_IDLE, SNEAK_WALK, LOCKPICK, HURT, DEATH }
 
-const RUN_SPEED: float = 100.0
-const SNEAK_SPEED: float = 60.0
+const RUN_SPEED: float = 80.0
+const SNEAK_SPEED: float = 55.0
 const LOCKPICK_SPEED: float = 1.0
 const LOCKPICK_MULTIPLIER: float = 2.0
 
@@ -150,12 +150,15 @@ func set_interact_true() -> void:
 	_interacting = true
 
 
-func set_interact_false(_flag) -> void:
+func set_interact_false(flag) -> void:
 	if _interacting == false:
 		return
 
 	# Edge case if player is sneaking when lockpicking
-	set_sneaking(false)
+	if flag == 0 or flag == 1:
+		set_sneaking(false)
+	elif flag == 2:
+		set_sneaking(true)
 	_interacting = false
 
 

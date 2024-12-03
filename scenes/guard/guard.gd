@@ -41,15 +41,16 @@ var _waypoints: Array[Vector2]
 var _wp_index: int = 0
 
 var _sneak_detection_value: float
+var _sneak_reduction_mult: float = 2.5
 
 @export_group("Patrol Variables")
-@export var patrol_speed: float = 25
-@export var patrol_delay: float = 2
+@export var patrol_speed: float = 15
+@export var patrol_delay: float = 5
 
 @export_group("Alert Variables")
-@export var alert_speed: float = 45
-@export var detection_inc: float = 8
-@export var detection_dec: float = 2
+@export var alert_speed: float = 35
+@export var detection_inc: float = 5
+@export var detection_dec: float = 3
 @export var _extra_search_max: int = 1
 
 @export_group("Search Variables")
@@ -214,7 +215,7 @@ func _player_in_sight(flag: bool) -> void:
 func detect_player(delta) -> void:
 	if _player != null:
 		if _player.get_sneak_status():
-			_sneak_detection_value = detection_inc / 2.5
+			_sneak_detection_value = detection_inc / _sneak_reduction_mult
 		else:
 			_sneak_detection_value = detection_inc
 

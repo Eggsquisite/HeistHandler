@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cxa6y2bqtmt8s"]
+[gd_scene load_steps=14 format=3 uid="uid://cxa6y2bqtmt8s"]
 
 [ext_resource type="Script" path="res://scenes/guard/guard.gd" id="1_8kgwj"]
 [ext_resource type="Texture2D" uid="uid://do40kednac0gt" path="res://assets/guard/Royal Swordsman Sprite Sheet.png" id="3_1ouyj"]
 [ext_resource type="PackedScene" uid="uid://t56j5dtc6cj3" path="res://scenes/detection_bar/detection_bar.tscn" id="3_hhikg"]
+[ext_resource type="Texture2D" uid="uid://bhysjr1o4b6uq" path="res://assets/shadow/shadow.png" id="3_q4p2t"]
 [ext_resource type="Texture2D" uid="uid://cekgxy76w5x7e" path="res://resources/lights/16x16_light.tres" id="4_oxdxr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oko4g"]
@@ -156,6 +157,14 @@ texture = ExtResource("3_1ouyj")
 hframes = 8
 vframes = 7
 
+[node name="Shadow" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.529412)
+z_index = 1
+z_as_relative = false
+position = Vector2(0, 6)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_q4p2t")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 4)
@@ -164,7 +173,8 @@ disabled = true
 
 [node name="PlayerDetectArea" type="Area2D" parent="."]
 visible = false
-position = Vector2(2, -2)
+position = Vector2(2, -3)
+scale = Vector2(0.640001, 0.680001)
 collision_layer = 0
 collision_mask = 2
 
@@ -172,13 +182,12 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_62iqj")
 
 [node name="VisionCone" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -1)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionCone"]
-polygon = PackedVector2Array(-45, 25, -45, -25, 0, -50, 175, -125, 175, 125, 0, 50)
+polygon = PackedVector2Array(-30, 25, -30, -25, 0, -40, 150, -100, 150, 100, 0, 40)
 
 [node name="EnemyHitbox" type="Area2D" parent="."]
 position = Vector2(0, -1)
@@ -213,7 +222,7 @@ energy = 0.7
 shadow_enabled = true
 shadow_filter = 1
 texture = ExtResource("4_oxdxr")
-texture_scale = 1.5
+texture_scale = 1.25
 
 [node name="BodyLight2" type="PointLight2D" parent="Light"]
 visible = false

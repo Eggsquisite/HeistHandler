@@ -24,7 +24,7 @@ position = Vector2(-236, -227)
 [node name="Player" parent="." index="4"]
 position = Vector2(-211, -210)
 
-[node name="PlayerCam" parent="Player" index="10"]
+[node name="PlayerCam" parent="Player" index="11"]
 limit_left = -350
 limit_top = -350
 limit_right = 350
@@ -106,12 +106,8 @@ position = Vector2(2, -140)
 [node name="Marker2D3" type="Marker2D" parent="Guard/PatrolWaypoints" index="2"]
 position = Vector2(125, -125)
 
-[node name="Marker2D4" type="Marker2D" parent="Guard/PatrolWaypoints" index="3"]
-position = Vector2(1, -108)
-
 [node name="Guard2" parent="." index="10" instance=ExtResource("5_oibgr")]
 position = Vector2(246, -30)
-patrol_delay = 5.0
 
 [node name="PatrolWaypoints" parent="Guard2" index="12" instance=ExtResource("6_xbfvg")]
 
@@ -124,22 +120,15 @@ position = Vector2(1, -46)
 [node name="Marker2D3" type="Marker2D" parent="Guard2/PatrolWaypoints" index="2"]
 position = Vector2(-192, -34)
 
-[node name="Marker2D4" type="Marker2D" parent="Guard2/PatrolWaypoints" index="3"]
-position = Vector2(1, -22)
-
 [node name="Guard3" parent="." index="11" instance=ExtResource("5_oibgr")]
 position = Vector2(-131, -224)
-patrol_delay = 5.0
 
 [node name="PatrolWaypoints" parent="Guard3" index="12" instance=ExtResource("6_xbfvg")]
 
-[node name="Marker2D1" type="Marker2D" parent="Guard3/PatrolWaypoints" index="0"]
-position = Vector2(1, -235)
-
-[node name="Marker2D2" type="Marker2D" parent="Guard3/PatrolWaypoints" index="1"]
+[node name="Marker2D2" type="Marker2D" parent="Guard3/PatrolWaypoints" index="0"]
 position = Vector2(145, -225)
 
-[node name="Marker2D3" type="Marker2D" parent="Guard3/PatrolWaypoints" index="2"]
+[node name="Marker2D3" type="Marker2D" parent="Guard3/PatrolWaypoints" index="1"]
 position = Vector2(-122, -225)
 
 [node name="Chest" parent="." index="12" instance=ExtResource("4_8gbjd")]
