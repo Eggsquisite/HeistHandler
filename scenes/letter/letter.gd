@@ -85,6 +85,22 @@ func begin_lockpick(duration: float) -> void:
 func end_lockpick() -> void:
 	timer.stop()
 	selector.stop_unlock()
+	self.release_focus()
+
+
+func get_is_hidden() -> bool:
+	return is_hidden
+
+
+func get_no_more_reveals() -> bool:
+	return no_more_reveals
+
+
+func set_focus() -> void:
+	if is_hidden:
+		self.grab_focus()
+		selector.show()
+		print("setting focus")
 
 
 func _on_timer_timeout() -> void:

@@ -99,10 +99,11 @@ func start_minigame() -> void:
 		
 		letter_instance.get_letter().text = letter
 		letter_containers.append(letter_instance)
-
+	
 	setup_line_edit(true)
 	update_lock_label()
 	randomize_letter(letter_containers.size() - 1)
+	start_letter_focus()
 
 
 func resume_minigame() -> void:
@@ -113,9 +114,19 @@ func resume_minigame() -> void:
 	
 	for n in letter_containers:
 		n.reenable_focus()
-	
+
 	update_lock_label()
+	start_letter_focus()
 	setup_line_edit(true)
+
+
+func start_letter_focus() -> void:
+	# grab focus of the first hidden letter
+	for n in letter_containers:
+		if n.get_is_hidden() and !n.get_no_more_reveals():
+			n.set_focus()
+			break
+		line_edit.grab_focus()
 
 
 func randomize_letter(size: int) -> void:
@@ -142,24 +153,24 @@ func setup_variables(diff: String, pick_time: float, pick_mult: float) -> void:
 		"easy":
 			letter_covers = 2
 			lockpick_max = 1
-			_max_tries = 3
+			_max_tries = 5
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 		"medium":
 			letter_covers = 3
-			lockpick_max = 1
+			lockpick_max = 2
 			_max_tries = 5
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 		"medium-hard":
 			letter_covers = 4
-			lockpick_max = 1
+			lockpick_max = 3
 			_max_tries = 5
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
 		"hard":
 			letter_covers = 5
-			lockpick_max = 2
+			lockpick_max = 3
 			_max_tries = 6
 			tries_left = _max_tries
 			lockpick_current = lockpick_max
@@ -170,7 +181,7 @@ func setup_line_edit(flag: bool) -> void:
 		line_edit.focus_mode = Control.FOCUS_ALL
 		line_edit.mouse_filter = Control.MOUSE_FILTER_STOP
 		line_edit.clear()
-		line_edit.grab_focus()
+		# line_edit.grab_focus()
 		line_edit.editable = true
 		line_edit.max_length = letter_array.size()
 	else:
@@ -203,10 +214,10 @@ func begin_lockpick() -> void:
 		lp_time = _time_to_pick
 	else:
 		lp_time = _time_to_pick + (
-			_time_to_pick * (_multiplier_to_pick - 1) * lockpick_count
+			_time_to_pick * (_multiplier_to_pick - 1) * (lockpick_count - 1)
 			)
 	lockpick_bar.max_value = lp_time
-	# print("lp time: %s" % lp_time)
+	print("lp time: %s" % lp_time)
 	
 	setup_line_edit(false)
 	lockpick_timer.start(lp_time)
@@ -226,6 +237,7 @@ func end_lockpick() -> void:
 	
 	reset_lockpick_bar()
 	setup_line_edit(true)
+	line_edit.grab_focus()
 	lockpick_current -= 1
 	lockpick_tries_container.update_lockpick_amt(lockpick_current)
 	SoundManager.play_clip(sound, SoundManager.SOUND_UNLOCK)

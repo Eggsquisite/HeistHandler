@@ -44,12 +44,12 @@ var _sneak_detection_value: float
 var _sneak_reduction_mult: float = 2.5
 
 @export_group("Patrol Variables")
-@export var patrol_speed: float = 15
-@export var patrol_delay: float = 5
+@export var patrol_speed: float = 12.5
+@export var patrol_delay: float = 8
 
 @export_group("Alert Variables")
 @export var alert_speed: float = 35
-@export var detection_inc: float = 5
+@export var detection_inc: float = 6
 @export var detection_dec: float = 3
 @export var _extra_search_max: int = 1
 

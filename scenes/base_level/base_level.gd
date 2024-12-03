@@ -8,9 +8,9 @@ var _is_level_complete: bool = false
 var _total_loot: int = 0
 
 @export_group("Loot Rank Percent")
-@export var loot_three_star: float = 80
-@export var loot_two_star: float = 50
-@export var loot_one_star: float = 30
+@export var loot_three_star: float = 85
+@export var loot_two_star: float = 70
+@export var loot_one_star: float = 50
 
 @export_group("Time Rank in Seconds")
 @export var time_three_star: float = 60

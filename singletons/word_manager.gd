@@ -22,7 +22,7 @@ func get_random_word(difficulty: String) -> String:
 	match difficulty:
 		"easy":
 			if _word_list_easy != []:
-				return _word_list_easy.pick_random()
+				return _word_list_med.pick_random()
 		"medium":
 			if _word_list_med != []:
 				return _word_list_med.pick_random()
@@ -31,5 +31,5 @@ func get_random_word(difficulty: String) -> String:
 				return _word_list_med.pick_random()
 		"hard":
 			if _word_list_hard != []:
-				return _word_list_hard.pick_random()
+				return _word_list_med.pick_random()
 	return 'debug'

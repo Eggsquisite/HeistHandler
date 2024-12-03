@@ -155,10 +155,11 @@ func set_interact_false(flag) -> void:
 		return
 
 	# Edge case if player is sneaking when lockpicking
-	if flag == 0 or flag == 1:
-		set_sneaking(false)
-	elif flag == 2:
-		set_sneaking(true)
+	set_sneaking(false)
+	#if flag == 0 or flag == 1:
+		#set_sneaking(false)
+	#elif flag == 2:
+		#set_sneaking(true)
 	_interacting = false
 
 
