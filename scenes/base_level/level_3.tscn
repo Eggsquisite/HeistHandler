@@ -79,11 +79,11 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="." index="10"]
 z_index = 20
-offset_left = -83.0
+offset_left = -142.0
 offset_top = -127.0
-offset_right = 85.0
+offset_right = 170.0
 offset_bottom = -120.0
-text = "Hold [Shift] to Sneak"
+text = "Hold [Shift] to Sneak or Stop Unlock"
 label_settings = ExtResource("6_vdybj")
 horizontal_alignment = 1
 vertical_alignment = 1

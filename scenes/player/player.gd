@@ -6,7 +6,7 @@ class_name Player
 enum PlayerState { IDLE, RUN, SNEAK_IDLE, SNEAK_WALK, LOCKPICK, HURT, DEATH }
 
 const RUN_SPEED: float = 80.0
-const SNEAK_SPEED: float = 55.0
+const SNEAK_SPEED: float = 50.0
 const LOCKPICK_SPEED: float = 1.0
 const LOCKPICK_MULTIPLIER: float = 2.0
 
